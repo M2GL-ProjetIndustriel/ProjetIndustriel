@@ -1,3 +1,4 @@
+/* Imports ################################################################## */
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
@@ -38,16 +39,20 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
+/* Declarations ############################################################# */
 import { AppComponent } from './app.component'
 import { SidenavComponent } from './shared/components/sidenav.component'
 import { HeaderComponent } from './shared/components/header.component'
+import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
 
+import { routing } from './app.routes'
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		SidenavComponent,
-		HeaderComponent
+		HeaderComponent,
+		UnluckyRouteComponent
 	],
 	imports: [
 		BrowserModule,
@@ -87,6 +92,7 @@ import { HeaderComponent } from './shared/components/header.component'
 		MatTabsModule,
 		MatToolbarModule,
 		MatTooltipModule,
+		routing
 	],
 	providers: [
 	],

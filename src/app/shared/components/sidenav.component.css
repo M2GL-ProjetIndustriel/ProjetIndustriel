@@ -9,6 +9,9 @@
 
 .sidenav {
 	background-color: #0091EA;
+	display: flex;
+	flex-direction: column;
+	color: #FFF;
 }
 
 .sidenav a {
@@ -22,7 +25,6 @@
 	padding-top: 16px;
 	background-color: #0277BD;
 	height: 48px;
-	color: #FFF;
 }
 
 

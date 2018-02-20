@@ -1,0 +1,11 @@
+.center-it {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 32px;
+	height: 250px;
+}
+
+.big-ass-question-mark {
+	font-size: 128px;
+}
