@@ -1,0 +1,27 @@
+<mat-sidenav-container class="main-container">
+	<!-- Sidebar -->
+	<mat-sidenav #sidenav class="sidenav mat-elevation-z12" mode="side" opened="false" role="navigation">
+		<div class="title-container mat-elevation-z2">
+			<h1>Title</h1>
+		</div>
+		<mat-divider></mat-divider>
+		<mat-list>
+			<mat-list-item *ngFor="let item of items; let i = index">
+				<a mat-button routerLink="/experiment" routerLinkActive="active">
+					<mat-icon>{{ item.icon }}</mat-icon>
+					<span>{{ item.label }}</span>
+				</a>
+			</mat-list-item>
+		</mat-list>
+	</mat-sidenav>
+
+	<!-- Content -->
+	<mat-sidenav-content role="main">
+		<!-- Header -->
+		<app-header [sidenav]="sidenav"></app-header>
+		<!-- Actual content -->
+		<div class="main-content">
+			<p>test</p>
+		</div>
+	</mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,27 @@
+.app-card-container {
+	border-radius: 2px;
+	background-color: #FFF;
+}
+
+.app-card-header {
+	border-radius: 2px 2px 0 0;
+	background-color: #0091EA;
+	padding: 12px;
+	color: #FFF;
+	display: flex;
+	justify-content: space-between;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.app-card-header > h1 {
+	margin: 0;
+}
+
+.app-card-action {
+	float: right;
+}
+
+.app-card-content {
+	padding: 24px;
+}

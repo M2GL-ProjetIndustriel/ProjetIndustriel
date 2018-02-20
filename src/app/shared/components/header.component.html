@@ -1,0 +1,14 @@
+<mat-toolbar role="header" class="mat-elevation-z4">
+	<button mat-icon-button (click)="toggle()"><mat-icon>{{ sidenavToggleIcon }}</mat-icon></button>
+
+	<form id="search-form">
+		<input type="text" placeholder="Rechercher"/>
+		<a><mat-icon>search</mat-icon></a>
+	</form>
+
+	<span class="separator"></span>
+
+	<button mat-icon-button matTooltip="L" [matTooltipPosition]="below">
+		<mat-icon>person</mat-icon>
+	</button>
+</mat-toolbar>
