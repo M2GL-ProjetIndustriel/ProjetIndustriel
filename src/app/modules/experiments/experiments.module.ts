@@ -1,9 +1,6 @@
 /* Imports ################################################################## */
-import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { Router } from '@angular/router'
+import { CommonModule } from '@angular/common'
 import {
 	MatAutocompleteModule,
 	MatButtonModule,
@@ -40,20 +37,18 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { SharedModule } from './shared.module'
-import { ExperimentsModule } from './modules/experiments/experiments.module'
-
-import { appRouting } from './app.routes'
+import { SharedModule } from '../../shared.module'
 
 /* Declarations ############################################################# */
-import { AppComponent } from './app.component'
+import { ExperimentsComponent } from './components/experiments.component'
+import { ExperimentsListComponent } from './components/experimentsList.component'
+
+/* Providers ################################################################ */
+import { ExperimentService } from './experiment.service'
 
 @NgModule({
 	imports: [
-		BrowserModule,
-		HttpClientModule,
-		HttpClientJsonpModule,
-		BrowserAnimationsModule,
+		CommonModule,
 		MatAutocompleteModule,
 		MatButtonModule,
 		MatButtonToggleModule,
@@ -87,17 +82,14 @@ import { AppComponent } from './app.component'
 		MatTabsModule,
 		MatToolbarModule,
 		MatTooltipModule,
-		ExperimentsModule,
-		SharedModule,
-		appRouting
+		SharedModule
 	],
 	declarations: [
-		AppComponent
+		ExperimentsComponent,
+		ExperimentsListComponent
 	],
-	bootstrap: [AppComponent]
+	providers: [
+		ExperimentService
+	]
 })
-export class AppModule {
-	constructor(router: Router) {
-		console.log('Routes: ', JSON.stringify(router.config, undefined, 2))
-	}
-}
+export class ExperimentsModule { }

@@ -1,9 +1,7 @@
 /* Imports ################################################################## */
-import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { Router } from '@angular/router'
+import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
 import {
 	MatAutocompleteModule,
 	MatButtonModule,
@@ -40,20 +38,16 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { SharedModule } from './shared.module'
-import { ExperimentsModule } from './modules/experiments/experiments.module'
-
-import { appRouting } from './app.routes'
-
 /* Declarations ############################################################# */
-import { AppComponent } from './app.component'
+import { SidenavComponent } from './shared/components/sidenav.component'
+import { HeaderComponent } from './shared/components/header.component'
+import { CardComponent } from './shared/components/card.component'
+import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
 
 @NgModule({
 	imports: [
-		BrowserModule,
-		HttpClientModule,
-		HttpClientJsonpModule,
-		BrowserAnimationsModule,
+		CommonModule,
+		RouterModule,
 		MatAutocompleteModule,
 		MatButtonModule,
 		MatButtonToggleModule,
@@ -86,18 +80,19 @@ import { AppComponent } from './app.component'
 		MatTableModule,
 		MatTabsModule,
 		MatToolbarModule,
-		MatTooltipModule,
-		ExperimentsModule,
-		SharedModule,
-		appRouting
+		MatTooltipModule
 	],
 	declarations: [
-		AppComponent
+		SidenavComponent,
+		HeaderComponent,
+		UnluckyRouteComponent,
+		CardComponent
 	],
-	bootstrap: [AppComponent]
+	exports: [
+		SidenavComponent,
+		HeaderComponent,
+		UnluckyRouteComponent,
+		CardComponent
+	]
 })
-export class AppModule {
-	constructor(router: Router) {
-		console.log('Routes: ', JSON.stringify(router.config, undefined, 2))
-	}
-}
+export class SharedModule { }
