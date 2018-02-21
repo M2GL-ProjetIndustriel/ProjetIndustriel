@@ -43,6 +43,7 @@ import { SidenavComponent } from './shared/components/sidenav.component'
 import { HeaderComponent } from './shared/components/header.component'
 import { CardComponent } from './shared/components/card.component'
 import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
+import { TestGraphComponent } from './shared/components/testGraph.component'
 
 @NgModule({
 	imports: [
@@ -86,13 +87,15 @@ import { UnluckyRouteComponent } from './shared/components/unluckyRoute.componen
 		SidenavComponent,
 		HeaderComponent,
 		UnluckyRouteComponent,
-		CardComponent
+		CardComponent,
+		TestGraphComponent
 	],
 	exports: [
 		SidenavComponent,
 		HeaderComponent,
 		UnluckyRouteComponent,
-		CardComponent
+		CardComponent,
+		TestGraphComponent
 	]
 })
 export class SharedModule { }

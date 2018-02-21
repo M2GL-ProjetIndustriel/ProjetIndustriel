@@ -1,6 +1,7 @@
 .app-card-container {
 	border-radius: 2px;
 	background-color: #FFF;
+	margin-bottom: 16px;
 }
 
 .app-card-header {

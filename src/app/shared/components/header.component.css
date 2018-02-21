@@ -34,7 +34,3 @@ mat-toolbar > button {
 #search-form > a:hover {
 	cursor: pointer;
 }
-
-.separator {
-	flex: 1 1 auto;
-}

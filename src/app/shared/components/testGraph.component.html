@@ -1,0 +1,14 @@
+<app-card header="Test Graph">
+	<mat-menu #graphExportMenu="matMenu">
+		<button mat-menu-item (click)="exportToImageAndSave()">PNG</button>
+		<button mat-menu-item>SVG</button>
+	</mat-menu>
+
+	<button mat-raised-button card-action color="accent" matTooltip="Export" [matMenuTriggerFor]="graphExportMenu">
+		<mat-icon>file_download</mat-icon>
+	</button>
+
+	<div card-content>
+		<canvas #chartCanvas id="chart-canvas"></canvas>
+	</div>
+</app-card>
