@@ -1,6 +1,6 @@
 # ProjetIndustriel
 
-[![Build Status](https://travis-ci.org/M2GL-ProjetIndustriel/ProjetIndustriel.svg?branch=master)](https://travis-ci.org/rM2GL-ProjetIndustriel/ProjetIndustriel)
+[![Build Status](https://travis-ci.org/M2GL-ProjetIndustriel/ProjetIndustriel.svg?branch=master)](https://travis-ci.org/M2GL-ProjetIndustriel/ProjetIndustriel)
 
 [![Coverage Status](https://coveralls.io/repos/github/M2GL-ProjetIndustriel/ProjetIndustriel/badge.svg?branch=master)](https://coveralls.io/github/M2GL-ProjetIndustriel/ProjetIndustriel?branch=master)
 

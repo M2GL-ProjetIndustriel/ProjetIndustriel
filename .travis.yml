@@ -7,10 +7,26 @@ cache:
   directories:
     - ./node_modules
 
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+
 install:
   - npm install
 
+before_install:
+  # needed for Travis.ci (https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-directly)
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
 script:
-  #- export CHROME_BIN=chronium-browser
-  #- xvfb-run -a npm run test -- --single-run --no-progress --browser=Chrome_travis_ci
-  - npm run-script build
+  # from http://gist.asciidoctor.org/?github-mraible%2Fng2-demo%2F%2FREADME.adoc#_travis_ci
+  - ng test --watch false
+  - ng e2e
+
+matrix:
+  fast_finish: true
