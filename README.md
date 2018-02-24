@@ -1,5 +1,12 @@
 # ProjetIndustriel
 
+[![Build Status](https://travis-ci.org/M2GL-ProjetIndustriel/ProjetIndustriel.svg?branch=master)](https://travis-ci.org/rM2GL-ProjetIndustriel/ProjetIndustriel)
+
+[![Coverage Status](https://coveralls.io/repos/github/M2GL-ProjetIndustriel/ProjetIndustriel/badge.svg?branch=master)](https://coveralls.io/github/M2GL-ProjetIndustriel/ProjetIndustriel?branch=master)
+
+[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/M2GL-ProjetIndustriel/ProjetIndustriel)
+
+
 `npm install` before doing anything
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
