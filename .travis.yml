@@ -11,6 +11,6 @@ install:
   - npm install
 
 script:
-  - export CHROME_BIN=chronium-browser
-  - xvfb-run -a npm run test -- --single-run --no-progress --browser=Chrome_travis_ci
+  #- export CHROME_BIN=chronium-browser
+  #- xvfb-run -a npm run test -- --single-run --no-progress --browser=Chrome_travis_ci
   - npm run-script build
