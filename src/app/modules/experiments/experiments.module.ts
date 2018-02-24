@@ -1,6 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import {
 	MatAutocompleteModule,
@@ -53,6 +54,8 @@ import { ExperimentService } from './experiment.service'
 @NgModule({
 	imports: [
 		CommonModule,
+		HttpClientModule,
+		HttpClientJsonpModule,
 		FlexLayoutModule,
 		MatAutocompleteModule,
 		MatButtonModule,

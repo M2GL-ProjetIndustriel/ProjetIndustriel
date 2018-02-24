@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {
 	MatAutocompleteModule,
 	MatButtonModule,
@@ -57,6 +58,7 @@ import { ErrorService } from './error.service'
 	imports: [
 		CommonModule,
 		RouterModule,
+		BrowserAnimationsModule,
 		MatAutocompleteModule,
 		MatButtonModule,
 		MatButtonToggleModule,
