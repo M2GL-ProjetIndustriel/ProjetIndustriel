@@ -5,9 +5,7 @@ language: node_js
 node_js:
   - "node"
 
-cache:
-  directories:
-    - ./node_modules
+cache: yarn
 
 addons:
   apt:
@@ -22,6 +20,7 @@ install:
 before_install:
   # needed for Travis.ci (https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-directly)
   - export CHROME_BIN=/usr/bin/google-chrome
+  # gui is needed to run tests
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
