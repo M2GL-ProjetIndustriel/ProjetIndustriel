@@ -47,6 +47,9 @@ import { ExperimentsListComponent } from './components/experimentsList.component
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
 
+/**
+ * Experiment module, everything you need to handle experiments.
+ */
 @NgModule({
 	imports: [
 		CommonModule,

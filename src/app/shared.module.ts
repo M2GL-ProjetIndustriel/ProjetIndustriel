@@ -45,6 +45,10 @@ import { CardComponent } from './shared/components/card.component'
 import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
 import { TestGraphComponent } from './shared/components/testGraph.component'
 
+/**
+ * Shared module, contains everything that is global/shared between the
+ * differents modules of the app.
+ */
 @NgModule({
 	imports: [
 		CommonModule,

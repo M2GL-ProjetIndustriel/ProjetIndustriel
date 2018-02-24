@@ -48,6 +48,9 @@ import { appRouting } from './app.routes'
 /* Declarations ############################################################# */
 import { AppComponent } from './app.component'
 
+/**
+ * Bootstraper module.
+ */
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -97,6 +100,11 @@ import { AppComponent } from './app.component'
 	bootstrap: [AppComponent]
 })
 export class AppModule {
+	/**
+	 * Constructor, does nothing other than logging the routes of the app,
+	 * for debug purpose only.
+	 * @param router This app router module.
+	 */
 	constructor(router: Router) {
 		console.log('Routes: ', JSON.stringify(router.config, undefined, 2))
 	}
