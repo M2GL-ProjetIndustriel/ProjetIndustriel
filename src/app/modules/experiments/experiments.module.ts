@@ -1,6 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import {
 	MatAutocompleteModule,
@@ -38,7 +39,7 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { SharedModule } from '../../shared.module'
+import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
 import { ExperimentsComponent } from './components/experiments.component'
@@ -53,6 +54,8 @@ import { ExperimentService } from './experiment.service'
 @NgModule({
 	imports: [
 		CommonModule,
+		HttpClientModule,
+		HttpClientJsonpModule,
 		FlexLayoutModule,
 		MatAutocompleteModule,
 		MatButtonModule,

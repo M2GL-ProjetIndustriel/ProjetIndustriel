@@ -18,22 +18,22 @@ export class SidenavComponent {
 	items = [
 		{
 			'label': 'Experimentations',
-			'icon': 'add',
+			'icon': 'list',
 			'routerLink': 'experiment'
 		},
 		{
 			'label': 'Instances',
-			'icon': 'add',
+			'icon': 'list',
 			'routerLink': 'instance'
 		},
 		{
 			'label': 'Résultats',
-			'icon': 'add',
+			'icon': 'list',
 			'routerLink': 'result'
 		},
 		{
 			'label': 'Solveurs',
-			'icon': 'add',
+			'icon': 'list',
 			'routerLink': 'solver'
 		},
 		{

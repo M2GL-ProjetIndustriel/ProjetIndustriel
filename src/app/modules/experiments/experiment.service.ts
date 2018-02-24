@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-import { Observable } from 'rxjs/Observable'
-
 import 'rxjs/add/operator/map'
-import 'rxjs/operator/catch'
 
 import { Experiment } from './experiment'
 
