@@ -39,11 +39,15 @@ import {
 } from '@angular/material'
 
 /* Declarations ############################################################# */
-import { SidenavComponent } from './shared/components/sidenav.component'
-import { HeaderComponent } from './shared/components/header.component'
-import { CardComponent } from './shared/components/card.component'
-import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
-import { TestGraphComponent } from './shared/components/testGraph.component'
+import { SidenavComponent } from './components/sidenav.component'
+import { HeaderComponent } from './components/header.component'
+import { CardComponent } from './components/card.component'
+import { UnluckyRouteComponent } from './components/unluckyRoute.component'
+import { TestGraphComponent } from './components/testGraph.component'
+import { ErrorDirective } from './error.directive'
+
+/* Providers ################################################################ */
+import { ErrorService } from './error.service'
 
 /**
  * Shared module, contains everything that is global/shared between the
@@ -92,14 +96,19 @@ import { TestGraphComponent } from './shared/components/testGraph.component'
 		HeaderComponent,
 		UnluckyRouteComponent,
 		CardComponent,
-		TestGraphComponent
+		TestGraphComponent,
+		ErrorDirective
 	],
 	exports: [
 		SidenavComponent,
 		HeaderComponent,
 		UnluckyRouteComponent,
 		CardComponent,
-		TestGraphComponent
+		TestGraphComponent,
+		ErrorDirective
+	],
+	providers: [
+		ErrorService
 	]
 })
 export class SharedModule { }

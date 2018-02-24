@@ -38,7 +38,7 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { SharedModule } from '../../shared.module'
+import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
 import { ExperimentsComponent } from './components/experiments.component'

@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 
 import { Experiment } from '../experiment'
 import { ExperimentService } from '../experiment.service'
+import { ErrorService } from '../../../shared/error.service'
 
 /**
  * Component displaying a table containing experiments inside a
@@ -46,7 +47,7 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	 * Constructor of the component, doesn't do shit.
 	 * @param experimentService Experiment service injection.
 	 */
-	constructor (private experimentService: ExperimentService) { }
+	constructor (private experimentService: ExperimentService, private errorService: ErrorService) { }
 
 	/**
 	 * Initialize everything the component need to be good to go.
@@ -100,6 +101,7 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 				},
 				err => {
 					this.isLoadingResults = false
+					this.errorService.newError(err)
 				}
 			)
 		}, 2000)

@@ -40,7 +40,7 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { SharedModule } from './shared.module'
+import { SharedModule } from './shared/shared.module'
 import { ExperimentsModule } from './modules/experiments/experiments.module'
 
 import { appRouting } from './app.routes'
