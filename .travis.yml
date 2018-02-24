@@ -1,3 +1,16 @@
+dist: trusty
 language: node_js
 node_js:
   - "node"
+
+cache:
+  directories:
+    - ./node_modules
+
+install:
+  - npm install
+
+scripts:
+  - export CHROME_BIN=chronium-browser
+  - xvfb-run -a npm run test -- --single-run --no-progress --browser=Chrome_travis_ci
+  - npm run-script build
