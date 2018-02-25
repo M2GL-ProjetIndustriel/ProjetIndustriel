@@ -23,7 +23,6 @@ mat-toolbar > button {
 
 #search-form > input:focus {
 	outline: none;
-	width: 300px;
 }
 
 #search-form > a {

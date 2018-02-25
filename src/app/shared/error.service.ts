@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core'
 
 import { ReplaySubject } from 'rxjs/ReplaySubject'
-import { Observable } from 'rxjs/Observable'
-
-import 'rxjs/add/operator/map'
-import 'rxjs/operator/catch'
 
 /**
  * Service handling errors inside the app.
@@ -12,7 +8,7 @@ import 'rxjs/operator/catch'
 @Injectable()
 export class ErrorService {
 	/**
-	 * Stream of error
+	 * Stream of errors.
 	 */
 	errors: ReplaySubject<string> = new ReplaySubject<string>()
 

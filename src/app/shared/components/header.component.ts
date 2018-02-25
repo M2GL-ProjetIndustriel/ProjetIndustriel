@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ElementRef, Renderer2, ViewChild, AfterViewInit } from '@angular/core'
+import { trigger, state, style, animate, transition } from '@angular/animations'
 
 /**
  * Header component, the header of the app composed of some buttons and a
@@ -7,9 +8,28 @@ import { Component, Input } from '@angular/core'
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.css']
+	styleUrls: ['./header.component.css'],
+	animations: [
+		trigger('searchInputAnimation', [
+			state('notFocused', style({
+				width: '*'
+			})),
+			state('focused', style({
+				width: '400px'
+			})),
+			transition('notFocused <=> focused', animate('150ms ease-in'))
+		]),
+		trigger('searchFormAnimation', [
+			state('notFocused', style({
+				border: '1px solid #F5F5F5'
+			})),
+			state('focused', style({
+				border: '1px solid #BBB'
+			}))
+		])
+	]
 })
-export class HeaderComponent {
+export class HeaderComponent implements AfterViewInit {
 	/**
 	 * Reference to the sidebar of the app {@link SidenavComponent}.
 	 */
@@ -18,6 +38,35 @@ export class HeaderComponent {
 	 * Name of the icon of the toggle button.
 	 */
 	sidenavToggleIcon: string = 'arrow_back'
+	/**
+	 * Reference to the search input html element.
+	 */
+	@ViewChild('searchInput') searchInput: ElementRef
+	/**
+	 * State of out search form. Should've only 2 value "focused" or
+	 * "notFocused".
+	 */
+	searchFormState: string = 'notFocused'
+
+	/**
+	 * Constructor, doesn't do shit.
+	 * @param renderer Renderer, used to set up native event listener on html
+	 * elements.
+	 */
+	constructor(public renderer: Renderer2) {
+	}
+
+	/**
+	 * Set up events listener after view init.
+	 */
+	ngAfterViewInit () {
+		this.renderer.listen(this.searchInput.nativeElement, 'focusin', (event) => {
+			this.searchFormState = 'focused'
+		})
+		this.renderer.listen(this.searchInput.nativeElement, 'focusout', (event) => {
+			this.searchFormState = 'notFocused'
+		})
+	}
 
 	/**
 	 * Toggle the display of the sidebar and change the icon to match the state
