@@ -1,6 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import {
@@ -44,6 +45,7 @@ import { SharedModule } from '../../shared/shared.module'
 /* Declarations ############################################################# */
 import { ExperimentsComponent } from './components/experiments.component'
 import { ExperimentsListComponent } from './components/experimentsList.component'
+import { ExperimentComponent } from './components/experiment.component'
 
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
@@ -54,6 +56,7 @@ import { ExperimentService } from './experiment.service'
 @NgModule({
 	imports: [
 		CommonModule,
+		RouterModule,
 		HttpClientModule,
 		HttpClientJsonpModule,
 		FlexLayoutModule,
@@ -94,7 +97,8 @@ import { ExperimentService } from './experiment.service'
 	],
 	declarations: [
 		ExperimentsComponent,
-		ExperimentsListComponent
+		ExperimentsListComponent,
+		ExperimentComponent
 	],
 	providers: [
 		ExperimentService

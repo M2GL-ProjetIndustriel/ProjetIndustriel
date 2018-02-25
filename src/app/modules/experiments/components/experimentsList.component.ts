@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 
-import { Experiment } from '../experiment'
+import { BasicExperiment } from '../experiment'
 import { ExperimentService } from '../experiment.service'
 import { ErrorService } from '../../../shared/error.service'
 
@@ -25,7 +25,7 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	/**
 	 * Data source of the table.
 	 */
-	dataSource: MatTableDataSource<Experiment> = new MatTableDataSource<Experiment>([])
+	dataSource: MatTableDataSource<BasicExperiment> = new MatTableDataSource<BasicExperiment>([])
 	/**
 	 * Boolean describing wether or not the component is loading results.
 	 */
@@ -47,7 +47,10 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	 * Constructor of the component, doesn't do shit.
 	 * @param experimentService Experiment service injection.
 	 */
-	constructor (private experimentService: ExperimentService, private errorService: ErrorService) { }
+	constructor (
+		private experimentService: ExperimentService,
+		private errorService: ErrorService
+	) {}
 
 	/**
 	 * Initialize everything the component need to be good to go.
@@ -69,8 +72,8 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	 * Unsubscribe of all subscriptions on destory to prevent memory leaks.
 	 */
 	ngOnDestroy() {
-		this.subscriptions.forEach((value) => {
-			value.unsubscribe()
+		this.subscriptions.forEach((subscription) => {
+			subscription.unsubscribe()
 		})
 	}
 

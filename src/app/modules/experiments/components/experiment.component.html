@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+	<button mat-raised-button color="primary" class="button-margin-bottom" routerLink="/experiment"><mat-icon>arrow_back</mat-icon>Retour</button>
+
+	<app-card header="experiment.name" fxFlex="100">
+		<button mat-raised-button card-action color="accent" (click)="refreshData()" matTooltip="Refresh">
+			<mat-icon>settings</mat-icon>
+		</button>
+
+		<div card-content></div>
+
+	</app-card>
+
+	<app-test-graph fxFlex="48"></app-test-graph>
+	<app-test-graph fxFlex="48"></app-test-graph>
+</div>

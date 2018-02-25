@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http'
 
 import 'rxjs/add/operator/map'
 
-import { Experiment } from './experiment'
+import { BasicExperiment, Experiment } from './experiment'
 
 @Injectable()
 export class ExperimentService {
-	constructor (private http: HttpClient) { }
+	constructor (private http: HttpClient) {}
 
 	static extractData (res: Response) {
-		const tmp: Experiment[] = []
+		const tmp: BasicExperiment[] = []
 		for (const i of Object.keys(res)) {
 			tmp.push(res[i])
 		}
@@ -19,6 +19,11 @@ export class ExperimentService {
 
 	getExperiments () {
 		return this.http.get('http://localhost:3000/api/experiment')
+			.map(ExperimentService.extractData)
+	}
+
+	getExperiment (experimentID: string) {
+		return this.http.get('http://localhost:3000/api/experiment/' + experimentID)
 			.map(ExperimentService.extractData)
 	}
 }
