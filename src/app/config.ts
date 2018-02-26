@@ -3,6 +3,6 @@
  * some fancy config shit.
  */
 export const appConfig = {
-	'apiUrl': 'localhost:3000/api',
+	'apiUrl': 'http://localhost:3000/api',
 	'animations': true
 }

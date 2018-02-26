@@ -1,5 +1,5 @@
 /* Imports ################################################################## */
-import { NgModule } from '@angular/core'
+import { NgModule, ErrorHandler } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 
@@ -10,6 +10,9 @@ import { appRouting } from './app.routes'
 
 /* Declarations ############################################################# */
 import { AppComponent } from './app.component'
+
+/* Providers ################################################################ */
+import { GlobalErrorHandler } from './error-handler'
 
 /**
  * Bootstraper module.
@@ -23,6 +26,12 @@ import { AppComponent } from './app.component'
 	],
 	declarations: [
 		AppComponent
+	],
+	providers: [
+		{
+			provide: ErrorHandler,
+			useClass: GlobalErrorHandler
+		}
 	],
 	bootstrap: [AppComponent]
 })

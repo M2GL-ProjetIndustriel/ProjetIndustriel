@@ -1,29 +1,31 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
-import 'rxjs/add/operator/map'
+import { catchError, retry } from 'rxjs/operators'
 
 import { BasicExperiment, Experiment } from './experiment'
 
+import { appConfig } from '../../config'
+
 @Injectable()
 export class ExperimentService {
+
 	constructor (private http: HttpClient) {}
 
-	static extractData (res: Response) {
-		const tmp: BasicExperiment[] = []
-		for (const i of Object.keys(res)) {
-			tmp.push(res[i])
-		}
-		return tmp
-	}
-
 	getExperiments () {
-		return this.http.get('http://localhost:3000/api/experiment')
-			.map(ExperimentService.extractData)
+		return this.http.get(appConfig.apiUrl + '/experiment')
+			.pipe(
+				retry(3),
+				catchError(err => { throw err })
+			)
 	}
 
 	getExperiment (experimentID: string) {
-		return this.http.get('http://localhost:3000/api/experiment/' + experimentID)
-			.map(ExperimentService.extractData)
+		return this.http.get(appConfig.apiUrl + '/experiment/' + experimentID)
+			.pipe(
+				retry(3),
+				catchError(err => { throw err })
+			)
 	}
+
 }

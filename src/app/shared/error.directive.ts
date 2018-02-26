@@ -11,19 +11,17 @@ import { ErrorService } from './error.service'
 })
 export class ErrorDirective {
 	/**
-	 * Constructor, subscribe to ErrorService subject and display a snackBar
-	 * when a new error arise. {@link ErrorService}
+	 * Constructor, subscribe to {@link ErrorService} subject and display
+	 * a snackBar when a new error arise.
 	 * @param errors   ErrorService injection.
 	 * @param snackBar Snackbar component/module (idk).
 	 */
 	constructor(private errors: ErrorService, public snackBar: MatSnackBar) {
 		this.errors.errors.subscribe(
-			(value) => {
+			value => {
 				this.snackBar.open(value, 'OK', { duration: 3000 })
 			},
-			(err) => {
-				this.errors.newError(err)
-			}
+			err => { throw err }
 		)
 	}
 }

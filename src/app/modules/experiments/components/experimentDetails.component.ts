@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map'
 
 import { Experiment } from '../experiment'
 import { ExperimentService } from '../experiment.service'
-import { ErrorService } from '../../../shared/error.service'
 
 @Component({
 	selector: 'experiment-details',
@@ -20,8 +19,7 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 
 	constructor (
 		private route: ActivatedRoute,
-		private experimentService: ExperimentService,
-		private errorService: ErrorService
+		private experimentService: ExperimentService
 	) {}
 
 	ngOnInit () {

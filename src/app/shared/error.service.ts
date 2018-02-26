@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
 
 import { ReplaySubject } from 'rxjs/ReplaySubject'
 
@@ -13,21 +14,18 @@ export class ErrorService {
 	errors: ReplaySubject<string> = new ReplaySubject<string>()
 
 	/**
-	 * Number of error received.
+	 * Error handler, basically display a message to the user, the message
+	 * depends of the type of error and should not be too specific.
+	 * @param  error An error.
 	 */
-	nbErrors: number = 0
-
-	/**
-	 *  Function adding a new error to the subject and increment the total
-	 *  count, call the callback function if present.
-	 * @param  err      The new error to add.
-	 * @param  callback Callback function.
-	 */
-	newError(err, callback?: Function) {
-		this.nbErrors += 1
-		this.errors.next(err.message)
-
-		if (callback)
-			callback()
+	handleError (error: any) {
+		if (error instanceof HttpErrorResponse)
+			this.errors.next('Le backend a chier dans la colle, veuillez réessayer. ¯\\_ツ_/¯ CODE: ' + (error as HttpErrorResponse).status)
+		else if (error instanceof TypeError)
+			this.errors.next('Erreur de typage ¯\\_ツ_/¯')
+		else if (error instanceof Error)
+			this.errors.next('Erreur: ' + error.message)
+		else
+			this.errors.next('Une erreu chelou est survenu ¯\\_ツ_/¯')
 	}
 }
