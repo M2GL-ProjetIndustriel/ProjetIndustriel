@@ -1,5 +1,7 @@
 import { Component } from '@angular/core'
 
+import { appConfig } from './config'
+
 /**
  * Bootstraper component.
  */
@@ -8,4 +10,9 @@ import { Component } from '@angular/core'
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
-export class AppComponent { }
+export class AppComponent {
+	/**
+	 * Reference to appConfig, see {@link appConfig}
+	 */
+	config: any = appConfig
+}

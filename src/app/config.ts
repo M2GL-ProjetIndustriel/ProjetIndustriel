@@ -1,0 +1,8 @@
+/**
+ * Lame ass config file. Application global config, couldn't be bothered to do
+ * some fancy config shit.
+ */
+export const appConfig = {
+	'apiUrl': 'localhost:3000/api',
+	'animations': true
+}
