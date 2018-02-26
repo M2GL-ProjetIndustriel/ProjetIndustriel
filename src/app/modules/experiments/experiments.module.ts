@@ -43,9 +43,9 @@ import {
 import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
-import { ExperimentsComponent } from './components/experiments.component'
+import { ExperimentsOverviewComponent } from './components/experimentsOverview.component'
 import { ExperimentsListComponent } from './components/experimentsList.component'
-import { ExperimentComponent } from './components/experiment.component'
+import { ExperimentDetailsComponent } from './components/experimentDetails.component'
 
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
@@ -96,9 +96,9 @@ import { ExperimentService } from './experiment.service'
 		SharedModule
 	],
 	declarations: [
-		ExperimentsComponent,
+		ExperimentsOverviewComponent,
 		ExperimentsListComponent,
-		ExperimentComponent
+		ExperimentDetailsComponent
 	],
 	providers: [
 		ExperimentService

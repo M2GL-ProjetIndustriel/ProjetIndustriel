@@ -1,16 +1,16 @@
 import { ModuleWithProviders } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { ExperimentsComponent } from './components/experiments.component'
-import { ExperimentComponent } from './components/experiment.component'
+import { ExperimentsOverviewComponent } from './components/experimentsOverview.component'
+import { ExperimentDetailsComponent } from './components/experimentDetails.component'
 
 export const experimentsRoutes: Routes = [
 	{
 		path: 'experiment',
-		component: ExperimentsComponent
+		component: ExperimentsOverviewComponent
 	},
 	{
 		path: 'experiment/:experimentID',
-		component: ExperimentComponent
+		component: ExperimentDetailsComponent
 	}
 ]

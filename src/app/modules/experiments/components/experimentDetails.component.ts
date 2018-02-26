@@ -8,11 +8,11 @@ import { ExperimentService } from '../experiment.service'
 import { ErrorService } from '../../../shared/error.service'
 
 @Component({
-	selector: 'experiment',
-	templateUrl: './experiment.component.html',
-	styleUrls: ['./experiment.component.css']
+	selector: 'experiment-details',
+	templateUrl: './experimentDetails.component.html',
+	styleUrls: ['./experimentDetails.component.css']
 })
-export class ExperimentComponent implements OnInit, OnDestroy {
+export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 
 	experiment: Experiment
 
