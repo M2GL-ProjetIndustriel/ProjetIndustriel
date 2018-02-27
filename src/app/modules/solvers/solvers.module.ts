@@ -1,6 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -44,6 +45,7 @@ import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
 import { SolversOverviewComponent } from './components/solversOverview.component'
+import { SolverFormComponent } from './components/solverForm.component'
 
 /* Providers ################################################################ */
 
@@ -53,6 +55,7 @@ import { SolversOverviewComponent } from './components/solversOverview.component
 @NgModule({
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		RouterModule,
 		HttpClientModule,
 		HttpClientJsonpModule,
@@ -93,7 +96,8 @@ import { SolversOverviewComponent } from './components/solversOverview.component
 		SharedModule
 	],
 	declarations: [
-		SolversOverviewComponent
+		SolversOverviewComponent,
+		SolverFormComponent
 	],
 	providers: [
 	]

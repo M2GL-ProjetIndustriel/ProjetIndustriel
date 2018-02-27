@@ -1,0 +1,23 @@
+<app-card header="Ajouter un solveur">
+	<div card-content>
+		<form [formGroup]="solverForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+			<mat-form-field fxFlex="100">
+				<input matInput placeholder="Nom" fromControlName="name">
+				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			</mat-form-field>
+			<mat-form-field fxFlex="100">
+				<input matInput placeholder="Version" fromControlName="version">
+				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			</mat-form-field>
+			<mat-form-field fxFlex="100">
+				<input matInput placeholder="Chemin des sources" fromControlName="sourcePath">
+				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			</mat-form-field>
+			<mat-form-field fxFlex="100">
+				<input matInput placeholder="Chemin de l'éxécutable" fromControlName="executablePath">
+				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			</mat-form-field>
+			<button type="submit" mat-raised-button color="accent">Sauvegarder</button>
+		</form>
+	</div>
+</app-card>
