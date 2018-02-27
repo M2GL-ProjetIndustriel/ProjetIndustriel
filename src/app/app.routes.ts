@@ -2,6 +2,8 @@ import { ModuleWithProviders } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
 import { experimentsRoutes } from './modules/experiments/experiments.routes'
+import { instancesRoutes } from './modules/instances/instances.routes'
+import { solversRoutes } from './modules/solvers/solvers.routes'
 
 import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
 
@@ -10,6 +12,8 @@ import { UnluckyRouteComponent } from './shared/components/unluckyRoute.componen
  */
 export const appRoutes: Routes = [
 	...experimentsRoutes,
+	...instancesRoutes,
+	...solversRoutes,
 	{
 		path: '**',
 		component: UnluckyRouteComponent

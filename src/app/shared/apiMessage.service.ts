@@ -14,7 +14,6 @@ export class ApiMessageService {
 	 * @return         Return the data of the message or throw an error.
 	 */
 	handleMessage(message: any) {
-		console.log(message)
 		if (message.error)
 			throw new Error(message.error.message)
 		if (!message.data)

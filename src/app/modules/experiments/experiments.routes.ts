@@ -1,9 +1,11 @@
-import { ModuleWithProviders } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
+import { Routes } from '@angular/router'
 
 import { ExperimentsOverviewComponent } from './components/experimentsOverview.component'
 import { ExperimentDetailsComponent } from './components/experimentDetails.component'
 
+/**
+ * Routes of the experiment module.
+ */
 export const experimentsRoutes: Routes = [
 	{
 		path: 'experiment',

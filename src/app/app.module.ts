@@ -5,6 +5,8 @@ import { Router } from '@angular/router'
 
 import { SharedModule } from './shared/shared.module'
 import { ExperimentsModule } from './modules/experiments/experiments.module'
+import { InstancesModule } from './modules/instances/instances.module'
+import { SolversModule } from './modules/solvers/solvers.module'
 
 import { appRouting } from './app.routes'
 
@@ -20,8 +22,10 @@ import { GlobalErrorHandler } from './error-handler'
 @NgModule({
 	imports: [
 		BrowserModule,
-		ExperimentsModule,
 		SharedModule,
+		ExperimentsModule,
+		InstancesModule,
+		SolversModule,
 		appRouting
 	],
 	declarations: [
