@@ -1,8 +1,4 @@
 <app-card header="Expérimentations">
-	<button mat-raised-button card-action color="accent" (click)="refreshData()" matTooltip="Refresh">
-		<mat-icon>refresh</mat-icon>
-	</button>
-
 	<div card-content>
 		<div class="table-container">
 			<div class="loading-shade" *ngIf="isLoadingResults">
@@ -34,7 +30,7 @@
 				</mat-row>
 			</mat-table>
 
-			<mat-paginator [pageSizeOptions]="[10, 250, 500, 1000]"></mat-paginator>
+			<mat-paginator [length]="resultsLength" [pageSizeOptions]="[100, 250, 500, 1000]"></mat-paginator>
 		</div>
 	</div>
 </app-card>

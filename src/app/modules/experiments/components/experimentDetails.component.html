@@ -1,13 +1,24 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+
 	<button mat-raised-button color="primary" class="button-margin-bottom" routerLink="/experiment"><mat-icon>arrow_back</mat-icon>Retour</button>
 
-	<app-card header="experiment.name" fxFlex="100">
-		<button mat-raised-button card-action color="accent" (click)="refreshData()" matTooltip="Refresh">
+	<app-card *ngIf="experiment" header="{{experiment.experimentName}}" fxFlex="100">
+		<mat-menu #experimentActionMenu="matMenu">
+			<button mat-menu-item><mat-icon>edit</mat-icon>Modifier</button>
+			<button mat-menu-item><mat-icon>delete</mat-icon>Supprimer</button>
+		</mat-menu>
+
+		<button mat-raised-button card-action color="accent" matTooltip="Options" [matMenuTriggerFor]="experimentActionMenu">
 			<mat-icon>settings</mat-icon>
 		</button>
 
-		<div card-content></div>
-
+		<div card-content>
+			<p><strong>ID</strong> {{experiment._id}}</p>
+			<p><strong>Name</strong> {{experiment.experimentName}}</p>
+			<p><strong>Date</strong> {{experiment.experimentDate | date: 'dd MMMM yy | h:mm:ss z'}}</p>
+			<p><strong>Version</strong> {{experiment.__v}}</p>
+			<p><strong>Results</strong> {{experiment.experimentResult}}</p>
+		</div>
 	</app-card>
 
 	<app-test-graph fxFlex="48"></app-test-graph>

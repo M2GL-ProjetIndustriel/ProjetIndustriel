@@ -14,7 +14,6 @@ body {
 	flex: 1 1 auto;
 }
 
-
 /* Loading screen bullshit ################################################## */
 #app-bootstrap-loader {
 	position: fixed;

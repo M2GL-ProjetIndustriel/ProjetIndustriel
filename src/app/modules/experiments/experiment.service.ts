@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 
-import { catchError, retry } from 'rxjs/operators'
+import { catchError, retry, map } from 'rxjs/operators'
 
 import { BasicExperiment, Experiment } from './experiment'
 import { ApiMessageService } from '../../shared/apiMessage.service'
@@ -33,23 +33,24 @@ export class ExperimentService {
 	 * page size as parameters, if none of them are present the request
 	 * should return evry single experiments otherwise should return the
 	 * experiments of the corresponding page.
-	 * @param  page     Number of the page requested.
-	 * @param  pageSize Size of a page.
-	 * @return 			Return an observable to subscribe to.
+	 * @param  pageIndex Number of the page requested.
+	 * @param  pageSize  Size of a page.
+	 * @param  sort      Sorting preference of the request.
+	 * @return 			 Return an observable to subscribe to.
 	 */
-	getExperiments (page?: number, pageSize?: number, sort?: string) {
-		console.log('?page='+page+'&pageSize='+pageSize+'&sort='+sort)
+	getExperiments (pageIndex?: number, pageSize?: number, sort?: string) {
+		let params = new HttpParams()
+		params = params.append('pageIndex', (pageIndex) ? pageIndex.toString() : '')
+		params = params.append('pageSize', (pageSize) ? pageSize.toString() : '')
+		params = params.append('sort', (sort) ? sort : '')
+
 		return this.http.get(appConfig.apiUrl + '/experiment', {
-			params: {
-				page: (page) ? page.toString() : '',
-				pageSize: (pageSize) ? pageSize.toString() : '',
-				sort: (sort) ? sort : ''
-			}
+			params: params
 		}).pipe(
 				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
 				catchError(err => { throw err })
 			)
-			.map(this.apiMessageService.handleMessage)
 	}
 
 	/**
@@ -62,8 +63,8 @@ export class ExperimentService {
 		return this.http.get(appConfig.apiUrl + '/experiment/' + experimentID)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
 				catchError(err => { throw err })
 			)
-			.map(this.apiMessageService.handleMessage)
 	}
 }

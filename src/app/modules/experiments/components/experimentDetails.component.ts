@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, ParamMap } from '@angular/router'
 
-import 'rxjs/add/operator/map'
-
 import { Experiment } from '../experiment'
 import { ExperimentService } from '../experiment.service'
 
@@ -23,14 +21,17 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit () {
-		this.route.params.subscribe(
+		this.subscriptions.push(this.route.params.subscribe(
 			params => this.experimentService.getExperiment(params['experimentID']).subscribe(
-				data => console.log('data'),
-				err => console.log('err')
+				data => this.experiment = data,
+				err => { throw err }
 			)
-		)
+		))
 	}
 
+	/**
+	 * Unsubscribe of all subscriptions on destory to prevent memory leaks.
+	 */
 	ngOnDestroy () {
 		this.subscriptions.forEach((subscription) => {
 			subscription.unsubscribe()

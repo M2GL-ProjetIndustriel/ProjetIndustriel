@@ -69,9 +69,25 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 		this.dataSource.paginator = this.paginator
 		this.dataSource.sort = this.sort
 
-		//Copy pasta of angular material exemple, go to https://material.angular.io/components/table/examples
-		//for actual explanations.
-		merge(this.sort.sortChange, this.paginator.page)
+		this.setUpTableEvent()
+	}
+
+	/**
+	 * Unsubscribe of all subscriptions on destory to prevent memory leaks.
+	 */
+	ngOnDestroy() {
+		this.subscriptions.forEach((subscription) => {
+			subscription.unsubscribe()
+		})
+	}
+
+	/**
+	 * Set up the table event, subscribe to the sort change and page observable,
+	 * so whenever the sort or the page change data is requested to the
+	 * backend to update the table.
+	 */
+	setUpTableEvent () {
+		this.subscriptions.push(merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
 				startWith({}),
 				switchMap(() => {
@@ -87,48 +103,7 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 				})
 			).subscribe(
 				data => this.dataSource.data = data,
-				err => { throw err })
-	}
-
-	/**
-	 * Unsubscribe of all subscriptions on destory to prevent memory leaks.
-	 */
-	ngOnDestroy() {
-		this.subscriptions.forEach((subscription) => {
-			subscription.unsubscribe()
-		})
-	}
-
-	/**
-	 * Function setting the value of the table filter.
-	 * The value is trimed and set to lower case before applying the filter.
-	 * @param filterValue Value  of the filter.
-	 */
-	applyFilter(filterValue: string) {
-		filterValue = filterValue.trim()
-		filterValue = filterValue.toLowerCase()
-		this.dataSource.filter = filterValue
-	}
-
-	/**
-	 * Function refreshing the data of the table. Request data from the
-	 * backend asynchronously. Need to subscribe each time because angular
-	 * automatically unsubscribe from the http requests. Still add the
-	 * subscription to the subcriptions array in case the component is
-	 * destroyed during the request, in which case we can cancel the request.
-	 */
-	refreshData() {
-		this.isLoadingResults = true
-
-		this.subscriptions.push(this.experimentService.getExperiments().subscribe(
-			data =>	{
-				this.dataSource.data = data as BasicExperiment[]
-				this.isLoadingResults = false
-			},
-			err => {
-				this.isLoadingResults = false
-				throw err
-			}
-		))
+				err => { throw err }
+			))
 	}
 }
