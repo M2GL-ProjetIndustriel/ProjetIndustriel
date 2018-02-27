@@ -4,5 +4,6 @@
  */
 export const appConfig = {
 	'apiUrl': 'http://localhost:3000/api',
+	'httpFailureRetryNumber': 3,
 	'animations': true
 }

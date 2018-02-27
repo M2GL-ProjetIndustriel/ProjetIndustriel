@@ -109,7 +109,7 @@ import { ErrorService } from './error.service'
 		TestGraphComponent,
 		ErrorDirective
 	],
-	providers [
+	providers: [
 		ErrorService
 	]
 })

@@ -20,11 +20,11 @@ export class ErrorService {
 	 */
 	handleError (error: any) {
 		if (error instanceof HttpErrorResponse)
-			this.errors.next('Le backend a chier dans la colle, veuillez réessayer. ¯\\_ツ_/¯ CODE: ' + (error as HttpErrorResponse).status)
+			this.errors.next('Le backend a chier dans la colle ¯\\_ツ_/¯, veuillez réessayer. CODE: ' + (error as HttpErrorResponse).status)
 		else if (error instanceof TypeError)
 			this.errors.next('Erreur de typage ¯\\_ツ_/¯')
 		else if (error instanceof Error)
-			this.errors.next('Erreur: ' + error.message)
+			this.errors.next('Erreur: ' + (error.message.length > 50) ?  error.message.slice(0, 50) + '...' : error.message)
 		else
 			this.errors.next('Une erreu chelou est survenu ¯\\_ツ_/¯')
 	}
