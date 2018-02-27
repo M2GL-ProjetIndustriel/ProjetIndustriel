@@ -49,6 +49,7 @@ import { ErrorDirective } from './error.directive'
 
 /* Providers ################################################################ */
 import { ErrorService } from './error.service'
+import { ApiMessageService } from './apiMessage.service'
 
 /**
  * Shared module, contains everything that is global/shared between the
@@ -110,7 +111,8 @@ import { ErrorService } from './error.service'
 		ErrorDirective
 	],
 	providers: [
-		ErrorService
+		ErrorService,
+		ApiMessageService
 	]
 })
 export class SharedModule { }

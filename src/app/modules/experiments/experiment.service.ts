@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { catchError, retry } from 'rxjs/operators'
 
 import { BasicExperiment, Experiment } from './experiment'
-
+import { ApiMessageService } from '../../shared/apiMessage.service'
 import { appConfig } from '../../config'
 
 /**
@@ -23,7 +23,10 @@ export class ExperimentService {
 	 * Constructor, doesn't do shit.
 	 * @param http HttpClient injection.
 	 */
-	constructor (private http: HttpClient) {}
+	constructor (
+		private http: HttpClient,
+		private apiMessageService: ApiMessageService
+	) {}
 
 	/**
 	 * Function requesting a list of experiments. Take apge number a and a
@@ -40,11 +43,11 @@ export class ExperimentService {
 				page: (page) ? page.toString() : '',
 				pageSize: (pageSize) ? pageSize.toString() : ''
 			}
-		})
-			.pipe(
+		}).pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				catchError(err => { throw err })
 			)
+			.map(this.apiMessageService.handleMessage)
 	}
 
 	/**
@@ -59,6 +62,6 @@ export class ExperimentService {
 				retry(appConfig.httpFailureRetryNumber),
 				catchError(err => { throw err })
 			)
+			.map(this.apiMessageService.handleMessage)
 	}
-
 }
