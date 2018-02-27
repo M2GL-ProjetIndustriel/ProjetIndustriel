@@ -37,11 +37,13 @@ export class ExperimentService {
 	 * @param  pageSize Size of a page.
 	 * @return 			Return an observable to subscribe to.
 	 */
-	getExperiments (page?: number, pageSize?: number) {
+	getExperiments (page?: number, pageSize?: number, sort?: string) {
+		console.log('?page='+page+'&pageSize='+pageSize+'&sort='+sort)
 		return this.http.get(appConfig.apiUrl + '/experiment', {
 			params: {
 				page: (page) ? page.toString() : '',
-				pageSize: (pageSize) ? pageSize.toString() : ''
+				pageSize: (pageSize) ? pageSize.toString() : '',
+				sort: (sort) ? sort : ''
 			}
 		}).pipe(
 				retry(appConfig.httpFailureRetryNumber),

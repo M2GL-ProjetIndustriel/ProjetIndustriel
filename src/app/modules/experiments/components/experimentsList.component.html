@@ -4,12 +4,6 @@
 	</button>
 
 	<div card-content>
-		<div class="experiment-list-header">
-			<mat-form-field>
-				<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-			</mat-form-field>
-		</div>
-
 		<div class="table-container">
 			<div class="loading-shade" *ngIf="isLoadingResults">
 				<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -36,11 +30,11 @@
 				</ng-container>
 
 				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-				<mat-row *matRowDef="let experiment; columns: displayedColumns;" (click)="onRowClicked()" class="table-row">
+				<mat-row *matRowDef="let experiment; columns: displayedColumns;" [routerLink]="['/experiment', experiment._id]" class="table-row">
 				</mat-row>
 			</mat-table>
 
-			<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+			<mat-paginator [pageSizeOptions]="[10, 250, 500, 1000]"></mat-paginator>
 		</div>
 	</div>
 </app-card>

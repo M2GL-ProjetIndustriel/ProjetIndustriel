@@ -1,6 +1,11 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core'
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 
+import { merge } from 'rxjs/observable/merge'
+import { map } from 'rxjs/operators/map'
+import { startWith } from 'rxjs/operators/startWith'
+import { switchMap } from 'rxjs/operators/switchMap'
+
 import { BasicExperiment } from '../experiment'
 import { ExperimentService } from '../experiment.service'
 
@@ -29,6 +34,10 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	 * Boolean describing wether or not the component is loading results.
 	 */
 	isLoadingResults: boolean = true
+	/**
+	 * Total length of the response, the total number of experiments.
+	 */
+	resultsLength: number = 0
 	/**
 	 * All the subcriptions of the component.
 	 */
@@ -60,8 +69,25 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 		this.dataSource.paginator = this.paginator
 		this.dataSource.sort = this.sort
 
-		//Populate the table by requesting data from the backend on init.
-		this.refreshData()
+		//Copy pasta of angular material exemple, go to https://material.angular.io/components/table/examples
+		//for actual explanations.
+		merge(this.sort.sortChange, this.paginator.page)
+			.pipe(
+				startWith({}),
+				switchMap(() => {
+					this.isLoadingResults = true
+					return this.experimentService.getExperiments(
+						this.paginator.pageIndex, this.paginator.pageSize, this.sort.active)
+				}),
+				map(data => {
+					this.isLoadingResults = false
+					this.resultsLength = data.totalLength
+
+					return data.experiments
+				})
+			).subscribe(
+				data => this.dataSource.data = data,
+				err => { throw err })
 	}
 
 	/**
@@ -87,40 +113,22 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	/**
 	 * Function refreshing the data of the table. Request data from the
 	 * backend asynchronously. Need to subscribe each time because angular
-	 * automatically unsubscribe from the http requests.
+	 * automatically unsubscribe from the http requests. Still add the
+	 * subscription to the subcriptions array in case the component is
+	 * destroyed during the request, in which case we can cancel the request.
 	 */
 	refreshData() {
 		this.isLoadingResults = true
 
-		setTimeout(() => {
-			this.experimentService.getExperiments().subscribe(
-				data =>	{
-					this.dataSource.data = data as BasicExperiment[]
-					this.isLoadingResults = false
-				},
-				err => {
-					this.isLoadingResults = false
-					throw err
-				}
-			)
-		}, 2000)
-
-		/*this.experimentService.getExperiments().subscribe(
+		this.subscriptions.push(this.experimentService.getExperiments().subscribe(
 			data =>	{
-				this.dataSource.data = data
+				this.dataSource.data = data as BasicExperiment[]
 				this.isLoadingResults = false
 			},
 			err => {
-				console.log(err)
 				this.isLoadingResults = false
+				throw err
 			}
-		)*/
-	}
-
-	/**
-	 * Function handling the click event of the rows of the table.
-	 */
-	onRowClicked() {
-		console.log(1)
+		))
 	}
 }

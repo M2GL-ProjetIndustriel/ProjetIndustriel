@@ -26,6 +26,6 @@ export class ErrorService {
 		else if (error instanceof Error)
 			this.errors.next('Erreur: ' + (error.message.length > 50) ?  error.message.slice(0, 50) + '...' : error.message)
 		else
-			this.errors.next('Une erreu chelou est survenu ¯\\_ツ_/¯')
+			this.errors.next('Une erreur chelou est survenu ¯\\_ツ_/¯')
 	}
 }
