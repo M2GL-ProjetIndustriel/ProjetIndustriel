@@ -20,10 +20,10 @@ export class SolverFormComponent {
 
 	createForm () {
 		this.solverForm = this.formBuilder.group({
-			name: [(this.solver) ? this.solver.name : '', Validators.required],
-			version: [(this.solver) ? this.solver.version : '', Validators.required],
-			sourcePath: [(this.solver) ? this.solver.sourcePath : '', Validators.required],
-			executablePath: [(this.solver) ? this.solver.executablePath : '', Validators.required]
+			name: [(this.solver) ? this.solver.name : '', [Validators.required, Validators.maxLength(100)]],
+			version: [(this.solver) ? this.solver.version : '', Validators.maxLength(100)],
+			sourcePath: [(this.solver) ? this.solver.sourcePath : '', Validators.maxLength(200)],
+			executablePath: [(this.solver) ? this.solver.executablePath : '', Validators.maxLength(200)]
 		})
 	}
 
@@ -32,6 +32,6 @@ export class SolverFormComponent {
 
 		console.log(formModel)
 
-		
+
 	}
 }

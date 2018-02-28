@@ -1,23 +1,28 @@
 <app-card header="Ajouter un solveur">
 	<div card-content>
 		<form [formGroup]="solverForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
-			<mat-form-field fxFlex="100">
-				<input matInput placeholder="Nom" fromControlName="name">
-				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			<mat-form-field fxFlex="100" hintLabel="100 charatères max">
+				<input matInput #name placeholder="Nom*" formControlName="name">
+				<mat-error *ngIf="solverForm.get('name').invalid && solverForm.get('name').dirty">Nom invalide</mat-error>
+				<mat-hint align="end">{{solverForm.get('name').value?.length || 0}}/100</mat-hint>
 			</mat-form-field>
-			<mat-form-field fxFlex="100">
-				<input matInput placeholder="Version" fromControlName="version">
-				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			<mat-form-field fxFlex="100" hintLabel="100 charatères max">
+				<input matInput placeholder="Version" formControlName="version">
+				<mat-error *ngIf="solverForm.get('version').invalid && solverForm.get('version').dirty">Version invalide</mat-error>
+				<mat-hint align="end">{{solverForm.get('version').value?.length || 0}}/100</mat-hint>
 			</mat-form-field>
-			<mat-form-field fxFlex="100">
-				<input matInput placeholder="Chemin des sources" fromControlName="sourcePath">
-				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			<mat-form-field fxFlex="100" hintLabel="200 charatères max">
+				<input matInput placeholder="Chemin des sources" formControlName="sourcePath">
+				<mat-error *ngIf="solverForm.get('sourcePath').invalid && solverForm.get('sourcePath').dirty">Chemin invalide</mat-error>
+				<mat-hint align="end">{{solverForm.get('sourcePath').value?.length || 0}}/200</mat-hint>
 			</mat-form-field>
-			<mat-form-field fxFlex="100">
-				<input matInput placeholder="Chemin de l'éxécutable" fromControlName="executablePath">
-				<mat-error *ngIf="solverForm.status == 'INVALID'">error</mat-error>
+			<mat-form-field fxFlex="100" hintLabel="200 charatères max">
+				<input matInput placeholder="Chemin de l'éxécutable" formControlName="executablePath">
+				<mat-error *ngIf="solverForm.get('executablePath').invalid && solverForm.get('executablePath').dirty">Chemin invalide</mat-error>
+				<mat-hint align="end">{{solverForm.get('executablePath').value?.length || 0}}/200</mat-hint>
 			</mat-form-field>
-			<button type="submit" mat-raised-button color="accent">Sauvegarder</button>
+			<span fxFlex="20"><button type="submit" mat-raised-button color="accent">Sauvegarder</button></span>
+			<span fxFlex="80">* : Champ(s) obligatoire</span>
 		</form>
 	</div>
 </app-card>
