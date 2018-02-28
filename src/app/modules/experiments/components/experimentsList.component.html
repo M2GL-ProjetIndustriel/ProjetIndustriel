@@ -26,8 +26,7 @@
 				</ng-container>
 
 				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-				<mat-row *matRowDef="let experiment; columns: displayedColumns;" [routerLink]="['/experiment', experiment._id]" class="table-row">
-				</mat-row>
+				<mat-row *matRowDef="let experiment; columns: displayedColumns;" [routerLink]="['/experiment', experiment._id]" class="table-row"></mat-row>
 			</mat-table>
 
 			<mat-paginator [length]="resultsLength" [pageSizeOptions]="[100, 250, 500, 1000]"></mat-paginator>

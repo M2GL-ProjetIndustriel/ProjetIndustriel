@@ -39,12 +39,15 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
+import { FileUploadModule } from 'ng2-file-upload'
+
 /* Declarations ############################################################# */
 import { SidenavComponent } from './components/sidenav.component'
 import { HeaderComponent } from './components/header.component'
 import { CardComponent } from './components/card.component'
 import { UnluckyRouteComponent } from './components/unluckyRoute.component'
 import { TestGraphComponent } from './components/testGraph.component'
+import { FileDropZoneComponent } from './components/fileDropZone.component'
 import { ErrorDirective } from './error.directive'
 
 /* Providers ################################################################ */
@@ -92,7 +95,8 @@ import { ApiMessageService } from './apiMessage.service'
 		MatTableModule,
 		MatTabsModule,
 		MatToolbarModule,
-		MatTooltipModule
+		MatTooltipModule,
+		FileUploadModule
 	],
 	declarations: [
 		SidenavComponent,
@@ -100,6 +104,7 @@ import { ApiMessageService } from './apiMessage.service'
 		UnluckyRouteComponent,
 		CardComponent,
 		TestGraphComponent,
+		FileDropZoneComponent,
 		ErrorDirective
 	],
 	exports: [
@@ -108,6 +113,7 @@ import { ApiMessageService } from './apiMessage.service'
 		UnluckyRouteComponent,
 		CardComponent,
 		TestGraphComponent,
+		FileDropZoneComponent,
 		ErrorDirective
 	],
 	providers: [

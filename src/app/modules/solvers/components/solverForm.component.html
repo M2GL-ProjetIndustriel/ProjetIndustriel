@@ -1,6 +1,7 @@
 <app-card header="Ajouter un solveur">
 	<div card-content>
 		<form [formGroup]="solverForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+			<!-- Data fields -->
 			<mat-form-field fxFlex="100" hintLabel="100 charatères max">
 				<input matInput #name placeholder="Nom*" formControlName="name">
 				<mat-error *ngIf="solverForm.get('name').invalid && solverForm.get('name').dirty">Nom invalide</mat-error>
@@ -21,6 +22,27 @@
 				<mat-error *ngIf="solverForm.get('executablePath').invalid && solverForm.get('executablePath').dirty">Chemin invalide</mat-error>
 				<mat-hint align="end">{{solverForm.get('executablePath').value?.length || 0}}/200</mat-hint>
 			</mat-form-field>
+
+			<!-- File Upload -->
+			<mat-accordion multi="true" fxFlex="100">
+				<!-- Sources files drop zone -->
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>Fichiers source</mat-panel-title>
+						<mat-panel-description>Ajouter une archive contenants les fichiers sources.</mat-panel-description>
+					</mat-expansion-panel-header>
+					<app-file-drop-zone></app-file-drop-zone>
+				</mat-expansion-panel>
+				<!-- Executable drop zone -->
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>Exécutable</mat-panel-title>
+						<mat-panel-description>Ajouter un éxécutable.</mat-panel-description>
+					</mat-expansion-panel-header>
+					<app-file-drop-zone></app-file-drop-zone>
+				</mat-expansion-panel>
+			</mat-accordion>
+
 			<span fxFlex="20"><button type="submit" mat-raised-button color="accent">Sauvegarder</button></span>
 			<span fxFlex="80">* : Champ(s) obligatoire</span>
 		</form>

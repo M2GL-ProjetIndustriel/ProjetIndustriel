@@ -28,10 +28,9 @@ export class SolverFormComponent {
 	}
 
 	onSubmit () {
-		const formModel = this.solverForm.value
-
-		console.log(formModel)
-
-
+		if (this.solverForm.dirty && this.solverForm.valid) {
+				const formModel = this.solverForm.value
+				console.log(formModel)
+		}
 	}
 }

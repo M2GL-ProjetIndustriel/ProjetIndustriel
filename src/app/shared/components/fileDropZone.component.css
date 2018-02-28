@@ -1,0 +1,25 @@
+.drop-zone-container {
+	margin: 16px;
+}
+
+.drop-zone {
+	height: 200px;
+	background-color: #F5F5F5;
+	border: 1px dotted #BBB;
+	border-radius: 2px;
+	color: #888;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+.file-over-event {
+	border: 5px dotted #0091EA;
+	border-radius: 2px;
+}
+
+mat-divider {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
