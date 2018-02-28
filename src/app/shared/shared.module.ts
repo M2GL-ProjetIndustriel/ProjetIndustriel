@@ -47,7 +47,7 @@ import { HeaderComponent } from './components/header.component'
 import { CardComponent } from './components/card.component'
 import { UnluckyRouteComponent } from './components/unluckyRoute.component'
 import { TestGraphComponent } from './components/testGraph.component'
-import { FileDropZoneComponent } from './components/fileDropZone.component'
+import { FileUploadComponent } from './components/fileUpload.component'
 import { ErrorDirective } from './error.directive'
 
 /* Providers ################################################################ */
@@ -104,7 +104,7 @@ import { ApiMessageService } from './apiMessage.service'
 		UnluckyRouteComponent,
 		CardComponent,
 		TestGraphComponent,
-		FileDropZoneComponent,
+		FileUploadComponent,
 		ErrorDirective
 	],
 	exports: [
@@ -113,7 +113,7 @@ import { ApiMessageService } from './apiMessage.service'
 		UnluckyRouteComponent,
 		CardComponent,
 		TestGraphComponent,
-		FileDropZoneComponent,
+		FileUploadComponent,
 		ErrorDirective
 	],
 	providers: [

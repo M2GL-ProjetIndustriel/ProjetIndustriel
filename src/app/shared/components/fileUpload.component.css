@@ -23,3 +23,27 @@ mat-divider {
 	margin-top: 16px;
 	margin-bottom: 16px;
 }
+
+.upload-table {
+	width: 100%;
+	text-align: left;
+	border: 0;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+.upload-table th, td {
+	border-bottom: 1px solid #E0E0E0;
+}
+
+.upload-table tbody > tr:hover {
+	background-color: #EEE;
+}
+
+.upload-table th {
+	color: #757575;
+	height: 32px;
+}
+
+.upload-table td {
+	color: #212121;
+}

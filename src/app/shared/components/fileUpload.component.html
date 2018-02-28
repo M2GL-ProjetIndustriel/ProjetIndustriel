@@ -1,0 +1,57 @@
+<div class="drop-zone-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+	<div fxFlex="100">
+		<h1>{{label}}</h1>
+	</div>
+	<div class="drop-zone" fxFlex="100"
+		ng2FileDrop
+		[ngClass]="{'file-over-event': isFileOverDropZone}"
+		(fileOver)="fileOverDropZone($event)"
+		[uploader]="fileUploader">
+		<h1>Drop file(s) here !</h1>
+	</div>
+	<div fxFlex="100">
+		<mat-divider></mat-divider>
+		<input type="file" ng2FileSelect [uploader]="fileUploader" multiple>
+		<mat-divider></mat-divider>
+		<h1>File d'upload</h1>
+		<p>Taille de la file: {{fileUploader?.queue?.length}}</p>
+
+		<table class="upload-table">
+			<thead>
+				<tr>
+					<th>Nom Fichier</th>
+					<th>Taille</th>
+					<th>Avancement</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of fileUploader.queue">
+					<td> {{item.file.name}} </td>
+					<td> {{item.file.size/1024/1024 | number:'.2'}}Mo </td>
+					<td> {{item.progress}} </td>
+					<td>
+						<span *ngIf="item.isSuccess">Succès</span>
+						<span *ngIf="item.isCancel">Annuler</span>
+						<span *ngIf="item.isError">Erreur</span>
+						<span *ngIf="!item.isSuccess && !item.isCancel && !item.isError">Aucun</span>
+					</td>
+					<td>
+						<button mat-icon-button color="warn" (click)="item.upload()"
+							[disabled]="item.isReady || item.isUploading || item.isSuccess" matTooltip="Upload">
+							<mat-icon>file_upload</mat-icon>
+						</button>
+						<button mat-icon-button color="warn" (click)="item.cancel()"
+							[disabled]="!item.isUploading" matTooltip="Annuler">
+							<mat-icon>cancel</mat-icon>
+						</button>
+						<button mat-icon-button color="warn" (click)="item.remove()" matTooltip="Supprimer">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

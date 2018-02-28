@@ -31,7 +31,7 @@
 						<mat-panel-title>Fichiers source</mat-panel-title>
 						<mat-panel-description>Ajouter une archive contenants les fichiers sources.</mat-panel-description>
 					</mat-expansion-panel-header>
-					<app-file-drop-zone></app-file-drop-zone>
+					<app-file-upload></app-file-upload>
 				</mat-expansion-panel>
 				<!-- Executable drop zone -->
 				<mat-expansion-panel>
@@ -39,11 +39,11 @@
 						<mat-panel-title>Exécutable</mat-panel-title>
 						<mat-panel-description>Ajouter un éxécutable.</mat-panel-description>
 					</mat-expansion-panel-header>
-					<app-file-drop-zone></app-file-drop-zone>
+					<app-file-upload></app-file-upload>
 				</mat-expansion-panel>
 			</mat-accordion>
 
-			<span fxFlex="20"><button type="submit" mat-raised-button color="accent">Sauvegarder</button></span>
+			<span fxFlex="20"><button type="submit" mat-raised-button color="warn">Sauvegarder</button></span>
 			<span fxFlex="80">* : Champ(s) obligatoire</span>
 		</form>
 	</div>
