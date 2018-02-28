@@ -18,8 +18,8 @@ export class ErrorDirective {
 	 */
 	constructor(private errors: ErrorService, public snackBar: MatSnackBar) {
 		this.errors.errors.subscribe(
-			value => {
-				this.snackBar.open(value, 'OK', { duration: 3000 })
+			data => {
+				this.snackBar.open(data, 'OK', { duration: 30000 })
 			},
 			err => { throw err }
 		)
