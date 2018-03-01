@@ -1,0 +1,24 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+
+	<button mat-raised-button color="primary" class="button-margin-bottom" routerLink="/solver"><mat-icon>arrow_back</mat-icon>Retour</button>
+
+	<app-card *ngIf="solver" header="{{solver.name}}" fxFlex="100">
+		<mat-menu #solverActionMenu="matMenu">
+			<button mat-menu-item><mat-icon>edit</mat-icon>Modifier</button>
+			<button mat-menu-item><mat-icon>delete</mat-icon>Supprimer</button>
+		</mat-menu>
+
+		<button mat-raised-button card-action color="accent" matTooltip="Options" [matMenuTriggerFor]="solverActionMenu">
+			<mat-icon>settings</mat-icon>
+		</button>
+
+		<div card-content>
+			<p><strong>Id</strong> {{solver.id}}</p>
+			<p><strong>Nom</strong> {{solver.name}}</p>
+			<p><strong>Version</strong> {{solver.version}}</p>
+			<p><strong>Date d'ajout</strong> {{solver.added | date: 'dd MMMM yy | h:mm:ss z'}}</p>
+			<p><strong>Version</strong> {{solver.source_path}}</p>
+			<p><strong>Results</strong> {{solver.executable_path}}</p>
+		</div>
+	</app-card>
+</div>

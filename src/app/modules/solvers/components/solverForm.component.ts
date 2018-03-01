@@ -22,8 +22,8 @@ export class SolverFormComponent {
 		this.solverForm = this.formBuilder.group({
 			name: [(this.solver) ? this.solver.name : '', [Validators.required, Validators.maxLength(100)]],
 			version: [(this.solver) ? this.solver.version : '', Validators.maxLength(100)],
-			sourcePath: [(this.solver) ? this.solver.sourcePath : '', Validators.maxLength(200)],
-			executablePath: [(this.solver) ? this.solver.executablePath : '', Validators.maxLength(200)]
+			source_path: [(this.solver) ? this.solver.source_path : '', Validators.maxLength(200)],
+			executable_path: [(this.solver) ? this.solver.executable_path : '', Validators.maxLength(200)]
 		})
 	}
 

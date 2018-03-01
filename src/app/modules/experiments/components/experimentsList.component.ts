@@ -103,7 +103,8 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 				switchMap(() => {
 					this.isLoadingResults = true
 					return this.experimentService.getExperiments(
-						this.paginator.pageIndex, this.paginator.pageSize, this.sort.active)
+						this.paginator.pageIndex, this.paginator.pageSize, this.sort.active,
+						(this.sort.direction === '') ? this.sort.start : this.sort.direction)
 				}),
 				map(data => {
 					this.isLoadingResults = false

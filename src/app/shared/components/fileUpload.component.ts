@@ -33,8 +33,8 @@ export class FileUploadComponent {
 		console.time('start')
 		let reader = new FileReader()
 		reader.onloadend = () => {
-			console.timeEnd('start')
 			file.md5Hash = Md5.hashAsciiStr(reader.result)
+			console.timeEnd('start')
 		}
 		reader.readAsBinaryString(file)
 	}

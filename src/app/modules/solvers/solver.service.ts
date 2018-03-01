@@ -36,13 +36,15 @@ export class SolverService {
 	 * @param  pageIndex Number of the page requested.
 	 * @param  pageSize  Size of a page.
 	 * @param  sort      Sorting preference of the request.
+	 * @param  order     Sorting order (asc or desc).
 	 * @return 			 Return an observable to subscribe to.
 	 */
-	getSolvers(pageIndex?: number, pageSize?: number, sort?: string) {
+	getSolvers(pageIndex?: number, pageSize?: number, sort?: string, order?: string) {
 		let params = new HttpParams()
 		params = params.append('pageIndex', (pageIndex) ? pageIndex.toString() : '')
 		params = params.append('pageSize', (pageSize) ? pageSize.toString() : '')
 		params = params.append('sort', (sort) ? sort : '')
+		params = params.append('order', (order) ? order : '')
 
 		return this.http.get(appConfig.apiUrl + '/solver', {
 			params: params

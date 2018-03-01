@@ -2,6 +2,7 @@ import { Routes } from '@angular/router'
 
 import { SolversOverviewComponent } from './components/solversOverview.component'
 import { SolverFormComponent } from './components/solverForm.component'
+import { SolverDetailsComponent } from './components/solverDetails.component'
 
 /**
  * Routes of the solvers module.
@@ -21,6 +22,6 @@ export const solversRoutes: Routes = [
 	},
 	{
 		path: 'solver/:solverID',
-		component: SolversOverviewComponent
+		component: SolverDetailsComponent
 	}
 ]

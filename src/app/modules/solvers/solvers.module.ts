@@ -47,6 +47,7 @@ import { SharedModule } from '../../shared/shared.module'
 import { SolversOverviewComponent } from './components/solversOverview.component'
 import { SolverFormComponent } from './components/solverForm.component'
 import { SolversListComponent } from './components/solversList.component'
+import { SolverDetailsComponent } from './components/solverDetails.component'
 
 /* Providers ################################################################ */
 import { SolverService } from './solver.service'
@@ -100,7 +101,8 @@ import { SolverService } from './solver.service'
 	declarations: [
 		SolversOverviewComponent,
 		SolverFormComponent,
-		SolversListComponent
+		SolversListComponent,
+		SolverDetailsComponent
 	],
 	providers: [
 		SolverService
