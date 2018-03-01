@@ -100,7 +100,6 @@ export class SolversListComponent implements AfterViewInit, OnDestroy {
 				startWith({}),
 				switchMap(() => {
 					this.isLoadingResults = true
-					console.log(this.sort)
 					return this.solverService.getSolvers(
 						this.paginator.pageIndex, this.paginator.pageSize, this.sort.active)
 				}),
