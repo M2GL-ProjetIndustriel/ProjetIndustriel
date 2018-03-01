@@ -33,6 +33,7 @@ mat-divider {
 }
 .upload-table th, td {
 	border-bottom: 1px solid #E0E0E0;
+	word-wrap: break-word;
 }
 
 .upload-table tbody > tr:hover {
