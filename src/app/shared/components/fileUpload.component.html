@@ -2,16 +2,18 @@
 	<div fxFlex="100">
 		<h1>{{label}}</h1>
 	</div>
-	<div class="drop-zone" fxFlex="100"
+	<div class="drop-zone"
+		fxFlex="100"
 		ng2FileDrop
 		[ngClass]="{'file-over-event': isFileOverDropZone}"
 		(fileOver)="fileOverDropZone($event)"
-		[uploader]="fileUploader">
+		[uploader]="fileUploader"
+		(onFileDrop)="onFileAdded($event)">
 		<h1>Drop file(s) here !</h1>
 	</div>
 	<div fxFlex="100">
 		<mat-divider></mat-divider>
-		<input type="file" ng2FileSelect [uploader]="fileUploader" multiple>
+		<input type="file" ng2FileSelect [uploader]="fileUploader" multiple (onFileSelected)="onFileAdded($event)">
 		<mat-divider></mat-divider>
 		<h1>File d'upload</h1>
 		<p>Taille de la file: {{fileUploader?.queue?.length}}</p>
@@ -24,6 +26,7 @@
 					<th>Avancement</th>
 					<th>Status</th>
 					<th>Actions</th>
+					<th>Md5</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -49,6 +52,10 @@
 						<button mat-icon-button color="warn" (click)="item.remove()" matTooltip="Supprimer">
 							<mat-icon>delete</mat-icon>
 						</button>
+					</td>
+					<td>
+						<span *ngIf="item.file.rawFile.md5Hash"> {{item.file.rawFile.md5Hash}} </span>
+						<span *ngIf="!item.file.rawFile.md5Hash">computing...</span>
 					</td>
 				</tr>
 			</tbody>

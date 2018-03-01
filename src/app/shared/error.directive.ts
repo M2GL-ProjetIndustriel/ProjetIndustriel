@@ -16,10 +16,10 @@ export class ErrorDirective {
 	 * @param errors   ErrorService injection.
 	 * @param snackBar Snackbar component/module (idk).
 	 */
-	constructor(private errors: ErrorService, public snackBar: MatSnackBar) {
+	constructor(private errors: ErrorService, private snackBar: MatSnackBar) {
 		this.errors.errors.subscribe(
 			data => {
-				this.snackBar.open(data, 'OK', { duration: 30000 })
+				this.snackBar.open(data, 'OK', { duration: 3000 })
 			},
 			err => { throw err }
 		)
