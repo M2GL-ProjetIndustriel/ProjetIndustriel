@@ -1,4 +1,8 @@
 <app-card header="Expérimentations">
+	<button card-action mat-raised-button color="accent" matTooltip="Actualiser" (click)="refreshEvent()">
+		<mat-icon>refresh</mat-icon>
+	</button>
+
 	<div card-content>
 		<div class="table-container">
 			<div class="loading-shade" *ngIf="isLoadingResults">

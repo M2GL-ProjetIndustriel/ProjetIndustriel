@@ -20,7 +20,7 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 		private experimentService: ExperimentService
 	) {}
 
-	ngOnInit () {
+	ngOnInit() {
 		this.subscriptions.push(this.route.params.subscribe(
 			params => this.experimentService.getExperiment(params['experimentID']).subscribe(
 				data => this.experiment = data,
@@ -32,7 +32,7 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 	/**
 	 * Unsubscribe of all subscriptions on destory to prevent memory leaks.
 	 */
-	ngOnDestroy () {
+	ngOnDestroy() {
 		this.subscriptions.forEach((subscription) => {
 			subscription.unsubscribe()
 		})

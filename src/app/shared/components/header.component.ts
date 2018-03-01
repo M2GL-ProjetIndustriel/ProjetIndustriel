@@ -59,7 +59,7 @@ export class HeaderComponent implements AfterViewInit {
 	/**
 	 * Set up events listener after view init.
 	 */
-	ngAfterViewInit () {
+	ngAfterViewInit() {
 		this.renderer.listen(this.searchInput.nativeElement, 'focusin', (event) => {
 			this.searchFormState = 'focused'
 		})
@@ -72,7 +72,7 @@ export class HeaderComponent implements AfterViewInit {
 	 * Toggle the display of the sidebar and change the icon to match the state
 	 * of the sidebar (opened or closed). By default the sidebar is open.
 	 */
-	toggle () {
+	toggle() {
 		this.sidenav.toggle().then((value) => {
 			if (value.type === 'open')
 				this.sidenavToggleIcon = 'arrow_back'

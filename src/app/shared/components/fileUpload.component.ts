@@ -21,15 +21,15 @@ export class FileUploadComponent {
 
 	displayedColumns = ['filename', 'size', 'progress', 'status', 'actions']
 
-	fileOverDropZone (e: any): void {
+	fileOverDropZone(e: any): void {
 		this.isFileOverDropZone = e
 	}
 
-	onFileAdded (event: any):void {
+	onFileAdded(event: any):void {
 		this.calcFileMd5(event[0])
 	}
 
-	calcFileMd5 (file: any):void {
+	calcFileMd5(file: any):void {
 		console.time('start')
 		let reader = new FileReader()
 		reader.onloadend = () => {

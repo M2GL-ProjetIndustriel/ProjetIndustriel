@@ -33,7 +33,7 @@ export class ErrorService {
 	 * depends of the type of error and should not be too specific.
 	 * @param  error An error.
 	 */
-	handleError (error: any) {
+	handleError(error: any) {
 		if (error instanceof HttpErrorResponse)
 			this.errors.next('Le backend a chier dans la colle ' + this.getQualityErrorMessage() + ', veuillez réessayer. CODE: ' + (error as HttpErrorResponse).status)
 		else if (error instanceof TypeError)
@@ -48,7 +48,7 @@ export class ErrorService {
 	 * Function returning a quality error message.
 	 * @return A quality error message.
 	 */
-	getQualityErrorMessage () {
+	getQualityErrorMessage() {
 		return this.qualityErrorMessages[Math.floor(Math.random() * this.qualityErrorMessages.length)]
 
 	}

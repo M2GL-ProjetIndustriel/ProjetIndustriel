@@ -15,7 +15,7 @@ export class GlobalErrorHandler extends ErrorHandler {
 	 * Call super class Constructor.
 	 * @param errorService ErrorService injection.
 	 */
-	constructor (private errorService: ErrorService) {
+	constructor(private errorService: ErrorService) {
 		super()
 	}
 
@@ -24,7 +24,7 @@ export class GlobalErrorHandler extends ErrorHandler {
 	 * error handler.
 	 * @param  error An error.
 	 */
-	handleError (error) {
+	handleError(error) {
 		super.handleError(error)
 		this.errorService.handleError(error)
 	}

@@ -17,7 +17,7 @@ export class TestGraphComponent implements AfterViewInit {
 
 	constructor (private elementRef: ElementRef) { }
 
-	ngAfterViewInit () {
+	ngAfterViewInit() {
 		this.chart = new Chart(this.canvas.nativeElement, {
 			type: 'line',
 			data: {
@@ -51,7 +51,7 @@ export class TestGraphComponent implements AfterViewInit {
 		})
 	}
 
-	exportToImageAndSave () {
+	exportToImageAndSave() {
 		this.canvas.nativeElement.toBlob((blob) => saveAs(blob, 'graph.png'))
 	}
 }

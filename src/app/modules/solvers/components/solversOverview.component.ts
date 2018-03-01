@@ -2,7 +2,8 @@ import { Component } from '@angular/core'
 
 @Component({
 	selector: 'solvers-overview',
-	template: 'mdr'
+	templateUrl: 'solversOverview.component.html',
+	styleUrls: ['solversOverview.component.css']
 })
 export class SolversOverviewComponent {
 }

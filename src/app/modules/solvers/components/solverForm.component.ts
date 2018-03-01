@@ -18,7 +18,7 @@ export class SolverFormComponent {
 		this.createForm()
 	}
 
-	createForm () {
+	createForm() {
 		this.solverForm = this.formBuilder.group({
 			name: [(this.solver) ? this.solver.name : '', [Validators.required, Validators.maxLength(100)]],
 			version: [(this.solver) ? this.solver.version : '', Validators.maxLength(100)],
@@ -27,7 +27,7 @@ export class SolverFormComponent {
 		})
 	}
 
-	onSubmit () {
+	onSubmit() {
 		if (this.solverForm.dirty && this.solverForm.valid) {
 				const formModel = this.solverForm.value
 				console.log(formModel)

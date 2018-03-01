@@ -29,7 +29,7 @@ export class UnluckyRouteComponent implements OnInit, OnDestroy {
 	/**
 	 * On init subscribe to the changes in the route url.
 	 */
-	ngOnInit () {
+	ngOnInit() {
 		this.subscription = this.route.url.subscribe(
 			data => {
 				this.setRoute(data)
@@ -43,7 +43,7 @@ export class UnluckyRouteComponent implements OnInit, OnDestroy {
 	/**
 	 * On destroy unsubscribe to prevent memory leaks.
 	 */
-	ngOnDestroy () {
+	ngOnDestroy() {
 		this.subscription.unsubscribe()
 	}
 
@@ -52,7 +52,7 @@ export class UnluckyRouteComponent implements OnInit, OnDestroy {
 	 * to the new url of the app.
 	 * @param  data Some data to process.
 	 */
-	setRoute (data: any) {
+	setRoute(data: any) {
 		this.unluckyUrl = ''
 		for (let i in data)
 			this.unluckyUrl += ('/' + data[i].path)

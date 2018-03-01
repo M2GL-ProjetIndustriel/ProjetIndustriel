@@ -9,6 +9,14 @@ import { SolverFormComponent } from './components/solverForm.component'
 export const solversRoutes: Routes = [
 	{
 		path: 'solver',
+		component: SolversOverviewComponent
+	},
+	{
+		path: 'solver/add',
+		component: SolverFormComponent
+	},
+	{
+		path: 'solver/edit',
 		component: SolverFormComponent
 	},
 	{

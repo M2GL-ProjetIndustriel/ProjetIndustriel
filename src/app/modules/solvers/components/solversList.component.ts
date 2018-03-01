@@ -6,22 +6,22 @@ import { map } from 'rxjs/operators/map'
 import { startWith } from 'rxjs/operators/startWith'
 import { switchMap } from 'rxjs/operators/switchMap'
 
-import { BasicExperiment } from '../experiment'
-import { ExperimentService } from '../experiment.service'
+import { Solver } from '../solver.model'
+import { SolverService } from '../solver.service'
 
 /**
- * Component displaying a table containing experiments inside a
+ * Component displaying a table containing solvers inside a
  * {@link CardComponent} component.
  *
  * Use angular material table component. See angular material table
  * documentation for more informations.
  */
 @Component({
-	selector: 'experiments-list',
-	templateUrl: './experimentsList.component.html',
-	styleUrls: ['./experimentsList.component.css']
+	selector: 'solvers-list',
+	templateUrl: './solversList.component.html',
+	styleUrls: ['./solversList.component.css']
 })
-export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
+export class SolversListComponent implements AfterViewInit, OnDestroy {
 	/**
 	 * Columns to be displayed in the template.
 	 */
@@ -29,13 +29,13 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	/**
 	 * Data source of the table.
 	 */
-	dataSource: MatTableDataSource<BasicExperiment> = new MatTableDataSource<BasicExperiment>([])
+	dataSource: MatTableDataSource<Solver> = new MatTableDataSource<Solver>([])
 	/**
 	 * Boolean describing wether or not the component is loading results.
 	 */
 	isLoadingResults: boolean = true
 	/**
-	 * Total length of the response, the total number of experiments.
+	 * Total length of the response, the total number of solvers.
 	 */
 	resultsLength: number = 0
 	/**
@@ -61,9 +61,9 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 
 	/**
 	 * Constructor of the component, doesn't do shit.
-	 * @param experimentService Experiment service injection.
+	 * @param solverService Solver service injection.
 	 */
-	constructor(private experimentService: ExperimentService) {}
+	constructor(private solverService: SolverService) {}
 
 	/**
 	 * Initialize everything the component need to be good to go.
@@ -87,8 +87,6 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 		this.subscriptions.forEach((subscription) => {
 			subscription.unsubscribe()
 		})
-		if (this.dataSubscription)
-			this.dataSubscription.unsubscribe()
 	}
 
 	/**
@@ -102,20 +100,23 @@ export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 				startWith({}),
 				switchMap(() => {
 					this.isLoadingResults = true
-					return this.experimentService.getExperiments(
+					console.log(this.sort)
+					return this.solverService.getSolvers(
 						this.paginator.pageIndex, this.paginator.pageSize, this.sort.active)
 				}),
 				map(data => {
 					this.isLoadingResults = false
 					this.resultsLength = data.totalLength
-					return data.experiments
+
+					return data.solvers
 				})
 			).subscribe(
-				data =>	this.dataSource.data = data,
+				data => this.dataSource.data = data,
 				err => {
 					this.isLoadingResults = false
 					throw err
-				})
+			 	}
+			)
 	}
 
 	/**
