@@ -1,6 +1,7 @@
 <div class="drop-zone-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 	<div fxFlex="100">
-		<h1>{{label}}</h1>
+		<h1 *ngIf="nbFileMax == -1">Pas de limite de fichiers</h1>
+		<h1 *ngIf="nbFileMax != -1 && nbFileMax != 0">{{nbFileMax}} fichier(s) maximum</h1>
 	</div>
 	<div class="drop-zone"
 		fxFlex="100"
@@ -13,42 +14,24 @@
 	</div>
 	<div fxFlex="100">
 		<mat-divider></mat-divider>
-		<input type="file" ng2FileSelect [uploader]="fileUploader" multiple (onFileSelected)="onFileAdded($event)">
+		<input type="file" ng2FileSelect [uploader]="fileUploader" (onFileSelected)="onFileAdded($event)">
 		<mat-divider></mat-divider>
-		<h1>File d'upload</h1>
-		<p>Taille de la file: {{fileUploader?.queue?.length}}</p>
 
 		<table class="upload-table">
 			<thead>
 				<tr>
 					<th>Nom Fichier</th>
 					<th>Taille</th>
-					<th>Avancement</th>
-					<th>Status</th>
 					<th>Actions</th>
 					<th>Md5</th>
+					<th *ngIf="validationColumn">Status</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr *ngFor="let item of fileUploader.queue">
 					<td> {{item.file.name}} </td>
 					<td> {{item.file.size/1024/1024 | number:'.2'}}Mo </td>
-					<td> {{item.progress | percent}} </td>
 					<td>
-						<span *ngIf="item.isSuccess">Succès</span>
-						<span *ngIf="item.isCancel">Annuler</span>
-						<span *ngIf="item.isError">Erreur</span>
-						<span *ngIf="!item.isSuccess && !item.isCancel && !item.isError">Aucun</span>
-					</td>
-					<td>
-						<button mat-icon-button color="warn" (click)="item.upload()"
-							[disabled]="item.isReady || item.isUploading || item.isSuccess" matTooltip="Upload">
-							<mat-icon>file_upload</mat-icon>
-						</button>
-						<button mat-icon-button color="warn" (click)="item.cancel()"
-							[disabled]="!item.isUploading" matTooltip="Annuler">
-							<mat-icon>cancel</mat-icon>
-						</button>
 						<button mat-icon-button color="warn" (click)="item.remove()" matTooltip="Supprimer">
 							<mat-icon>delete</mat-icon>
 						</button>
@@ -56,6 +39,11 @@
 					<td>
 						<span *ngIf="item.file.rawFile.md5Hash"> {{item.file.rawFile.md5Hash}} </span>
 						<span *ngIf="!item.file.rawFile.md5Hash">computing...</span>
+					</td>
+					<td *ngIf="validationColumn">
+						<mat-icon *ngIf="validationColumn && item.file.rawFile.apiValidationStatus == 0" matTooltip="En cours de validation">autorenew</mat-icon>
+						<mat-icon *ngIf="validationColumn && item.file.rawFile.apiValidationStatus == 1" matTooltip="Fichier valide">check_circle</mat-icon>
+						<mat-icon *ngIf="validationColumn && !item.file.rawFile.apiValidationStatus == 2" matTooltip="Fichier déjà présent">error</mat-icon>
 					</td>
 				</tr>
 			</tbody>

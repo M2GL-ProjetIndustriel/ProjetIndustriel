@@ -1,7 +1,9 @@
 /* Imports ################################################################## */
-import { NgModule, ErrorHandler } from '@angular/core'
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router } from '@angular/router'
+import { registerLocaleData } from '@angular/common'
+import localFr from '@angular/common/locales/fr'
 
 import { SharedModule } from './shared/shared.module'
 import { ExperimentsModule } from './modules/experiments/experiments.module'
@@ -15,6 +17,9 @@ import { AppComponent } from './app.component'
 
 /* Providers ################################################################ */
 import { GlobalErrorHandler } from './error-handler'
+
+//Register fr-FR local
+registerLocaleData(localFr)
 
 /**
  * Bootstraper module.
@@ -35,7 +40,8 @@ import { GlobalErrorHandler } from './error-handler'
 		{
 			provide: ErrorHandler,
 			useClass: GlobalErrorHandler
-		}
+		},
+		{ provide: LOCALE_ID, useFactory: () => "fr-FR" }
 	],
 	bootstrap: [AppComponent]
 })

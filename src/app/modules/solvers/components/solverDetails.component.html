@@ -1,10 +1,10 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 
-	<button mat-raised-button color="primary" class="button-margin-bottom" routerLink="/solver"><mat-icon>arrow_back</mat-icon>Retour</button>
+	<button mat-raised-button color="primary" class="button-margin-bottom" (click)="back()"><mat-icon>arrow_back</mat-icon>Retour</button>
 
 	<app-card *ngIf="solver" header="{{solver.name}}" fxFlex="100">
 		<mat-menu #solverActionMenu="matMenu">
-			<button mat-menu-item><mat-icon>edit</mat-icon>Modifier</button>
+			<button mat-menu-item [routerLink]="['/solver/edit', solver.id]"><mat-icon>edit</mat-icon>Modifier</button>
 			<button mat-menu-item><mat-icon>delete</mat-icon>Supprimer</button>
 		</mat-menu>
 
@@ -16,9 +16,20 @@
 			<p><strong>Id</strong> {{solver.id}}</p>
 			<p><strong>Nom</strong> {{solver.name}}</p>
 			<p><strong>Version</strong> {{solver.version}}</p>
-			<p><strong>Date d'ajout</strong> {{solver.added | date: 'dd MMMM yy | h:mm:ss z'}}</p>
-			<p><strong>Version</strong> {{solver.source_path}}</p>
-			<p><strong>Results</strong> {{solver.executable_path}}</p>
+			<p><strong>Date d'ajout</strong> {{solver.created | date: 'dd MMMM yy | h:mm:ss z'}}</p>
+			<p><strong>Date de modification</strong> {{solver.modified | date: 'dd MMMM yy | h:mm:ss z'}}</p>
+			<p>
+				<a mat-raised-button color="warn" href="{{solver.source_path}}" [disabled]="!solver.source_path">
+					<mat-icon>file_download</mat-icon>
+					Sources
+				</a>
+			</p>
+			<p>
+				<a mat-raised-button color="warn" href="{{solver.executable_path}}" [disabled]="!solver.executable_path">
+					<mat-icon>file_download</mat-icon>
+					Exécutable
+				</a>
+			</p>
 		</div>
 	</app-card>
 </div>

@@ -17,7 +17,7 @@ export const solversRoutes: Routes = [
 		component: SolverFormComponent
 	},
 	{
-		path: 'solver/edit',
+		path: 'solver/edit/:solverID',
 		component: SolverFormComponent
 	},
 	{

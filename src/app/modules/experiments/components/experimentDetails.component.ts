@@ -15,7 +15,7 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 
 	subscriptions = []
 
-	constructor (
+	constructor(
 		private route: ActivatedRoute,
 		private experimentService: ExperimentService
 	) {}

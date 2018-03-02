@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
 
 import { catchError, retry, map } from 'rxjs/operators'
 
-import { Solver } from './solver.model'
 import { ApiMessageService } from '../../shared/apiMessage.service'
 import { appConfig } from '../../config'
 
@@ -63,6 +62,20 @@ export class SolverService {
 	 */
 	getSolver(solverID: string) {
 		return this.http.get(appConfig.apiUrl + '/solver/' + solverID)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
+	postSolver(data: any) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'enctype': 'multipart/form-data'
+			})
+		}
+		return this.http.post(appConfig.apiUrl + '/solver/', data, httpOptions)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),

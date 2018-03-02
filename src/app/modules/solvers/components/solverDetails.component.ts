@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, ParamMap } from '@angular/router'
+import { Location } from '@angular/common'
 
 import { Solver } from '../solver.model'
 import { SolverService } from '../solver.service'
@@ -17,6 +18,7 @@ export class SolverDetailsComponent implements OnInit, OnDestroy {
 
 	constructor (
 		private route: ActivatedRoute,
+		private location: Location,
 		private experimentService: SolverService
 	) {}
 
@@ -25,7 +27,11 @@ export class SolverDetailsComponent implements OnInit, OnDestroy {
 			params => this.experimentService.getSolver(params['solverID']).subscribe(
 				data => this.solver = data,
 				err => { throw err }
-			)
+			),
+			err => {
+				this.back()
+				throw err
+			}
 		))
 	}
 
@@ -36,5 +42,9 @@ export class SolverDetailsComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach((subscription) => {
 			subscription.unsubscribe()
 		})
+	}
+
+	back() {
+		this.location.back()
 	}
 }

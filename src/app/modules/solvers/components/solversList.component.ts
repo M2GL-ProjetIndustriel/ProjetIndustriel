@@ -25,7 +25,7 @@ export class SolversListComponent implements AfterViewInit, OnDestroy {
 	/**
 	 * Columns to be displayed in the template.
 	 */
-	displayedColumns: string[] = ['id', 'name', 'date']
+	displayedColumns: string[] = ['id', 'name', 'created', 'modified']
 	/**
 	 * Data source of the table.
 	 */
@@ -106,9 +106,14 @@ export class SolversListComponent implements AfterViewInit, OnDestroy {
 				}),
 				map(data => {
 					this.isLoadingResults = false
-					this.resultsLength = data.totalLength
+					if (data.resultsLength) {
+						this.resultsLength = data.totalLength
 
-					return data.solvers
+						return data.solvers
+					}
+					console.log(data)
+					return data
+
 				})
 			).subscribe(
 				data => this.dataSource.data = data,

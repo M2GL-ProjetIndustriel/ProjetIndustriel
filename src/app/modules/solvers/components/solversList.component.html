@@ -24,9 +24,15 @@
 				</ng-container>
 
 				<!-- Added date Column -->
-				<ng-container matColumnDef="date">
+				<ng-container matColumnDef="created">
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Date d'ajout </mat-header-cell>
-					<mat-cell *matCellDef="let solver"> {{solver.added | date: 'dd MMMM yy | h:mm:ss z'}} </mat-cell>
+					<mat-cell *matCellDef="let solver"> {{solver.created | date: 'dd MMMM yy | h:mm:ss z'}} </mat-cell>
+				</ng-container>
+
+				<!-- Modified date Column -->
+				<ng-container matColumnDef="modified">
+					<mat-header-cell *matHeaderCellDef mat-sort-header> Date de modification </mat-header-cell>
+					<mat-cell *matCellDef="let solver"> {{solver.modified | date: 'dd MMMM yy | h:mm:ss z'}} </mat-cell>
 				</ng-container>
 
 				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
