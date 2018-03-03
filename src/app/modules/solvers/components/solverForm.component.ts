@@ -130,9 +130,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 			name: data.name,
 			version: data.version,
 			created: data.created,
-			modified: data.modified,
-			source_path: data.source_path,
-			executable_path: data.executable_path
+			modified: data.modified
 		})
 	}
 

@@ -39,8 +39,6 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { FileUploadModule } from 'ng2-file-upload'
-
 /* Declarations ############################################################# */
 import { SidenavComponent } from './components/sidenav.component'
 import { HeaderComponent } from './components/header.component'
@@ -95,8 +93,7 @@ import { ApiMessageService } from './apiMessage.service'
 		MatTableModule,
 		MatTabsModule,
 		MatToolbarModule,
-		MatTooltipModule,
-		FileUploadModule
+		MatTooltipModule
 	],
 	declarations: [
 		SidenavComponent,
