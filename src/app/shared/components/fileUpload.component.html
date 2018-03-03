@@ -5,16 +5,16 @@
 	</div>
 	<div class="drop-zone"
 		fxFlex="100"
-		ng2FileDrop
 		[ngClass]="{'file-over-event': isFileOverDropZone}"
-		(fileOver)="fileOverDropZone($event)"
-		[uploader]="fileUploader"
-		(onFileDrop)="onFileAdded($event)">
+		(dragenter)="onDragEnter($event)"
+		(dragleave)="onDragLeave($event)"
+		(dragover)="onDragOver($event)"
+		(drop)="onDrop($event)">
 		<h1>Drop file(s) here !</h1>
 	</div>
 	<div fxFlex="100">
 		<mat-divider></mat-divider>
-		<input type="file" ng2FileSelect [uploader]="fileUploader" (onFileSelected)="onFileAdded($event)">
+		<input type="file" multiple (change)="onFileAdded($event)">
 		<mat-divider></mat-divider>
 
 		<table class="upload-table">
@@ -28,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let item of fileUploader.queue">
+				<tr *ngFor="let item of fileQueue.queue">
 					<td> {{item.file.name}} </td>
 					<td> {{item.file.size/1024/1024 | number:'.2'}}Mo </td>
 					<td>
@@ -37,13 +37,13 @@
 						</button>
 					</td>
 					<td>
-						<span *ngIf="item.file.rawFile.md5Hash"> {{item.file.rawFile.md5Hash}} </span>
-						<span *ngIf="!item.file.rawFile.md5Hash">computing...</span>
+						<span *ngIf="item.md5Hash"> {{item.md5Hash}} </span>
+						<span *ngIf="!item.md5Hash">computing...</span>
 					</td>
 					<td *ngIf="validationColumn">
-						<mat-icon *ngIf="validationColumn && item.file.rawFile.apiValidationStatus == 0" matTooltip="En cours de validation">autorenew</mat-icon>
-						<mat-icon *ngIf="validationColumn && item.file.rawFile.apiValidationStatus == 1" matTooltip="Fichier valide">check_circle</mat-icon>
-						<mat-icon *ngIf="validationColumn && !item.file.rawFile.apiValidationStatus == 2" matTooltip="Fichier déjà présent">error</mat-icon>
+						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 0" matTooltip="En cours de validation">autorenew</mat-icon>
+						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 1" matTooltip="Fichier valide">check_circle</mat-icon>
+						<mat-icon *ngIf="validationColumn && !item.apiValidationStatus == 2" matTooltip="Fichier déjà présent">error</mat-icon>
 					</td>
 				</tr>
 			</tbody>

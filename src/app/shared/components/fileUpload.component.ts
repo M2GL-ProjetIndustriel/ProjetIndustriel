@@ -1,50 +1,69 @@
-import { Component, Input, EventEmitter } from '@angular/core'
+import { Component, Input, EventEmitter, OnInit } from '@angular/core'
 import { MatTableDataSource } from '@angular/material'
 
 import { Observable } from 'rxjs/Observable'
 import { of as observableOf } from 'rxjs/observable/of'
-import { FileUploader } from 'ng2-file-upload'
 import { Md5 } from 'ts-md5/dist/md5'
+
+import { CustomFile, FileQueue } from '../files.model'
 
 @Component({
 	selector: 'app-file-upload',
 	templateUrl: './fileUpload.component.html',
 	styleUrls: ['./fileUpload.component.css'],
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnInit {
 	@Input() nbFileMax: number = -1
 
 	@Input() validationColumn: boolean = false
 
-	fileUploader: FileUploader = new FileUploader({})
+	fileQueue: FileQueue = new FileQueue()
 
 	isFileOverDropZone: boolean = false
 
-	onFileAddedToQueue: EventEmitter<File> = new EventEmitter()
+	onFileAddedToQueue: EventEmitter<CustomFile> = new EventEmitter()
 
-	fileOverDropZone(e: any): void {
-		this.isFileOverDropZone = e
+	ngOnInit() {
+		this.fileQueue.setQueueMaxLength(this.nbFileMax)
 	}
 
-	onFileAdded(event: any):void {
-		if (this.nbFileMax !== -1 && this.fileUploader.queue.length > this.nbFileMax)
-			this.fileUploader.queue = this.fileUploader.queue.slice(0, this.nbFileMax)
+	onDragEnter(event: any) {
+		this.isFileOverDropZone = true
+	}
+	onDragLeave(event: any) {
+		this.isFileOverDropZone = false
+	}
+	onDragOver(event: any) {
+		event.preventDefault()
+	}
+	onDrop(event: any) {
+		event.preventDefault()
+		event.stopPropagation()
+		this.isFileOverDropZone = false
+		this.onFileAdded(null, event.dataTransfer.files)
+	}
 
-		this.fileUploader.queue.forEach((value) => {
-			if (!value.file.rawFile.md5Hash) {
-				//calc md5
-				this.calcFileMd5(value.file.rawFile)
+	onFileAdded(event: any, fileList?: FileList) {
+		const files: Array<File> = Array.from((fileList) ? fileList : event.target.files)
+
+		files.forEach((file) => {
+			let fileAdded = this.fileQueue.add(file)
+			if (fileAdded)
+				this.onFileAddedToQueue.emit(fileAdded)
+		})
+
+		this.calcFileMd5()
+	}
+
+	calcFileMd5() {
+		this.fileQueue.queue.forEach((file) => {
+			if (!file.md5Hash) {
+				let reader = new FileReader()
+				reader.onloadend = () => {
+					file.md5Hash = Md5.hashAsciiStr(reader.result).toString()
+				}
+				reader.readAsBinaryString(file.file)
 			}
 		})
-	}
-
-	calcFileMd5(file: any):void {
-		let reader = new FileReader()
-		reader.onloadend = () => {
-			file.md5Hash = Md5.hashAsciiStr(reader.result)
-			//emit event signaling file has been added
-			this.onFileAddedToQueue.emit(file)
-		}
-		reader.readAsBinaryString(file)
 	}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Location } from '@angular/common'
@@ -6,13 +6,14 @@ import { Location } from '@angular/common'
 import { Solver } from '../solver.model'
 import { SolverService } from '../solver.service'
 import { FileUploadComponent } from '../../../shared/components/fileUpload.component'
+import { CustomFile, ApiValidationStatus } from '../../../shared/files.model'
 
 @Component({
 	selector: 'solver-form',
 	templateUrl: './solverForm.component.html',
 	styleUrls: ['./solverForm.component.css']
 })
-export class SolverFormComponent implements OnInit {
+export class SolverFormComponent implements OnInit, OnDestroy {
 
 	solver: Solver
 
@@ -20,9 +21,16 @@ export class SolverFormComponent implements OnInit {
 
 	solverForm: FormGroup
 
+	subscriptions = []
+
 	@ViewChild('sourceInput') sourceInput: FileUploadComponent
 
+
 	@ViewChild('execInput') execInput: FileUploadComponent
+
+	sourceFile: CustomFile = null
+
+	execFile: CustomFile = null
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -34,7 +42,31 @@ export class SolverFormComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		let sub = this.route.params.subscribe(
+		//If it's
+		this.getSolverFromParams()
+
+		this.subscriptions.push(this.sourceInput.onFileAddedToQueue.subscribe(
+			file => {
+				this.sourceFile = file
+				this.validateFile(file.md5Hash)
+			}
+		))
+		this.subscriptions.push(this.sourceInput.onFileAddedToQueue.subscribe(
+			file => {
+				this.execFile = file
+				this.validateFile(file.md5Hash)
+			}
+		))
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach((sub) => {
+			sub.unsubscribe()
+		})
+	}
+
+	getSolverFromParams() {
+		this.subscriptions.push(this.route.params.subscribe(
 			params => {
 				if (params['solverID']) {
 					this.isLoadingResults = true
@@ -54,13 +86,7 @@ export class SolverFormComponent implements OnInit {
 				this.back()
 				throw err
 			}
-		)
-		this.sourceInput.onFileAddedToQueue.subscribe(
-			file => {
-				file.apiValidationStatus = 0
-				this.validateFile(file.md5Hash)
-			}
-		)
+		))
 	}
 
 	back() {
@@ -85,11 +111,11 @@ export class SolverFormComponent implements OnInit {
 				formData.append('created', this.solverForm.value.created)
 				formData.append('modified', this.solverForm.value.modified)
 
-				if (this.sourceInput.fileUploader.queue[0])
-					formData.append('source_path', this.sourceInput.fileUploader.queue[0].file.rawFile, this.sourceInput.fileUploader.queue[0].file.rawFile.name)
+				if (this.sourceFile)
+					formData.append('source_path', this.sourceFile.file, this.sourceFile.file.name)
 
-				if (this.execInput.fileUploader.queue[0])
-					formData.append('executable_path', this.execInput.fileUploader.queue[0].file.rawFile, this.execInput.fileUploader.queue[0].file.rawFile.name)
+				if (this.execFile)
+					formData.append('executable_path', this.execFile.file, this.execFile.file.name)
 
 
 				this.solverService.postSolver(formData).subscribe(

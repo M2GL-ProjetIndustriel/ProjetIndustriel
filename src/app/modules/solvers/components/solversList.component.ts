@@ -111,7 +111,6 @@ export class SolversListComponent implements AfterViewInit, OnDestroy {
 
 						return data.solvers
 					}
-					console.log(data)
 					return data
 
 				})
