@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http'
 
 import { catchError, retry, map } from 'rxjs/operators'
 
@@ -79,6 +79,28 @@ export class SolverService {
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
+	editSolver(data: FormData, solverID: string) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'enctype': 'multipart/form-data'
+			})
+		}
+		return this.http.put(appConfig.apiUrl + '/solver/' + solverID, data, httpOptions)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
+	getSolverFile(url: string) {
+		return this.http.get(url, { responseType: 'blob' })
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
 				catchError(err => { throw err })
 			)
 	}

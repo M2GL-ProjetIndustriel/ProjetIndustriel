@@ -23,7 +23,7 @@ export class FileUploadComponent implements OnInit {
 	@Input() nbFileMax: number = -1
 	/**
 	 * The validationColumn is a column that correspond to a specific need and
-	 * by default is not displyed because it's not usefull in most cases.
+	 * by default is not displyed because it's useless in most cases.
 	 */
 	@Input() validationColumn: boolean = false
 	/**
@@ -87,17 +87,20 @@ export class FileUploadComponent implements OnInit {
 	 * also emit an event for each file added and calc the md5 hash of the files
 	 * added.
 	 * @param  event    An event.
-	 * @param  fileList A list of file, optional.
+	 * @param  fileList A list of file or a single file, optional.
 	 */
-	onFileAdded(event: any, fileList?: FileList) {
-		const files: Array<File> = Array.from((fileList) ? fileList : event.target.files)
+	onFileAdded(event: any, fileList?: FileList | File) {
+		let files: Array<File>
+		if (fileList && fileList instanceof File)
+			files = [ fileList ]
+		else
+		 	 files = Array.from((fileList) ? fileList : event.target.files)
 
 		files.forEach((file) => {
 			let fileAdded = this.fileQueue.add(file)
 			if (fileAdded)
 				this.onFileAddedToQueue.emit(fileAdded)
 		})
-
 		this.calcFileMd5()
 	}
 

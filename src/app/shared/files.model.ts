@@ -69,7 +69,7 @@ export class CustomFile {
 	/**
 	 * Status of the validation with the backend.
 	 */
-	apiValidationStatus: ApiValidationStatus
+	apiValidationStatus: ApiValidationStatus = ApiValidationStatus.NotValidated
 	/**
 	 * The actual file.
 	 */

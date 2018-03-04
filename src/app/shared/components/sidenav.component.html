@@ -5,20 +5,16 @@
 			<mat-divider></mat-divider>
 
 			<h3 mat-subheader>Catégories</h3>
-			<mat-list-item *ngFor="let item of items; let i = index">
+			<mat-list-item *ngFor="let item of items; let i = index"  [routerLink]="['/' + item.routerLink]">
 				<mat-icon matListIcon>{{ item.icon }}</mat-icon>
-				<a [routerLink]="['/' + item.routerLink]">
-					{{ item.label }}
-				</a>
+				<span>{{ item.label }}</span>
 			</mat-list-item>
 			<mat-divider></mat-divider>
 
 			<h3 mat-subheader>Paramètres</h3>
 			<mat-list-item>
 				<mat-icon matListIcon>settings</mat-icon>
-				<a>
-					<span>Paramètres</span>
-				</a>
+				<span>Paramètres</span>
 			</mat-list-item>
 			<mat-divider></mat-divider>
 		</mat-nav-list>

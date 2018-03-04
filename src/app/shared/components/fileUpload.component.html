@@ -41,9 +41,9 @@
 						<span *ngIf="!item.md5Hash">computing...</span>
 					</td>
 					<td *ngIf="validationColumn">
-						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 0" matTooltip="En cours de validation">autorenew</mat-icon>
-						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 1" matTooltip="Fichier valide">check_circle</mat-icon>
-						<mat-icon *ngIf="validationColumn && !item.apiValidationStatus == 2" matTooltip="Fichier déjà présent">error</mat-icon>
+						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 1" matTooltip="En cours de validation">autorenew</mat-icon>
+						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 2" matTooltip="Fichier valide">check_circle</mat-icon>
+						<mat-icon *ngIf="validationColumn && item.apiValidationStatus == 3" matTooltip="Fichier déjà présent">error</mat-icon>
 					</td>
 				</tr>
 			</tbody>

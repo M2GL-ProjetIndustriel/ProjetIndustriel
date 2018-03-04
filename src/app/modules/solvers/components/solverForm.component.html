@@ -1,5 +1,5 @@
 <button mat-raised-button color="primary" class="button-margin-bottom" (click)="back()"><mat-icon>arrow_back</mat-icon>Retour</button>
-<app-card header="Ajouter un solveur">
+<app-card header="Ajouter/Modifier un solveur">
 	<div card-content>
 		<div class="loading-shade" *ngIf="isLoadingResults">
 			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -36,7 +36,7 @@
 						<mat-panel-title>Fichiers source</mat-panel-title>
 						<mat-panel-description>Ajouter une archive contenants les fichiers sources.</mat-panel-description>
 					</mat-expansion-panel-header>
-					<app-file-upload nbFileMax=3 validationColumn=true #sourceInput></app-file-upload>
+					<app-file-upload nbFileMax=1 validationColumn=true #sourceInput></app-file-upload>
 				</mat-expansion-panel>
 				<!-- Executable drop zone -->
 				<mat-expansion-panel>
