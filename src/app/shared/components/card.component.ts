@@ -7,7 +7,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 @Component({
 	selector: 'app-card',
 	templateUrl: './card.component.html',
-	styleUrls: ['./card.component.css'],
+	styleUrls: ['./card.component.scss'],
 	animations: [
 		trigger('flyInOut', [
 			state('in', style({ transform: 'translateX(0)' })),

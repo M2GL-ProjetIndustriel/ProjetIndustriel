@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'
 @Component({
 	selector: 'app-unlucky-route',
 	templateUrl: './unluckyRoute.component.html',
-	styleUrls: ['./unluckyRoute.component.css']
+	styleUrls: ['./unluckyRoute.component.scss']
 })
 export class UnluckyRouteComponent implements OnInit, OnDestroy {
 	/**

@@ -8,7 +8,7 @@ import { SolverService } from '../solver.service'
 @Component({
 	selector: 'solver-details',
 	templateUrl: './solverDetails.component.html',
-	styleUrls: ['./solverDetails.component.css']
+	styleUrls: ['./solverDetails.component.scss']
 })
 export class SolverDetailsComponent implements OnInit, OnDestroy {
 

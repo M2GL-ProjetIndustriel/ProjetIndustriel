@@ -1,13 +1,15 @@
+@import '~sass/variables';
+
 .drop-zone-container {
 	margin: 16px;
 }
 
 .drop-zone {
 	height: 200px;
-	background-color: #F5F5F5;
+	background-color: $grey;
 	border: 1px dotted #BBB;
 	border-radius: 2px;
-	color: #888;
+	color: #757575;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -15,7 +17,7 @@
 }
 
 .file-over-event {
-	border: 5px dotted #0091EA;
+	border: 5px dotted $primary;
 	border-radius: 2px;
 }
 
@@ -30,21 +32,22 @@ mat-divider {
 	border: 0;
 	border-collapse: collapse;
 	table-layout: fixed;
-}
-.upload-table th, td {
-	border-bottom: 1px solid #E0E0E0;
-	word-wrap: break-word;
-}
 
-.upload-table tbody > tr:hover {
-	background-color: #EEE;
-}
+	th, td {
+		border-bottom: 1px solid $grey-300;
+		word-wrap: break-word;
+	}
 
-.upload-table th {
-	color: #757575;
-	height: 32px;
-}
+	tbody > tr:hover {
+		background-color: $grey-200;
+	}
 
-.upload-table td {
-	color: #212121;
+	th {
+		color: $grey-600;
+		height: 32px;
+	}
+
+	td {
+		color: $grey-900;
+	}
 }

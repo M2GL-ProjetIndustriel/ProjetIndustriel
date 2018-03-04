@@ -7,7 +7,7 @@ import { ExperimentService } from '../experiment.service'
 @Component({
 	selector: 'experiment-details',
 	templateUrl: './experimentDetails.component.html',
-	styleUrls: ['./experimentDetails.component.css']
+	styleUrls: ['./experimentDetails.component.scss']
 })
 export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 

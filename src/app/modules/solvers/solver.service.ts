@@ -69,7 +69,7 @@ export class SolverService {
 			)
 	}
 
-	postSolver(data: any) {
+	postSolver(data: FormData) {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'enctype': 'multipart/form-data'

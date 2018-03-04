@@ -19,7 +19,7 @@ import { SolverService } from '../solver.service'
 @Component({
 	selector: 'solvers-list',
 	templateUrl: './solversList.component.html',
-	styleUrls: ['./solversList.component.css']
+	styleUrls: ['./solversList.component.scss']
 })
 export class SolversListComponent implements AfterViewInit, OnDestroy {
 	/**
@@ -87,6 +87,8 @@ export class SolversListComponent implements AfterViewInit, OnDestroy {
 		this.subscriptions.forEach((subscription) => {
 			subscription.unsubscribe()
 		})
+		if (this.dataSubscription)
+			this.dataSubscription.unsubscribe()
 	}
 
 	/**

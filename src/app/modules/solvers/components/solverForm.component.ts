@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { Location } from '@angular/common'
+import { Location, DatePipe } from '@angular/common'
 
 import { Solver } from '../solver.model'
 import { SolverService } from '../solver.service'
@@ -11,7 +11,7 @@ import { CustomFile, ApiValidationStatus } from '../../../shared/files.model'
 @Component({
 	selector: 'solver-form',
 	templateUrl: './solverForm.component.html',
-	styleUrls: ['./solverForm.component.css']
+	styleUrls: ['./solverForm.component.scss']
 })
 export class SolverFormComponent implements OnInit, OnDestroy {
 
@@ -36,6 +36,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private location: Location,
+		private datePipe: DatePipe,
 		private solverService: SolverService
 	) {
 		this.createForm()
@@ -106,10 +107,12 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 		if (this.solverForm.dirty && this.solverForm.valid) {
 				let formData = new FormData()
 
+				console.log(this.datePipe.transform(this.solverForm.value.modified, 'yyyy-MM-ddThh:mm'))
+
 				formData.append('name', this.solverForm.value.name)
 				formData.append('version', this.solverForm.value.version)
-				formData.append('created', this.solverForm.value.created)
-				formData.append('modified', this.solverForm.value.modified)
+				formData.append('created', this.datePipe.transform(this.solverForm.value.created, 'yyyy-MM-ddThh:mm'))
+				formData.append('modified', this.datePipe.transform(this.solverForm.value.modified, 'yyyy-MM-ddThh:mm'))
 
 				if (this.sourceFile)
 					formData.append('source_path', this.sourceFile.file, this.sourceFile.file.name)

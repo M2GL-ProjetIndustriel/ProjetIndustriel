@@ -1,0 +1,39 @@
+@import '~sass/variables';
+
+mat-toolbar {
+	background-color: $white;
+
+	button {
+		margin-right: 16px;
+	}
+}
+
+
+
+#search-form {
+	display: flex;
+	align-items: center;
+	border: 1px solid $grey;
+	border-radius: 3px;
+	background-color: $grey;
+
+	input {
+		background-color: transparent;
+		border: none;
+		padding: 6px;
+		font-size: 16px;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	a {
+		padding-top: 7px;
+		margin-right: 6px;
+	}
+
+	a:hover {
+		cursor: pointer;
+	}
+}

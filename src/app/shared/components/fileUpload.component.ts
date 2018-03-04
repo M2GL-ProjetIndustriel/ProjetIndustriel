@@ -14,7 +14,7 @@ import { CustomFile, FileQueue } from '../files.model'
 @Component({
 	selector: 'app-file-upload',
 	templateUrl: './fileUpload.component.html',
-	styleUrls: ['./fileUpload.component.css'],
+	styleUrls: ['./fileUpload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
 	/**

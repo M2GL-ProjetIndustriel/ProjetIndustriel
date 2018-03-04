@@ -1,3 +1,5 @@
+@import '~sass/variables';
+
 .table-container {
 	display: flex;
 	flex-direction: column;
@@ -18,6 +20,6 @@
 }
 
 .table-row:hover {
-	background-color: #F5F5F5;
+	background-color: $grey;
 	cursor: pointer;
 }

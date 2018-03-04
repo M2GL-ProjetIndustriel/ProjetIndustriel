@@ -8,7 +8,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.css'],
+	styleUrls: ['./header.component.scss'],
 	animations: [
 		trigger('searchInputAnimation', [
 			state('notFocused', style({

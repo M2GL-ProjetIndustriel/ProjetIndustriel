@@ -1,22 +1,24 @@
+@import '~sass/variables';
+
 .app-card-container {
 	border-radius: 2px;
-	background-color: #FFF;
+	background-color: $white;
 	margin-bottom: 16px;
 }
 
 .app-card-header {
 	border-radius: 2px 2px 0 0;
-	background-color: #0091EA;
+	background-color: $primary;
 	padding: 12px;
-	color: #FFF;
+	color: $white;
 	display: flex;
 	justify-content: space-between;
 	padding-left: 24px;
 	padding-right: 24px;
-}
 
-.app-card-header > h1 {
-	margin: 0;
+	h1 {
+		margin: 0;
+	}
 }
 
 .app-card-action {

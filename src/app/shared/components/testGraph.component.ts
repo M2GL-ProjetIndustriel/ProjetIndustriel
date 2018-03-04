@@ -7,7 +7,7 @@ import { saveAs } from 'file-saver/FileSaver'
 @Component({
 	selector: 'app-test-graph',
 	templateUrl: './testGraph.component.html',
-	styleUrls: ['./testGraph.component.css']
+	styleUrls: ['./testGraph.component.scss']
 })
 export class TestGraphComponent implements AfterViewInit {
 

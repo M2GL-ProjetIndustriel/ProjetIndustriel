@@ -1,0 +1,37 @@
+@import '~sass/variables';
+
+.main-container {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: $grey;
+}
+
+.sidenav {
+	background-image: linear-gradient(to bottom, #182848, #4b6cb7);
+	display: flex;
+	flex-direction: column;
+	color: $white;
+}
+
+mat-nav-list {
+	margin-top: 56px;
+}
+
+mat-nav-list mat-list-item {
+	color: $grey;
+}
+mat-nav-list h3 {
+	color: $grey-200;
+}
+
+.main-content {
+	padding: 16px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
+}

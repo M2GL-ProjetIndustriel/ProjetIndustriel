@@ -19,7 +19,7 @@ import { ExperimentService } from '../experiment.service'
 @Component({
 	selector: 'experiments-list',
 	templateUrl: './experimentsList.component.html',
-	styleUrls: ['./experimentsList.component.css']
+	styleUrls: ['./experimentsList.component.scss']
 })
 export class ExperimentsListComponent implements AfterViewInit, OnDestroy {
 	/**
