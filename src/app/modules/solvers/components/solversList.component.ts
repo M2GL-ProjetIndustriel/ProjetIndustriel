@@ -108,13 +108,10 @@ export class SolversListComponent implements AfterViewInit, OnDestroy {
 				}),
 				map(data => {
 					this.isLoadingResults = false
-					if (data.resultsLength) {
-						this.resultsLength = data.totalLength
+					
+					this.resultsLength = data.count
 
-						return data.solvers
-					}
-					return data
-
+					return data.results
 				})
 			).subscribe(
 				data => this.dataSource.data = data,

@@ -97,7 +97,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 			}
 		))
 		//Sub to the exec file FileUploadComponent to get the file uploaded
-		this.subscriptions.push(this.sourceInput.onFileAddedToQueue.subscribe(
+		this.subscriptions.push(this.execInput.onFileAddedToQueue.subscribe(
 			file => {
 				this.execFile = file
 				this.validateFile(file.md5Hash)

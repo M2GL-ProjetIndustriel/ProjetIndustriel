@@ -5,7 +5,7 @@
 	<app-card *ngIf="solver" header="{{solver.name}}" fxFlex="100">
 		<mat-menu #solverActionMenu="matMenu">
 			<button mat-menu-item [routerLink]="['/solver/edit', solver.id]"><mat-icon>edit</mat-icon>Modifier</button>
-			<button mat-menu-item><mat-icon>delete</mat-icon>Supprimer</button>
+			<button mat-menu-item (click)="onDelete()"><mat-icon>delete</mat-icon>Supprimer</button>
 		</mat-menu>
 
 		<button mat-raised-button card-action color="accent" matTooltip="Options" [matMenuTriggerFor]="solverActionMenu">

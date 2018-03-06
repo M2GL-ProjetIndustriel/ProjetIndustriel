@@ -104,4 +104,13 @@ export class SolverService {
 				catchError(err => { throw err })
 			)
 	}
+
+	deleteSolver(solverID: string) {
+		return this.http.delete(appConfig.apiUrl + '/solver/' + solverID)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
 }

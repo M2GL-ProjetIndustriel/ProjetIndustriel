@@ -1,4 +1,5 @@
 export interface Solver {
+	id: string,
 	name: string
 	version: string
 	created: Date

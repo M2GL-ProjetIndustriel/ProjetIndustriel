@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ActivatedRoute, ParamMap } from '@angular/router'
-import { Location } from '@angular/common'
+import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 
 import { Solver } from '../solver.model'
 import { SolverService } from '../solver.service'
@@ -18,13 +17,13 @@ export class SolverDetailsComponent implements OnInit, OnDestroy {
 
 	constructor (
 		private route: ActivatedRoute,
-		private location: Location,
-		private experimentService: SolverService
+		private router: Router,
+		private solverService: SolverService
 	) {}
 
 	ngOnInit() {
 		this.subscriptions.push(this.route.params.subscribe(
-			params => this.experimentService.getSolver(params['solverID']).subscribe(
+			params => this.solverService.getSolver(params['solverID']).subscribe(
 				data => this.solver = data,
 				err => { throw err }
 			),
@@ -45,6 +44,17 @@ export class SolverDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	back() {
-		this.location.back()
+		this.router.navigate(['/solver'])
+	}
+
+	//TODO: dialog box ?
+	onDelete() {
+		this.solverService.deleteSolver(this.solver.id).subscribe(
+			data => this.back(),
+			err => {
+				this.back()
+				throw err
+			}
+		)
 	}
 }
