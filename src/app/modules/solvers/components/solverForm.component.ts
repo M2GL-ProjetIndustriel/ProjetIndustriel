@@ -58,6 +58,10 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 * Reference to the executable file extracted from the FileUploadComponent.
 	 */
 	execFile: CustomFile = null
+	/**
+	 * Value of the progress bar (0-100).
+	 */
+	progressValue: number = 0
 
 	/**
 	 * Constructor, create the form.
@@ -272,7 +276,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 */
 	addSolver() {
 		this.isLoadingResults = true
-		this.solverService.postSolver(this.buildFormData()).subscribe(
+		this.solverService.postSolver(this.buildFormData(), this.onProgressUpdate).subscribe(
 			data => this.router.navigate(['/solver/', data.id]),
 			err => {
 				this.isLoadingResults = false
@@ -287,12 +291,22 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 */
 	editSolver() {
 		this.isLoadingResults = true
-		this.solverService.editSolver(this.buildFormData(), this.solverID).subscribe(
+		this.solverService.editSolver(this.buildFormData(), this.solverID, this.onProgressUpdate).subscribe(
 			data => this.router.navigate(['/solver/', data.id]),
 			err => {
 				this.isLoadingResults = false
 				throw err
 			}
 		)
+	}
+
+	onProgressUpdate(message: any) {
+		if (typeof message === 'number') {
+			this.progressValue = message
+			console.log(this.progressValue)
+
+		}
+		else
+			console.log(message)
 	}
 }

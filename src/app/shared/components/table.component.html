@@ -1,4 +1,7 @@
-<div *ngIf="isTableSetUp">
+<div *ngIf="isTableSetUp" class="table-container">
+	<div class="loading-shade" *ngIf="isLoadingResults">
+		<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+	</div>
 	<mat-table [dataSource]="dataSource" matSort>
 
 		<ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnKey">

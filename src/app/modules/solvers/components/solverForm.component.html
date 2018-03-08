@@ -1,8 +1,9 @@
 <button mat-raised-button color="primary" class="button-margin-bottom" (click)="back()"><mat-icon>arrow_back</mat-icon>Retour</button>
 <app-card header="Ajouter/Modifier un solveur">
-	<div card-content>
+	<div card-content class="form-container">
 		<div class="loading-shade" *ngIf="isLoadingResults">
-			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+			<!--<mat-spinner *ngIf="isLoadingResults"></mat-spinner>-->
+			<mat-progress-bar mode="determinate" [value]="progressValue" color="primary"></mat-progress-bar>
 		</div>
 		<form [formGroup]="solverForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 			<!-- Data fields -->

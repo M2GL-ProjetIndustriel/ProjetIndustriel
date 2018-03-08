@@ -15,6 +15,9 @@ import { switchMap } from 'rxjs/operators/switchMap'
  * Take a service name and a function name
  * as input, the columns and routing are set up by calling the setUpTable
  * function.
+ *
+ * Use angular material table component. See angular material table
+ * documentation for more informations.
  */
 @Component({
 	selector: 'app-table',

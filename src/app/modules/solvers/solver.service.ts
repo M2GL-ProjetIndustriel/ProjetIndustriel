@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http'
+import { HttpClient, HttpParams, HttpHeaders, HttpRequest, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http'
 
-import { catchError, retry, map } from 'rxjs/operators'
+import { catchError, retry, map, tap, last } from 'rxjs/operators'
 
 import { ApiMessageService } from '../../shared/apiMessage.service'
 import { appConfig } from '../../config'
@@ -69,29 +69,29 @@ export class SolverService {
 			)
 	}
 
-	postSolver(data: FormData) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'enctype': 'multipart/form-data'
-			})
-		}
-		return this.http.post(appConfig.apiUrl + '/solver/', data, httpOptions)
+	postSolver(data: FormData, progressHandler?: (message: any) => void) {
+		const req = this.createFormDataRequest('POST', appConfig.apiUrl + '/solver/', data)
+
+		return this.http.request(req)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
+				map(event => this.getEventMessage(event)),
+				tap(progressHandler),
+				last(),
 				map(this.apiMessageService.handleMessage),
 				catchError(err => { throw err })
 			)
 	}
 
-	editSolver(data: FormData, solverID: string) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'enctype': 'multipart/form-data'
-			})
-		}
-		return this.http.put(appConfig.apiUrl + '/solver/' + solverID, data, httpOptions)
+	editSolver(data: FormData, solverID: string, progressHandler?: (message: any) => void) {
+		const req = this.createFormDataRequest('PUT', appConfig.apiUrl + '/solver/' + solverID, data)
+
+		return this.http.request(req)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
+				map(event => this.getEventMessage(event)),
+				tap(progressHandler),
+				last(),
 				map(this.apiMessageService.handleMessage),
 				catchError(err => { throw err })
 			)
@@ -112,5 +112,29 @@ export class SolverService {
 				map(this.apiMessageService.handleMessage),
 				catchError(err => { throw err })
 			)
+	}
+
+	private createFormDataRequest(method: string, url: string, data: FormData): HttpRequest<any> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'enctype': 'multipart/form-data'
+			}),
+			reportProgress: true
+		}
+
+		return new HttpRequest(method, url, data, httpOptions)
+	}
+
+	private getEventMessage(event: HttpEvent<any>) {
+		switch(event.type) {
+			case HttpEventType.Sent:
+				return 'Upload start'
+			case HttpEventType.UploadProgress:
+				return Math.round(100 * event.loaded / event.total)
+			case HttpEventType.Response:
+				return event.body
+			default:
+				return 'Some event: ' + event.type
+		}
 	}
 }
