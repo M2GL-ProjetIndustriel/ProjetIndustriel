@@ -4,42 +4,6 @@
 	</button>
 
 	<div card-content>
-		<div class="table-container">
-			<div class="loading-shade" *ngIf="isLoadingResults">
-				<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-			</div>
-
-			<mat-table [dataSource]="dataSource" matSort>
-
-				<!-- Name Column -->
-				<ng-container matColumnDef="id">
-					<mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
-					<mat-cell *matCellDef="let solver"> {{solver.name}} </mat-cell>
-				</ng-container>
-
-				<!-- Version Column -->
-				<ng-container matColumnDef="name">
-					<mat-header-cell *matHeaderCellDef mat-sort-header> Version </mat-header-cell>
-					<mat-cell *matCellDef="let solver"> {{solver.version}} </mat-cell>
-				</ng-container>
-
-				<!-- Added date Column -->
-				<ng-container matColumnDef="created">
-					<mat-header-cell *matHeaderCellDef mat-sort-header> Date d'ajout </mat-header-cell>
-					<mat-cell *matCellDef="let solver"> {{solver.created | date: 'dd MMMM yy | h:mm:ss z'}} </mat-cell>
-				</ng-container>
-
-				<!-- Modified date Column -->
-				<ng-container matColumnDef="modified">
-					<mat-header-cell *matHeaderCellDef mat-sort-header> Date de modification </mat-header-cell>
-					<mat-cell *matCellDef="let solver"> {{solver.modified | date: 'dd MMMM yy | h:mm:ss z'}} </mat-cell>
-				</ng-container>
-
-				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-				<mat-row *matRowDef="let solver; columns: displayedColumns;" [routerLink]="['/solver', solver.id]" class="table-row"></mat-row>
-			</mat-table>
-
-			<mat-paginator [length]="resultsLength" [pageSizeOptions]="[100, 250, 500, 1000]"></mat-paginator>
-		</div>
+		<app-table serviceName="SolverService" dataStreamName="getSolvers" #table></app-table>
 	</div>
 </app-card>

@@ -106,7 +106,11 @@ import { SolverService } from './solver.service'
 	],
 	providers: [
 		DatePipe,
-		SolverService
+		SolverService,
+		{
+			provide: 'SolverService',
+			useExisting: SolverService
+		}
 	]
 })
 export class SolversModule { }

@@ -46,6 +46,7 @@ import { CardComponent } from './components/card.component'
 import { UnluckyRouteComponent } from './components/unluckyRoute.component'
 import { TestGraphComponent } from './components/testGraph.component'
 import { FileUploadComponent } from './components/fileUpload.component'
+import { TableComponent } from './components/table.component'
 import { ErrorDirective } from './error.directive'
 
 /* Providers ################################################################ */
@@ -102,6 +103,7 @@ import { ApiMessageService } from './apiMessage.service'
 		CardComponent,
 		TestGraphComponent,
 		FileUploadComponent,
+		TableComponent,
 		ErrorDirective
 	],
 	exports: [
@@ -111,6 +113,7 @@ import { ApiMessageService } from './apiMessage.service'
 		CardComponent,
 		TestGraphComponent,
 		FileUploadComponent,
+		TableComponent,
 		ErrorDirective
 	],
 	providers: [

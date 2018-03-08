@@ -7,9 +7,9 @@
 .drop-zone {
 	height: 200px;
 	background-color: $grey;
-	border: 1px dotted #BBB;
+	border: 1px dotted $grey-900;
 	border-radius: 2px;
-	color: #757575;
+	color: $grey-600;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;

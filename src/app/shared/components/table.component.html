@@ -1,0 +1,19 @@
+<div *ngIf="isTableSetUp">
+	<mat-table [dataSource]="dataSource" matSort>
+
+		<ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnKey">
+			<mat-header-cell *matHeaderCellDef mat-sort-header> {{column.columnHeader}} </mat-header-cell>
+			<mat-cell *matCellDef="let row"> {{row[column.columnKey]}} </mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"
+			[routerLink]="[tableRouterLink.routerLink, row[tableRouterLink.tableColumnKey]]"></mat-row>
+		<!-- -->
+	</mat-table>
+
+	<mat-paginator [length]="resultsLength" [pageSizeOptions]="[100, 250, 500, 1000]"></mat-paginator>
+</div>
+<div *ngIf="!isTableSetUp">
+	<p>Table non initialisé</p>
+</div>

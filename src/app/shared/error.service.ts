@@ -50,6 +50,5 @@ export class ErrorService {
 	 */
 	getQualityErrorMessage() {
 		return this.qualityErrorMessages[Math.floor(Math.random() * this.qualityErrorMessages.length)]
-
 	}
 }
