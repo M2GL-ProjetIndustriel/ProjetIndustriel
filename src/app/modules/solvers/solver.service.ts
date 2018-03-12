@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpParams, HttpHeaders, HttpRequest, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http'
+import {
+	HttpClient,
+	HttpParams,
+	HttpHeaders,
+	HttpRequest,
+	HttpEvent,
+	HttpEventType,
+	HttpResponse
+} from '@angular/common/http'
 
 import { catchError, retry, map, tap, last } from 'rxjs/operators'
 
@@ -41,7 +49,7 @@ export class SolverService {
 	getSolvers(pageIndex?: number, pageSize?: number, sort?: string, order?: string) {
 		let params = new HttpParams()
 		params = params.append('pageIndex', (pageIndex) ? pageIndex.toString() : '')
-		params = params.append('pageSize', (pageSize) ? pageSize.toString() : '')
+		params = params.append('page_size', (pageSize) ? pageSize.toString() : '')
 		params = params.append('sort', (sort) ? sort : '')
 		params = params.append('order', (order) ? order : '')
 
@@ -69,40 +77,16 @@ export class SolverService {
 			)
 	}
 
-	postSolver(data: FormData, progressHandler?: (message: any) => void) {
+	postSolver(data: FormData, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
 		const req = this.createFormDataRequest('POST', appConfig.apiUrl + '/solver/', data)
 
-		return this.http.request(req)
-			.pipe(
-				retry(appConfig.httpFailureRetryNumber),
-				map(event => this.getEventMessage(event)),
-				tap(progressHandler),
-				last(),
-				map(this.apiMessageService.handleMessage),
-				catchError(err => { throw err })
-			)
+		return this.requestWithProgress(req, progressHandler, ctx)
 	}
 
-	editSolver(data: FormData, solverID: string, progressHandler?: (message: any) => void) {
+	editSolver(data: FormData, solverID: string, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
 		const req = this.createFormDataRequest('PUT', appConfig.apiUrl + '/solver/' + solverID, data)
 
-		return this.http.request(req)
-			.pipe(
-				retry(appConfig.httpFailureRetryNumber),
-				map(event => this.getEventMessage(event)),
-				tap(progressHandler),
-				last(),
-				map(this.apiMessageService.handleMessage),
-				catchError(err => { throw err })
-			)
-	}
-
-	getSolverFile(url: string) {
-		return this.http.get(url, { responseType: 'blob' })
-			.pipe(
-				retry(appConfig.httpFailureRetryNumber),
-				catchError(err => { throw err })
-			)
+		return this.requestWithProgress(req, progressHandler, ctx)
 	}
 
 	deleteSolver(solverID: string) {
@@ -111,6 +95,24 @@ export class SolverService {
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),
 				catchError(err => { throw err })
+			)
+	}
+
+	getSolverFile(url: string, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
+		const req = new HttpRequest('GET', url, {
+			reportProgress: true,
+			responseType: 'blob'
+		})
+
+		return this.http.request(req)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(event => this.getEventMessage(event)),
+				tap((msg) => {
+					if (progressHandler)
+						progressHandler(msg, ctx)
+				}),
+				last(),
 			)
 	}
 
@@ -125,11 +127,28 @@ export class SolverService {
 		return new HttpRequest(method, url, data, httpOptions)
 	}
 
+	private requestWithProgress(req: HttpRequest<any>, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
+		return this.http.request(req)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(event => this.getEventMessage(event)),
+				tap((msg) => {
+					if (progressHandler)
+						progressHandler(msg, ctx)
+				}),
+				last(),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
 	private getEventMessage(event: HttpEvent<any>) {
 		switch(event.type) {
 			case HttpEventType.Sent:
 				return 'Upload start'
 			case HttpEventType.UploadProgress:
+				return Math.round(100 * event.loaded / event.total)
+			case HttpEventType.DownloadProgress:
 				return Math.round(100 * event.loaded / event.total)
 			case HttpEventType.Response:
 				return event.body

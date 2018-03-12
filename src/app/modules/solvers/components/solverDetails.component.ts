@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 
-import { Solver } from '../solver.model'
 import { SolverService } from '../solver.service'
 
 @Component({
@@ -11,7 +10,7 @@ import { SolverService } from '../solver.service'
 })
 export class SolverDetailsComponent implements OnInit, OnDestroy {
 
-	solver: Solver
+	solver: any
 
 	subscriptions = []
 

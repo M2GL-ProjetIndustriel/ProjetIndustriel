@@ -171,30 +171,42 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 * @param  data Data containing infos on the solver.
 	 */
 	getSolverToEditFiles(data: any) {
-		if (data.source_path)
-			this.solverService.getSolverFile(data.source_path).subscribe(
-				(blob: Blob) => {
-					this.sourceInput.onFileAdded(null, new File([blob], data.source_path.split('/').pop()))
-					this.isLoadingResults = false
-				},
-				err => {
-					this.isLoadingResults = false
-					throw err
-				})
-
-		if (data.executable_path)
-			this.solverService.getSolverFile(data.executable_path).subscribe(
-				(blob: Blob) => {
-					this.execInput.onFileAdded(null, new File([blob], data.executable_path.split('/').pop()))
-					this.isLoadingResults = false
-				},
-				err => {
-					this.isLoadingResults = false
-					throw err
-				})
-
-		if(!data.source_path && !data.executable_path)
+		if (data.source_path && data.executable_path)
+			this.getSolverToEditSourceFiles(data, this.getSolverToEditExecFiles)
+		else if (data.source_path)
+			this.getSolverToEditSourceFiles(data)
+		else if (data.executable_path)
+			this.getSolverToEditExecFiles(data)
+		else
 			this.isLoadingResults = false
+	}
+
+	getSolverToEditSourceFiles(data: any, callback?: (data: any) => void) {
+		this.solverService.getSolverFile(data.source_path, this.onProgressUpdate, this).subscribe(
+			(blob: Blob) => {
+				this.sourceInput.onFileAdded(null, new File([blob], data.source_path.split('/').pop()))
+				this.isLoadingResults = false
+
+				if (callback) callback(data)
+			},
+			err => {
+				this.isLoadingResults = false
+				throw err
+			})
+	}
+
+	getSolverToEditExecFiles(data: any, callback?: (data: any) => void) {
+		this.solverService.getSolverFile(data.executable_path, this.onProgressUpdate, this).subscribe(
+			(blob: Blob) => {
+				this.execInput.onFileAdded(null, new File([blob], data.executable_path.split('/').pop()))
+				this.isLoadingResults = false
+
+				if (callback) callback(data)
+			},
+			err => {
+				this.isLoadingResults = false
+				throw err
+			})
 	}
 
 	/**
@@ -210,9 +222,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	createForm() {
 		this.solverForm = this.formBuilder.group({
 			name: ['', [Validators.required, Validators.maxLength(100)]],
-			version: ['', Validators.maxLength(100)],
-			created: [new Date(), Validators.required],
-			modified: [new Date(), Validators.required]
+			version: ['', Validators.maxLength(100)]
 		})
 	}
 
@@ -236,9 +246,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	setFormValues(data) {
 		this.solverForm.setValue({
 			name: data.name,
-			version: data.version,
-			created: data.created,
-			modified: data.modified
+			version: data.version
 		})
 	}
 
@@ -252,8 +260,6 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 
 		formData.append('name', this.solverForm.value.name)
 		formData.append('version', this.solverForm.value.version)
-		formData.append('created', this.datePipe.transform(this.solverForm.value.created, 'yyyy-MM-ddThh:mm'))
-		formData.append('modified', this.datePipe.transform(this.solverForm.value.modified, 'yyyy-MM-ddThh:mm'))
 
 		//add check api logic
 		//if (this.sourceFile && this.sourceFile.apiValidationStatus === ApiValidationStatus.Validated)
@@ -276,7 +282,8 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 */
 	addSolver() {
 		this.isLoadingResults = true
-		this.solverService.postSolver(this.buildFormData(), this.onProgressUpdate).subscribe(
+		this.progressValue = 0
+		this.solverService.postSolver(this.buildFormData(), this.onProgressUpdate, this).subscribe(
 			data => this.router.navigate(['/solver/', data.id]),
 			err => {
 				this.isLoadingResults = false
@@ -291,7 +298,8 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 */
 	editSolver() {
 		this.isLoadingResults = true
-		this.solverService.editSolver(this.buildFormData(), this.solverID, this.onProgressUpdate).subscribe(
+		this.progressValue = 0
+		this.solverService.editSolver(this.buildFormData(), this.solverID, this.onProgressUpdate, this).subscribe(
 			data => this.router.navigate(['/solver/', data.id]),
 			err => {
 				this.isLoadingResults = false
@@ -300,13 +308,8 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 		)
 	}
 
-	onProgressUpdate(message: any) {
-		if (typeof message === 'number') {
-			this.progressValue = message
-			console.log(this.progressValue)
-
-		}
-		else
-			console.log(message)
+	onProgressUpdate(message: any, ctx?: any) {
+		if (typeof message === 'number' && ctx)
+			ctx.progressValue = message
 	}
 }
