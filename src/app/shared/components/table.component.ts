@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs/operators/switchMap'
 //TODO: find an alternative
 /**
  * Table component, dynamic table with pagination, assume the data is provided
- * by a service and a http request.
+ * by a service and an http request.
  *
  * Take a service name and a function name
  * as input, the columns and routing are set up by calling the setUpTable
@@ -87,6 +87,10 @@ export class TableComponent implements AfterViewInit, OnDestroy, OnInit {
 	 */
 	refresh: EventEmitter<any> = new EventEmitter()
 
+	/**
+	 * Constructor, doesn't do shit.
+	 * @param injector Injection injection.
+	 */
 	constructor(private injector: Injector) {}
 
 	/**
@@ -186,7 +190,13 @@ export class TableComponent implements AfterViewInit, OnDestroy, OnInit {
  * A table column is defined by a key and a header name.
  */
 export interface TableColumn {
+	/**
+	 * Key of the column.
+	 */
 	columnKey: string
+	/**
+	 * Header of the column, value that is displayed on the table.
+	 */
 	columnHeader: string
 }
 
@@ -195,6 +205,12 @@ export interface TableColumn {
  * column key for the data to pass to the route (optional).
  */
 export interface TableRouterLink {
+	/**
+	 * Route to redirect to.
+	 */
 	routerLink: string
+	/**
+	 * Key of the colmun to use to pass as parameters the route.
+	 */
 	tableColumnKey: string
 }

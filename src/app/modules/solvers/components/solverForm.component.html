@@ -2,7 +2,6 @@
 <app-card header="Ajouter/Modifier un solveur">
 	<div card-content class="form-container">
 		<div class="loading-shade" *ngIf="isLoadingResults">
-			<!--<mat-spinner *ngIf="isLoadingResults"></mat-spinner>-->
 			<h1 class="mat-display-1" *ngIf="isLoadingResults">{{progressValue}}%</h1>
 			<mat-progress-bar color="warn" [value]="progressValue"></mat-progress-bar>
 		</div>
