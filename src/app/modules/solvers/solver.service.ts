@@ -36,10 +36,10 @@ export class SolverService {
 	) {}
 
 	/**
-	 * Function requesting a list of solvers. Take apge number a and a
-	 * page size as parameters, if none of them are present the request
-	 * should return evry single solvers otherwise should return the
-	 * solvers of the corresponding page.
+	 * Function requesting a list of solvers. Take a page number and a
+	 * page size as parameters for pagination, and a sort colomn and a sort
+	 * order (asc or desc) for sorting purpose should return the solvers of the
+	 * corresponding page sorted in the requested order.
 	 * @param  pageIndex Number of the page requested.
 	 * @param  pageSize  Size of a page.
 	 * @param  sort      Sorting preference of the request.
@@ -65,8 +65,8 @@ export class SolverService {
 	/**
 	 * Function requesting a specific solver. Take the requested solver
 	 * ID as a parameter.
-	 * @param  solverID The id of the solver requested.
-	 * @return              Return an observable to subscribe to.
+	 * @param  solverID Id of the solver requested.
+	 * @return          Return an observable to subscribe to.
 	 */
 	getSolver(solverID: string) {
 		return this.http.get(appConfig.apiUrl + '/solver/' + solverID)
@@ -77,18 +77,44 @@ export class SolverService {
 			)
 	}
 
+	/**
+	 * Post the FormData to create a new solver. Since the solver might need to
+	 * upload files the request is reporting progress to keep an eye on the
+	 * progress of the upload. The function can be given a function and a
+	 * context to be called each time progress is reported.
+	 * @param  data            Data to post.
+	 * @param  progressHandler Function handling the event messages on progress update.
+	 * @param  ctx             Context to be passed to the progressHandler function.
+	 * @return                 Return an observable to subscribe to.
+	 */
 	postSolver(data: FormData, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
 		const req = this.createFormDataRequest('POST', appConfig.apiUrl + '/solver/', data)
 
 		return this.requestWithProgress(req, progressHandler, ctx)
 	}
 
+	/**
+	 * Put the FormData to update an existing solver. Since the solver might
+	 * need to upload files the request is reporting progress to keep an eye
+	 * on the progress of the upload. The function can be given a function and a
+	 * context to be called each time progress is reported.
+	 * @param  data            Data to update.
+	 * @param  solverID        Id of the solver to update.
+	 * @param  progressHandler Function handling the event messages on progress update.
+	 * @param  ctx             Context to be passed to the progressHandler function.
+	 * @return                 Return an observable to subscribe to.
+	 */
 	editSolver(data: FormData, solverID: string, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
 		const req = this.createFormDataRequest('PUT', appConfig.apiUrl + '/solver/' + solverID, data)
 
 		return this.requestWithProgress(req, progressHandler, ctx)
 	}
 
+	/**
+	 * Request a solver to be deleted.
+	 * @param  solverID Id of the solver to be deleted.
+	 * @return          Return an observable to subscribe to.
+	 */
 	deleteSolver(solverID: string) {
 		return this.http.delete(appConfig.apiUrl + '/solver/' + solverID)
 			.pipe(
@@ -98,6 +124,16 @@ export class SolverService {
 			)
 	}
 
+	/**
+	 * Download the files of a solver (source files and executable). Since it's
+	 * a download the request is reporting progress to keep an eye on the
+	 * progress of the download. The function can be given a function and a
+	 * context to be called each time progress is reported.
+	 * @param  url             Location of the file to download.
+	 * @param  progressHandler Function handling the event messages on progress update.
+	 * @param  ctx             Context to be passed to the progressHandler function.
+	 * @return                 Return an observable to subscribe to.
+	 */
 	getSolverFile(url: string, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
 		const req = new HttpRequest('GET', url, {
 			reportProgress: true,
@@ -116,6 +152,13 @@ export class SolverService {
 			)
 	}
 
+	/**
+	 * Create a multipart/form-data request that report progress.
+	 * @param  method Http method of the request (GET, POST, ...)
+	 * @param  url    Url of the request.
+	 * @param  data   FormData of the request.
+	 * @return        Return an HttpRequest.
+	 */
 	private createFormDataRequest(method: string, url: string, data: FormData): HttpRequest<any> {
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -127,6 +170,15 @@ export class SolverService {
 		return new HttpRequest(method, url, data, httpOptions)
 	}
 
+	/**
+	 * Handle a request with progress, each time progress is reported, the
+	 * progressHandler function is called and will only return the last progress
+	 * message which is the HttpResponse.
+	 * @param  req             An Http request who report progress.
+	 * @param  progressHandler Function handling the event messages on progress update.
+	 * @param  ctx             Context to be passed to the progressHandler function.
+	 * @return                 Return an observable to subscribe to.
+	 */
 	private requestWithProgress(req: HttpRequest<any>, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
 		return this.http.request(req)
 			.pipe(
@@ -142,10 +194,19 @@ export class SolverService {
 			)
 	}
 
+	/**
+	 * Function handling the events in a request who report progres, the only
+	 * event type supported are UploadProgress, DownloadProgress who will
+	 * return the percentage of the upload or download. The event type Response
+	 * will return the HttpResponse.
+	 *
+	 * Can be subject to change if the handling of other event type become
+	 * necessary.
+	 * @param  event An Http event.
+	 * @return       Return a number or an HttpResponse.
+	 */
 	private getEventMessage(event: HttpEvent<any>) {
 		switch(event.type) {
-			case HttpEventType.Sent:
-				return 'Upload start'
 			case HttpEventType.UploadProgress:
 				return Math.round(100 * event.loaded / event.total)
 			case HttpEventType.DownloadProgress:

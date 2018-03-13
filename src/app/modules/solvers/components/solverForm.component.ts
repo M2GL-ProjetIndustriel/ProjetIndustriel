@@ -29,11 +29,11 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 */
 	solverID: string
 	/**
-	 * Whether or not a http request is ongoing.
+	 * Whether or not an http request is ongoing.
 	 */
 	isLoadingResults: boolean = false
 	/**
-	 * Reference to the form.
+	 * Form reference.
 	 */
 	solverForm: FormGroup
 	/**
@@ -59,7 +59,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 */
 	execFile: CustomFile = null
 	/**
-	 * Value of the progress bar (0-100).
+	 * Value of the progress of the download/upload (0-100).
 	 */
 	progressValue: number = 0
 
@@ -119,7 +119,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Check if it's an edit or an addition by tryong to get the ':solverID'
+	 * Check if it's an edit or an addition by trying to get the ':solverID'
 	 * params in the route, if no param ':solverID' was found it's not an edit,
 	 * otherwise if a ':solverID' is found it mean it's an edit and will set to
 	 * true the 'isEdit' flag and call getSolverToEdit to, you guessed it, get
@@ -166,13 +166,13 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Call the solverService to retrieve the file of the solver (if present)
+	 * Call the solverService to retrieve the files of the solver (if present)
 	 * and add them to the corresponding FileUploadComponent.
 	 * @param  data Data containing infos on the solver.
 	 */
 	getSolverToEditFiles(data: any) {
 		if (data.source_path && data.executable_path)
-			this.getSolverToEditSourceFiles(data, this.getSolverToEditExecFiles)
+			this.getSolverToEditSourceFiles(data, true)
 		else if (data.source_path)
 			this.getSolverToEditSourceFiles(data)
 		else if (data.executable_path)
@@ -181,13 +181,21 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 			this.isLoadingResults = false
 	}
 
-	getSolverToEditSourceFiles(data: any, callback?: (data: any) => void) {
+	/**
+	 * Call solverService to get the source file of the solver and add the file
+	 * retrieved to the corresponding FileUploadComponent.
+	 * @param  data        Data containing infos on the solver.
+	 * @param  getExecFile Whether or not to get the exec files once the source files have been retrieved.
+	 */
+	getSolverToEditSourceFiles(data: any, getExecFile?: boolean) {
 		this.solverService.getSolverFile(data.source_path, this.onProgressUpdate, this).subscribe(
 			(blob: Blob) => {
 				this.sourceInput.onFileAdded(null, new File([blob], data.source_path.split('/').pop()))
-				this.isLoadingResults = false
 
-				if (callback) callback(data)
+				if (getExecFile)
+					this.getSolverToEditExecFiles(data)
+				else
+					this.isLoadingResults = false
 			},
 			err => {
 				this.isLoadingResults = false
@@ -195,13 +203,16 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 			})
 	}
 
-	getSolverToEditExecFiles(data: any, callback?: (data: any) => void) {
+	/**
+	* Call solverService to get the executable file of the solver and add the
+	* file retrieved to the corresponding FileUploadComponent.
+	 * @param  data     Data containing infos on the solver.
+	 */
+	getSolverToEditExecFiles(data: any) {
 		this.solverService.getSolverFile(data.executable_path, this.onProgressUpdate, this).subscribe(
 			(blob: Blob) => {
 				this.execInput.onFileAdded(null, new File([blob], data.executable_path.split('/').pop()))
 				this.isLoadingResults = false
-
-				if (callback) callback(data)
 			},
 			err => {
 				this.isLoadingResults = false
@@ -273,7 +284,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	}
 
 	validateFile(fileMd5: string) {
-		//check with the api there
+		//check with the api here
 	}
 
 	/**
@@ -308,8 +319,16 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 		)
 	}
 
+	/**
+	 * Progress handler, update progressValue, called during the download or
+	 * upload of files from the form.
+	 * @param  message Progress message received.
+	 * @param  ctx     Context, reference to this SolverFormComponent.
+	 */
 	onProgressUpdate(message: any, ctx?: any) {
 		if (typeof message === 'number' && ctx)
 			ctx.progressValue = message
+		else if (typeof message !== 'number' && ctx)
+			ctx.progressValue = 0
 	}
 }
