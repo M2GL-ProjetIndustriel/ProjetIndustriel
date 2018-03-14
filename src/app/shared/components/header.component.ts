@@ -50,11 +50,11 @@ export class HeaderComponent implements AfterViewInit {
 
 	/**
 	 * Constructor, doesn't do shit.
-	 * @param renderer Renderer, used to set up native event listener on html
-	 * elements.
+	 * @param renderer Renderer, used to set up native event listener on html elements.
 	 */
-	constructor(public renderer: Renderer2) {
-	}
+	constructor(
+		public renderer: Renderer2
+	) {}
 
 	/**
 	 * Set up events listener after view init.

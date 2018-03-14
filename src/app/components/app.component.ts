@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 
-import { appConfig } from './config'
+import { appConfig } from '../config'
 
 /**
  * Bootstraper component.

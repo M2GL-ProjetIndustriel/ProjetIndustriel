@@ -1,0 +1,38 @@
+@import '~sass/variables';
+
+.login-form-container {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: $primary;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	form {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		background-color: $grey;
+		padding: 32px;
+		border-radius: 2px;
+
+		h1 {
+			color: $grey-600;
+		}
+
+		mat-form-field {
+			margin-bottom: 16px;
+
+			min-width: 300px;
+		}
+
+		button {
+			margin-top: 16px;
+		}
+	}
+}

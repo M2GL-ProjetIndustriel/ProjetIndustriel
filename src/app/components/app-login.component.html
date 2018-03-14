@@ -1,0 +1,16 @@
+<div class="login-form-container">
+	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate class="mat-elevation-z4">
+		<h1>Connexion</h1>
+		<mat-form-field hintLabel="100 charatères max">
+			<input matInput placeholder="Nom d'utilisateur*" formControlName="username">
+			<mat-error *ngIf="loginForm.get('username').invalid && loginForm.get('username').dirty">Nom d'utilisateur invalide</mat-error>
+			<mat-hint align="end">{{loginForm.get('username').value?.length || 0}}/100</mat-hint>
+		</mat-form-field>
+		<mat-form-field hintLabel="100 charatères max">
+			<input type="password" matInput placeholder="Mot de passe*" formControlName="password">
+			<mat-error *ngIf="loginForm.get('password').invalid && loginForm.get('password').dirty">Mot de passe invalide</mat-error>
+			<mat-hint align="end">{{loginForm.get('password').value?.length || 0}}/100</mat-hint>
+		</mat-form-field>
+		<button type="submit" mat-raised-button color="warn">Connexion</button>
+	</form>
+</div>

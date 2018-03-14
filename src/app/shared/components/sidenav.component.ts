@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
+import { Router, NavigationStart } from '@angular/router'
 
 /**
  * Sidenav component, the sidebar of the app, this is the main component of the
@@ -42,4 +43,24 @@ export class SidenavComponent {
 			'routerLink': 'search'
 		}
 	]
+	/**
+	 * Reference to the sidenav component.
+	 */
+	@ViewChild('sidenav') sidenav: any
+
+	/**
+	 * Constructor, subscribe to events change on the router and hide the
+	 * sidenav if the route is '/login'.
+	 * @param router Router injection.
+	 */
+	constructor(private router: Router) {
+		router.events.subscribe(
+			event => {
+				if (event instanceof NavigationStart && event.url.startsWith('/login')) {
+					if (this.sidenav.opened)
+						this.sidenav.close()
+				}
+			}
+		)
+	}
 }
