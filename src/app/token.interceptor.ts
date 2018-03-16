@@ -12,12 +12,14 @@ import { Observable } from 'rxjs/Observable'
 export class TokenInterceptor implements HttpInterceptor {
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		request = request.clone({
-			setHeaders: {
-				Authorization: `Bearer ${localStorage.getItem('user')}`
-			}
-		})
-
+		if (localStorage.getItem('user')) {
+			request = request.clone({
+				setHeaders: {
+					Authorization: `Token ${JSON.parse(localStorage.getItem('user')).token}`
+				}
+			})
+		}
+		
 		return next.handle(request)
 	}
 }

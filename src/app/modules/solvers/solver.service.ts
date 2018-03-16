@@ -88,7 +88,7 @@ export class SolverService {
 	 * @return                 Return an observable to subscribe to.
 	 */
 	postSolver(data: FormData, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
-		const req = this.createFormDataRequest('POST', appConfig.apiUrl + '/solver/', data)
+		const req = this.createFormDataRequest('POST', appConfig.apiUrl + '/solver', data)
 
 		return this.requestWithProgress(req, progressHandler, ctx)
 	}
