@@ -20,7 +20,7 @@ export class ErrorDirective {
 		private errors: ErrorService,
 		private snackBar: MatSnackBar
 	) {
-		//TODO: fix using an interval to prevent overflow
+		//TODO: fix using an interval to prevent overflow -> overflow is not the issue
 		this.errors.errors.subscribe(
 			data => {
 				this.snackBar.open(data, 'OK', { duration: 3000 })

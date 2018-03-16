@@ -48,13 +48,17 @@ export class HeaderComponent implements AfterViewInit {
 	 */
 	searchFormState: string = 'notFocused'
 
+	user: any
+
 	/**
 	 * Constructor, doesn't do shit.
 	 * @param renderer Renderer, used to set up native event listener on html elements.
 	 */
 	constructor(
 		public renderer: Renderer2
-	) {}
+	) {
+		this.user = localStorage.getItem('user') || { username: null }
+	}
 
 	/**
 	 * Set up events listener after view init.

@@ -1,32 +1,17 @@
 import { ModuleWithProviders } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 
-import { experimentsRoutes } from './modules/experiments/experiments.routes'
-import { instancesRoutes } from './modules/instances/instances.routes'
-import { solversRoutes } from './modules/solvers/solvers.routes'
+import { authenticationRoutes } from './modules/authentication/authentication.routes'
 
-import { AppLoginComponent } from './components/app-login.component'
+import { AppHomeComponent } from './components/app-home.component'
 import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
 
-import { AppAuthenticationGuard } from './app-authentication.guard'
 
 /**
  * Routes of the app, some routes are imported from other modules.
  */
 export const appRoutes: Routes = [
-	{
-		path: '',
-		canActivate: [AppAuthenticationGuard],
-		children: [
-			...experimentsRoutes,
-			...instancesRoutes,
-			...solversRoutes
-		]
-	},
-	{
-		path: 'login',
-		component: AppLoginComponent
-	},
+	...authenticationRoutes,
 	{
 		path: '**',
 		component: UnluckyRouteComponent

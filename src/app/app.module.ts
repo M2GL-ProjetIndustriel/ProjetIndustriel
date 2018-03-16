@@ -1,17 +1,13 @@
 /* Imports ################################################################## */
 import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { ReactiveFormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { registerLocaleData } from '@angular/common'
 import localFr from '@angular/common/locales/fr'
-import {
-	MatButtonModule,
-	MatFormFieldModule,
-	MatInputModule,
-} from '@angular/material'
 
 import { SharedModule } from './shared/shared.module'
+import { AuthenticationModule } from './modules/authentication/authentication.module'
 import { ExperimentsModule } from './modules/experiments/experiments.module'
 import { InstancesModule } from './modules/instances/instances.module'
 import { SolversModule } from './modules/solvers/solvers.module'
@@ -20,12 +16,11 @@ import { appRouting } from './app.routes'
 
 /* Declarations ############################################################# */
 import { AppComponent } from './components/app.component'
-import { AppLoginComponent } from './components/app-login.component'
+import { AppHomeComponent } from './components/app-home.component'
 
 /* Providers ################################################################ */
 import { GlobalErrorHandler } from './error-handler'
-import { AppAuthenticationService } from './app-authentication.service'
-import { AppAuthenticationGuard } from './app-authentication.guard'
+import { TokenInterceptor } from './token.interceptor'
 
 //Register fr-FR local
 registerLocaleData(localFr)
@@ -36,11 +31,8 @@ registerLocaleData(localFr)
 @NgModule({
 	imports: [
 		BrowserModule,
-		ReactiveFormsModule,
-		MatButtonModule,
-		MatFormFieldModule,
-		MatInputModule,
 		SharedModule,
+		AuthenticationModule,
 		ExperimentsModule,
 		InstancesModule,
 		SolversModule,
@@ -48,16 +40,22 @@ registerLocaleData(localFr)
 	],
 	declarations: [
 		AppComponent,
-		AppLoginComponent
+		AppHomeComponent
 	],
 	providers: [
 		{
 			provide: ErrorHandler,
 			useClass: GlobalErrorHandler
 		},
-		{ provide: LOCALE_ID, useFactory: () => "fr-FR" },
-		AppAuthenticationService,
-		AppAuthenticationGuard
+		{
+			provide: LOCALE_ID,
+			useFactory: () => "fr-FR"
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: TokenInterceptor,
+			multi: true
+		}
 	],
 	bootstrap: [AppComponent]
 })
