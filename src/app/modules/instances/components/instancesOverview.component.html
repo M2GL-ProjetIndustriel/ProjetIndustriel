@@ -1,0 +1,4 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+	<button *ngIf="user && user.accessLevel == 'admin'" mat-raised-button color="primary" class="button-margin-bottom" routerLink="/instance/add"><mat-icon>add</mat-icon>Ajouter une instance</button>
+	<instances-list fxFlex="100"></instances-list>
+</div>

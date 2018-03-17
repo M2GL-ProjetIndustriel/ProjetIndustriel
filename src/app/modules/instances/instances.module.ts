@@ -1,6 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -44,8 +45,10 @@ import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
 import { InstancesOverviewComponent } from './components/instancesOverview.component'
+import { InstancesListComponent } from './components/instancesList.component'
 
 /* Providers ################################################################ */
+import { InstanceService } from  './instance.service'
 
 /**
  * Instances module, everything you need to handle instances.
@@ -53,6 +56,7 @@ import { InstancesOverviewComponent } from './components/instancesOverview.compo
 @NgModule({
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		RouterModule,
 		HttpClientModule,
 		HttpClientJsonpModule,
@@ -93,9 +97,15 @@ import { InstancesOverviewComponent } from './components/instancesOverview.compo
 		SharedModule
 	],
 	declarations: [
-		InstancesOverviewComponent
+		InstancesOverviewComponent,
+		InstancesListComponent
 	],
 	providers: [
+		InstanceService,
+		{
+			provide: 'InstanceService',
+			useExisting: InstanceService
+		}
 	]
 })
 export class InstancesModule { }

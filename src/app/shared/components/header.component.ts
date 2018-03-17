@@ -49,12 +49,15 @@ export class HeaderComponent implements AfterViewInit {
 	 * "notFocused".
 	 */
 	searchFormState: string = 'notFocused'
-
-	user: any
+	/**
+	 * Reference to the current user, null = not logged in.
+	 */
+	user: any = null
 
 	/**
-	 * Constructor, doesn't do shit.
-	 * @param renderer Renderer, used to set up native event listener on html elements.
+	 * Constructor, subscribe to authService user stream to get the current user.
+	 * @param renderer    Renderer, used to set up native event listener on html elements.
+	 * @param authService AuthenticationService injection.
 	 */
 	constructor(
 		public renderer: Renderer2,

@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login.component'
 /* Providers ################################################################ */
 import { AuthenticationService } from './authentication.service'
 import { AuthenticationGuard } from './authentication.guard'
+import { AdminAccessGuard } from './adminAccess.guard'
 
 @NgModule({
 	imports: [
@@ -29,7 +30,8 @@ import { AuthenticationGuard } from './authentication.guard'
 	],
 	providers: [
 		AuthenticationService,
-		AuthenticationGuard
+		AuthenticationGuard,
+		AdminAccessGuard
 	]
 })
 export class AuthenticationModule {}

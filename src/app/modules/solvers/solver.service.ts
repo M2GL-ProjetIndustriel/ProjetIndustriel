@@ -25,10 +25,10 @@ import { appConfig } from '../../config'
  */
 @Injectable()
 export class SolverService {
-
 	/**
 	 * Constructor, doesn't do shit.
-	 * @param http HttpClient injection.
+	 * @param http              HttpClient injection.
+	 * @param apiMessageService ApiMessageService injection.
 	 */
 	constructor (
 		private http: HttpClient,
