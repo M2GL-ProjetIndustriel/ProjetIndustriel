@@ -15,6 +15,10 @@ export class InstancesOverviewComponent {
 
 	user: any = null
 
+	/**
+	 * Constructor, subscribe to authService user stream to get the current user.
+	 * @param authService AuthenticationService injection.
+	 */
 	constructor(private authService: AuthenticationService) {
 		this.authService.getUserStream().subscribe(
 			data => this.user = data,

@@ -46,6 +46,7 @@ import { SharedModule } from '../../shared/shared.module'
 /* Declarations ############################################################# */
 import { InstancesOverviewComponent } from './components/instancesOverview.component'
 import { InstancesListComponent } from './components/instancesList.component'
+import { InstanceDetailsComponent, DeleteInstanceDialogComponent } from './components/instanceDetails.component'
 
 /* Providers ################################################################ */
 import { InstanceService } from  './instance.service'
@@ -98,7 +99,12 @@ import { InstanceService } from  './instance.service'
 	],
 	declarations: [
 		InstancesOverviewComponent,
-		InstancesListComponent
+		InstancesListComponent,
+		InstanceDetailsComponent,
+		DeleteInstanceDialogComponent
+	],
+	entryComponents: [
+		DeleteInstanceDialogComponent
 	],
 	providers: [
 		InstanceService,

@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+
+	<button mat-raised-button color="primary" class="button-margin-bottom" (click)="back()"><mat-icon>arrow_back</mat-icon>Retour</button>
+
+	<app-card *ngIf="instance" header="{{instance.name}}" fxFlex="100">
+		<mat-menu #instanceActionMenu="matMenu">
+			<button mat-menu-item [routerLink]="['/instance/edit', instance.id]"><mat-icon>edit</mat-icon>Modifier</button>
+			<button mat-menu-item (click)="onDelete()"><mat-icon>delete</mat-icon>Supprimer</button>
+		</mat-menu>
+
+		<button mat-raised-button card-action color="accent" matTooltip="Options" [matMenuTriggerFor]="instanceActionMenu">
+			<mat-icon>more_vert</mat-icon>
+		</button>
+
+		<div card-content>
+			<mat-list>
+				<h3 mat-subheader>Caractéristiques</h3>
+				<mat-list-item>
+					<p matLine><strong>Nom</strong></p>
+					<p matLine> {{instance.name}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Type</strong></p>
+					<p matLine> {{instance.instance_type}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Famille</strong></p>
+					<p matLine> {{instance.instance_family}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Chemin</strong></p>
+					<p matLine> {{instance.path}} </p>
+				</mat-list-item>
+				<mat-divider></mat-divider>
+
+				<h3 mat-subheader>Valeurs</h3>
+				<mat-list-item *ngFor="let value of instance.values">
+					<p matLine><strong> {{value.feature.name}} </strong></p>
+					<p matLine><strong>{{ value.value + ' ' + value.feature.unit }}</strong></p>
+				</mat-list-item>
+			</mat-list>
+		</div>
+	</app-card>
+</div>

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material'
 import { SolverService } from '../solver.service'
 
 /**
- * Solver details component, display the details of the component and allow
+ * Solver details component, display the details of the solver and allow
  * edition and deletion of said solver.
  */
 @Component({
@@ -98,7 +98,7 @@ export class SolverDetailsComponent implements OnInit, OnDestroy {
 }
 
 /**
- * Component to be dispplayed inside a dialog box to confirm the deletion of a
+ * Component to be displayed inside a dialog box to confirm the deletion of a
  * solver.
  */
 @Component({
