@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
 	ngOnInit() {
 		this.authService.logout()
 
-		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
+		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home'
+		this.returnUrl = (this.returnUrl === '/') ? '/home' : this.returnUrl
 	}
 
 	onSubmit() {
@@ -48,7 +49,6 @@ export class LoginComponent implements OnInit {
 			this.loginForm.value.password
 		).subscribe(
 			data => {
-				console.log(data)
 				this.router.navigate([this.returnUrl])
 			},
 			err => { throw err }

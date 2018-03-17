@@ -1,6 +1,8 @@
 import { Component, Input, ElementRef, Renderer2, ViewChild, AfterViewInit } from '@angular/core'
 import { trigger, state, style, animate, transition } from '@angular/animations'
 
+import { AuthenticationService } from '../../modules/authentication/authentication.service'
+
 /**
  * Header component, the header of the app composed of some buttons and a
  * search bar.
@@ -55,9 +57,13 @@ export class HeaderComponent implements AfterViewInit {
 	 * @param renderer Renderer, used to set up native event listener on html elements.
 	 */
 	constructor(
-		public renderer: Renderer2
+		public renderer: Renderer2,
+		private authService: AuthenticationService
 	) {
-		this.user = localStorage.getItem('user') || { username: null }
+		this.authService.getUserStream().subscribe(
+			data => this.user = data,
+			err => { throw err }
+		)
 	}
 
 	/**
@@ -83,5 +89,9 @@ export class HeaderComponent implements AfterViewInit {
 			else if (value.type === 'close')
 				this.sidenavToggleIcon = 'arrow_forward'
 		})
+	}
+
+	logout() {
+		this.authService.logout()
 	}
 }

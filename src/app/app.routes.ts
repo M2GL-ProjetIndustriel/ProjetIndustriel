@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { authenticationRoutes } from './modules/authentication/authentication.routes'
 
-import { AppHomeComponent } from './components/app-home.component'
 import { UnluckyRouteComponent } from './shared/components/unluckyRoute.component'
 
 

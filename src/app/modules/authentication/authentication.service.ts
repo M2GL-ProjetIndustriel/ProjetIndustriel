@@ -6,7 +6,7 @@ import { retry, map } from 'rxjs/operators'
 
 import { appConfig } from '../../config'
 
-//TODO: sync with backend && JWTInterceptor && user access level guard
+//TODO: oninit check localStorage for previous token && user access level guard
 
 @Injectable()
 export class AuthenticationService {
@@ -23,8 +23,12 @@ export class AuthenticationService {
 				retry(appConfig.httpFailureRetryNumber),
 				map((data: any) => {
 					if (data.token) {
-						localStorage.setItem('user', JSON.stringify(this.createLoggedInUser(data.token, username)))
+						let user = this.createLoggedInUser(data.token, username)
+						localStorage.setItem('user', JSON.stringify(user))
+						this.user.next(user)
+
 						this.loggedIn = true
+
 						return data
 					}
 					else
@@ -35,11 +39,16 @@ export class AuthenticationService {
 
 	logout() {
 		localStorage.removeItem('user')
+		this.user.next(null)
 		this.loggedIn = false
 	}
 
 	isLoggedIn(): boolean {
 		return this.loggedIn
+	}
+
+	getUserStream() {
+		return this.user
 	}
 
 	private createLoggedInUser(token?: string, username?: string, accessLevel?: string) {

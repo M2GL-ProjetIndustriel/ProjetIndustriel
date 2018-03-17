@@ -18,6 +18,11 @@ export class SidenavComponent {
 	 */
 	items = [
 		{
+			'label': 'Accueil',
+			'icon': 'home',
+			'routerLink': 'home'
+		},
+		{
 			'label': 'Experimentations',
 			'icon': 'list',
 			'routerLink': 'experiment'
