@@ -9,7 +9,7 @@ import { CustomFile, FileQueue } from '../files.model'
 
 /**
  * FileUploadComponent, a component composed of a drag and drop zone and a
- * input type="file" to add files. An array display the file added.
+ * input type="file" to add files. An array display the file(s) added.
  */
 @Component({
 	selector: 'app-file-upload',
@@ -18,7 +18,7 @@ import { CustomFile, FileQueue } from '../files.model'
 })
 export class FileUploadComponent implements OnInit {
 	/**
-	 * Number of file(s) allowed (-1 = infinite).
+	 * Number of file(s) allowed (-1 = infinite, or until the browser crash).
 	 */
 	@Input() nbFileMax: number = -1
 	/**
@@ -26,6 +26,10 @@ export class FileUploadComponent implements OnInit {
 	 * by default is not displyed because it's useless in most cases.
 	 */
 	@Input() validationColumn: boolean = false
+	/**
+	 * Whether or not to check (calcul) file md5, default to false.
+	 */
+	@Input() md5Check: boolean = false
 	/**
 	 * Queue of file added.
 	 */
@@ -101,7 +105,8 @@ export class FileUploadComponent implements OnInit {
 			if (fileAdded)
 				this.onFileAddedToQueue.emit(fileAdded)
 		})
-		this.calcFileMd5()
+		if (this.md5Check)
+			this.calcFileMd5()
 	}
 
 	/**

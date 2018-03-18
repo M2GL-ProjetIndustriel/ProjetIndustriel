@@ -21,7 +21,7 @@ export class InstancesListComponent implements OnInit {
 		{ columnKey: 'instance_family', columnHeader: 'Famille' }
 	]
 	/**
-	 * Routing of the table, each row of the table will redirect to a instance.
+	 * Routing of the table, each row of the table will redirect to an instance.
 	 */
 	tableLink = {
 		routerLink: '/instance/',

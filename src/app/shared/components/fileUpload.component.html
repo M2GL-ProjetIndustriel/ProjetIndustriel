@@ -23,7 +23,7 @@
 					<th>Nom Fichier</th>
 					<th>Taille</th>
 					<th>Actions</th>
-					<th>Md5</th>
+					<th *ngIf="md5Check">Md5</th>
 					<th *ngIf="validationColumn">Status</th>
 				</tr>
 			</thead>
@@ -36,7 +36,7 @@
 							<mat-icon>delete</mat-icon>
 						</button>
 					</td>
-					<td>
+					<td *ngIf="md5Check">
 						<span *ngIf="item.md5Hash"> {{item.md5Hash}} </span>
 						<span *ngIf="!item.md5Hash">computing...</span>
 					</td>

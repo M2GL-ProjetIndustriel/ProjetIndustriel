@@ -3,6 +3,8 @@ import { Routes } from '@angular/router'
 import { AdminAccessGuard } from '../authentication/adminAccess.guard'
 
 import { InstancesOverviewComponent } from './components/instancesOverview.component'
+import { InstanceDetailsComponent } from './components/instanceDetails.component'
+import { InstanceFormComponent } from './components/instanceForm.component'
 
 /**
  * Routes of the instances module.
@@ -13,17 +15,17 @@ export const instancesRoutes: Routes = [
 		component: InstancesOverviewComponent
 	},
 	{
-		path: 'instance/:instanceID',
-		component: InstancesOverviewComponent
-	},
-	{
 		path: 'instance/add',
-		component: InstancesOverviewComponent,
+		component: InstanceFormComponent,
 		canActivate: [AdminAccessGuard]
 	},
 	{
+		path: 'instance/:instanceID',
+		component: InstanceDetailsComponent
+	},
+	{
 		path: 'intance/edit/:instanceID',
-		component: InstancesOverviewComponent,
+		component: InstanceFormComponent,
 		canActivate: [AdminAccessGuard]
 	}
 ]

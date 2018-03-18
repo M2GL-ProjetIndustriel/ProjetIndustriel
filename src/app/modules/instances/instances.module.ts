@@ -41,12 +41,16 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
+import { PapaParseModule } from 'ngx-papaparse'
+
 import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
 import { InstancesOverviewComponent } from './components/instancesOverview.component'
 import { InstancesListComponent } from './components/instancesList.component'
 import { InstanceDetailsComponent, DeleteInstanceDialogComponent } from './components/instanceDetails.component'
+import { InstanceFormComponent } from './components/instanceForm.component'
+import { InstanceFeaturesTableComponent } from './components/instanceFeaturesTable.component'
 
 /* Providers ################################################################ */
 import { InstanceService } from  './instance.service'
@@ -95,13 +99,16 @@ import { InstanceService } from  './instance.service'
 		MatTabsModule,
 		MatToolbarModule,
 		MatTooltipModule,
+		PapaParseModule,
 		SharedModule
 	],
 	declarations: [
 		InstancesOverviewComponent,
 		InstancesListComponent,
 		InstanceDetailsComponent,
-		DeleteInstanceDialogComponent
+		DeleteInstanceDialogComponent,
+		InstanceFormComponent,
+		InstanceFeaturesTableComponent
 	],
 	entryComponents: [
 		DeleteInstanceDialogComponent

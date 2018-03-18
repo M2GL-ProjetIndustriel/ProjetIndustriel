@@ -1,0 +1,54 @@
+<button mat-raised-button color="primary" class="button-margin-bottom" (click)="back()"><mat-icon>arrow_back</mat-icon>Retour</button>
+<app-card header="Ajouter/Modifier une instance">
+	<div card-content class="form-container">
+		<div class="loading-shade" *ngIf="isLoadingResults">
+			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+		</div>
+		<form [formGroup]="instanceForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+			<!-- Data fields -->
+			<mat-form-field fxFlex="100" hintLabel="100 caratères max">
+				<input matInput #name placeholder="Nom*" formControlName="name">
+				<mat-error *ngIf="instanceForm.get('name').invalid && instanceForm.get('name').dirty">Nom invalide</mat-error>
+				<mat-hint align="end">{{instanceForm.get('name').value?.length || 0}}/100</mat-hint>
+			</mat-form-field>
+			<mat-form-field fxFlex="48" hintLabel="100 caratères max">
+				<input matInput placeholder="Type*" formControlName="instance_type">
+				<mat-error *ngIf="instanceForm.get('instance_type').invalid && instanceForm.get('instance_type').dirty">Type invalide</mat-error>
+				<mat-hint align="end">{{instanceForm.get('instance_type').value?.length || 0}}/100</mat-hint>
+			</mat-form-field>
+			<mat-form-field fxFlex="48" hintLabel="100 caratères max">
+				<input matInput placeholder="Famille" formControlName="instance_family">
+				<mat-error *ngIf="instanceForm.get('instance_family').invalid && instanceForm.get('instance_family').dirty">Famille invalide</mat-error>
+				<mat-hint align="end">{{instanceForm.get('instance_family').value?.length || 0}}/100</mat-hint>
+			</mat-form-field>
+			<mat-form-field fxFlex="100" hintLabel="200 caratères max">
+				<input matInput placeholder="Chemin" formControlName="path">
+				<mat-error *ngIf="instanceForm.get('path').invalid && instanceForm.get('path').dirty">Chemin invalide</mat-error>
+				<mat-hint align="end">{{instanceForm.get('path').value?.length || 0}}/200</mat-hint>
+			</mat-form-field>
+
+			<!-- File Upload -->
+			<mat-accordion multi="true" fxFlex="100">
+				<!-- Csv file drop zone -->
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>Instance features</mat-panel-title>
+						<mat-panel-description>Ajouter un fichier csv contenants les features de l'instance.</mat-panel-description>
+					</mat-expansion-panel-header>
+					<app-file-upload nbFileMax=1 #csvInput></app-file-upload>
+				</mat-expansion-panel>
+				<!-- CSV table -->
+				<mat-expansion-panel *ngIf="csvFileUploaded">
+					<mat-expansion-panel-header>
+						<mat-panel-title>Instance features</mat-panel-title>
+						<mat-panel-description>Tableau des features.</mat-panel-description>
+					</mat-expansion-panel-header>
+						<instance-features-table #featureTable [stream]="csvFileAsArrayStream"></instance-features-table>
+				</mat-expansion-panel>
+			</mat-accordion>
+
+			<span fxFlex="20"><button type="submit" mat-raised-button color="warn">Sauvegarder</button></span>
+			<span fxFlex="80">* : Champ(s) obligatoire</span>
+		</form>
+	</div>
+</app-card>

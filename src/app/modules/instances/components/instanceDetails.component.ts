@@ -110,7 +110,7 @@ export class InstanceDetailsComponent implements OnInit, OnDestroy {
 }
 
 /**
- * Component to be displayed inside a dialog box to confirm the deletion of a
+ * Component to be displayed inside a dialog box to confirm the deletion of an
  * instance.
  */
 @Component({

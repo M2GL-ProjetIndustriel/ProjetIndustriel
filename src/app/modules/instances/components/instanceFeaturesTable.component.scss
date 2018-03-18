@@ -1,0 +1,12 @@
+@import '~sass/variables';
+
+.table-container {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.table-row:hover {
+	background-color: $grey;
+	cursor: pointer;
+}

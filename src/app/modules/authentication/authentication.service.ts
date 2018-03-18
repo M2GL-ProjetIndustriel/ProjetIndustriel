@@ -55,7 +55,7 @@ export class AuthenticationService {
 		return {
 			token: token,
 			username: username,
-			accessLevel: accessLevel
+			accessLevel: 'admin'
 		}
 	}
 }

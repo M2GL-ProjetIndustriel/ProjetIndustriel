@@ -26,7 +26,7 @@
 						<mat-panel-title>Fichiers source</mat-panel-title>
 						<mat-panel-description>Ajouter une archive contenants les fichiers sources.</mat-panel-description>
 					</mat-expansion-panel-header>
-					<app-file-upload nbFileMax=1 validationColumn=true #sourceInput></app-file-upload>
+					<app-file-upload nbFileMax=1 md5Check=true validationColumn=true #sourceInput></app-file-upload>
 				</mat-expansion-panel>
 				<!-- Executable drop zone -->
 				<mat-expansion-panel>
@@ -34,7 +34,7 @@
 						<mat-panel-title>Exécutable</mat-panel-title>
 						<mat-panel-description>Ajouter un éxécutable.</mat-panel-description>
 					</mat-expansion-panel-header>
-					<app-file-upload nbFileMax=1 validationColumn=true #execInput></app-file-upload>
+					<app-file-upload nbFileMax=1 md5Check=true validationColumn=true #execInput></app-file-upload>
 				</mat-expansion-panel>
 			</mat-accordion>
 
