@@ -179,62 +179,67 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * When the form is submited, check if the form is valid and call the
-	 * appropriate function if it's an edit or an addition.
-	 */
-	onSubmit() {
-		if (this.instanceForm.valid) {
-			let data = this.instanceForm.value
-			data.features = this.featureTable.dataSource.data
-
-			console.log(data)
-
-			/*if (this.isEdit)
-				this.editInstance()
-			else
-				this.addInstance()*/
-		}
-	}
-
-	/**
 	 * Set the values of the instanceForm from data given as an argument.
 	 * @param  data Data containing infos on an instance.
 	 */
 	setFormValues(data) {
 		this.instanceForm.setValue({
 			name: data.name,
-			version: data.version
+			instance_type: data.instance_type,
+			instance_family: data.instance_family,
+			path: data.path
 		})
+		//might need to convert data beforehand
+		//this.csvFileAsArrayStream.next(data.features)
 	}
+
+	/**
+	 * When the form is submited, check if the form is valid and call the
+	 * appropriate function if it's an edit or an addition.
+	 */
+	onSubmit() {
+		if (this.instanceForm.valid) {
+			let data = this.instanceForm.value
+			data.values = this.toBackendFormat(this.featureTable.dataSource.data)
+
+			console.log(data)
+
+			if (this.isEdit)
+				this.editInstance(data)
+			else
+				this.addInstance(data)
+		}
+	}
+
 
 	/**
 	 * Call the instanceService to add an instance. On success redirect to the newly
 	 * created instance details page.
 	 */
-	addInstance() {
+	addInstance(data: any) {
 		this.isLoadingResults = true
-		/*this.instanceService.postInstance(this.buildFormData(), this.onProgressUpdate, this).subscribe(
+		this.instanceService.postInstance(data).subscribe(
 			data => this.router.navigate(['/instance/', data.id]),
 			err => {
 				this.isLoadingResults = false
 				throw err
 			}
-		)*/
+		)
 	}
 
 	/**
 	 * Call the instanceService to edit an instance. On success redirect to the
 	 * edited instance details page.
 	 */
-	editInstance() {
+	editInstance(data: any) {
 		this.isLoadingResults = true
-		/*this.instanceService.editInstance(this.buildFormData(), this.instanceID, this.onProgressUpdate, this).subscribe(
+		this.instanceService.editInstance(data, this.instanceID).subscribe(
 			data => this.router.navigate(['/instance/', data.id]),
 			err => {
 				this.isLoadingResults = false
 				throw err
 			}
-		)*/
+		)
 	}
 
 	private checkFileTypeIsCSV (file: CustomFile): boolean {
@@ -252,16 +257,68 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 		reader.onloadend = () => {
 			this.papa.parse(reader.result, {
 				complete: (result) => {
-					//check if the format is valid
-					this.csvFileAsArrayStream.next({
+					let data = {
 						headers: result.data.slice(0, 1)[0],
 						data: result.data.slice(1)
-					})
+					}
+					//check
+					if (this.isValidCSV(this.normalizeHeader(data.headers))) {
+						//convert & normalize
+						data.data = this.convertData(data.data)
+						this.csvFileAsArrayStream.next(data)
+						this.csvFileUploaded = true
+					}
+					else
+						this.csvFile.remove()
+
 					this.isLoadingResults = false
-					this.csvFileUploaded = true
 				}
 			})
 		}
 		reader.readAsText(this.csvFile.file)
+	}
+
+	//convert
+	private convertData(data) {
+		let result = []
+		for (let i in data) {
+			result[i] = {}
+			for (let j in data[i]) {
+				result[i]['name'] = data[i][0]
+				result[i]['value'] = data[i][1]
+				result[i]['unit'] = data[i][2] || ''
+			}
+		}
+		return result
+	}
+
+	private isValidCSV(headers): boolean {
+		if (headers.length !== 3)
+			return false
+		if (headers[0] !== 'name' || headers[1] !== 'value' || headers[2] !== 'unit')
+			return false
+
+		return true
+	}
+
+	private normalizeHeader(headers) {
+		for (let i in headers)
+			headers[i] = headers[i].replace(/ /g, '').toLowerCase()
+		return headers
+	}
+
+	private toBackendFormat(data) {
+		let result = []
+		for (let i in data) {
+			result[i] = {}
+			for (let j in data[i]) {
+				result[i]['value'] = data[i]['value']
+				result[i]['feature'] = {
+					'name': data[i]['name'],
+					'unit': data[i]['unit']
+				}
+			}
+		}
+		return result
 	}
 }

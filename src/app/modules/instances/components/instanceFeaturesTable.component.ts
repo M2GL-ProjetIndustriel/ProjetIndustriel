@@ -4,7 +4,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material'
 @Component({
 	selector: 'instance-features-table',
 	templateUrl: 'instanceFeaturesTable.component.html',
-	styleUrls: ['./instanceFeaturesTable.component.scss'],
+	styleUrls: ['./instanceFeaturesTable.component.scss']
 })
 export class InstanceFeaturesTableComponent implements OnInit, AfterViewInit {
 	@Input() stream: any
@@ -19,7 +19,7 @@ export class InstanceFeaturesTableComponent implements OnInit, AfterViewInit {
 		this.stream.subscribe(
 			data => {
 				if (data) {
-					this.dataSource.data = this.convertData(data.headers, data.data)
+					this.dataSource.data = data.data
 					this.displayedColumns = data.headers
 				}
 			}
@@ -28,21 +28,5 @@ export class InstanceFeaturesTableComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit() {
 		this.dataSource.paginator = this.paginator
-	}
-
-	private convertData(headers, data) {
-		let result = []
-		for (let i in data) {
-			result[i] = {}
-			for (let j in data[i]) {
-				//normalize strings
-				if (!headers[j]) //for testing remove later
-					headers[j] = j
-				else
-					headers[j] = headers[j].replace(/ /g, '').toLowerCase()
-				result[i][headers[j]] = data[i][j].replace(/ /g, '').toLowerCase()
-			}
-		}
-		return result
 	}
 }
