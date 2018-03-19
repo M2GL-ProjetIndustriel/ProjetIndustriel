@@ -1,6 +1,8 @@
 import { Component, Input, ViewChild, OnInit, AfterViewInit } from '@angular/core'
 import { MatPaginator, MatTableDataSource } from '@angular/material'
 
+import { InstanceFeaturesTableFormat } from '../instanceFeatures.model'
+
 @Component({
 	selector: 'instance-features-table',
 	templateUrl: 'instanceFeaturesTable.component.html',
@@ -19,8 +21,9 @@ export class InstanceFeaturesTableComponent implements OnInit, AfterViewInit {
 		this.stream.subscribe(
 			data => {
 				if (data) {
-					this.dataSource.data = data.data
-					this.displayedColumns = data.headers
+					let features = new InstanceFeaturesTableFormat(data)
+					this.dataSource.data = features.toArray()
+					this.displayedColumns = features.headers
 				}
 			}
 		)

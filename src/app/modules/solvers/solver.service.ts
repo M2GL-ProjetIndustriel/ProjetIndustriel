@@ -53,13 +53,10 @@ export class SolverService {
 		params = params.append('sort', (sort) ? sort : '')
 		params = params.append('order', (order) ? order : '')
 
-		let req = new HttpRequest('GET', appConfig.apiUrl + '/solver', { params: params })
-
-		return this.http.request(req).pipe(
+		return this.http.get(appConfig.apiUrl + '/solver', { params: params }).pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),
-				catchError(err => { throw err })
-			)
+				catchError(err => { throw err }))
 	}
 
 	/**

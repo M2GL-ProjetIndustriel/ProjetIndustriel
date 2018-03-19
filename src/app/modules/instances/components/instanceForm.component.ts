@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { PapaParseService } from 'ngx-papaparse'
 
 import { InstanceService } from '../instance.service'
+import { InstanceFeaturesFactory, InstanceFeatures } from '../instanceFeatures.model'
 import { FileUploadComponent } from '../../../shared/components/fileUpload.component'
 import { CustomFile } from '../../../shared/files.model'
 
@@ -55,7 +56,7 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	 */
 	csvFile: CustomFile = null
 
-	private csvFileAsArrayStream: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+	private csvFileAsArrayStream: BehaviorSubject<InstanceFeatures> = new BehaviorSubject<InstanceFeatures>(null)
 
 	csvFileUploaded: boolean = false
 
@@ -257,14 +258,11 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 		reader.onloadend = () => {
 			this.papa.parse(reader.result, {
 				complete: (result) => {
-					let data = {
-						headers: result.data.slice(0, 1)[0],
-						data: result.data.slice(1)
-					}
-					//check
-					if (this.isValidCSV(this.normalizeHeader(data.headers))) {
-						//convert & normalize
-						data.data = this.convertData(data.data)
+					let data = InstanceFeaturesFactory.newFromCSV(result.data)
+
+					console.log(data)
+
+					if (data) {
 						this.csvFileAsArrayStream.next(data)
 						this.csvFileUploaded = true
 					}
@@ -276,49 +274,5 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 			})
 		}
 		reader.readAsText(this.csvFile.file)
-	}
-
-	//convert
-	private convertData(data) {
-		let result = []
-		for (let i in data) {
-			result[i] = {}
-			for (let j in data[i]) {
-				result[i]['name'] = data[i][0]
-				result[i]['value'] = data[i][1]
-				result[i]['unit'] = data[i][2] || ''
-			}
-		}
-		return result
-	}
-
-	private isValidCSV(headers): boolean {
-		if (headers.length !== 3)
-			return false
-		if (headers[0] !== 'name' || headers[1] !== 'value' || headers[2] !== 'unit')
-			return false
-
-		return true
-	}
-
-	private normalizeHeader(headers) {
-		for (let i in headers)
-			headers[i] = headers[i].replace(/ /g, '').toLowerCase()
-		return headers
-	}
-
-	private toBackendFormat(data) {
-		let result = []
-		for (let i in data) {
-			result[i] = {}
-			for (let j in data[i]) {
-				result[i]['value'] = data[i]['value']
-				result[i]['feature'] = {
-					'name': data[i]['name'],
-					'unit': data[i]['unit']
-				}
-			}
-		}
-		return result
 	}
 }

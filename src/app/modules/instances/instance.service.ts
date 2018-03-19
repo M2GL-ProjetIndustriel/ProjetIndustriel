@@ -49,13 +49,10 @@ export class InstanceService {
 		params = params.append('sort', (sort) ? sort : '')
 		params = params.append('order', (order) ? order : '')
 
-		let req = new HttpRequest('GET', appConfig.apiUrl + '/instance', { params: params })
-
-		return this.http.request(req).pipe(
+		return this.http.get(appConfig.apiUrl + '/instance', { params: params }).pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),
-				catchError(err => { throw err })
-			)
+				catchError(err => { throw err }))
 	}
 
 	/**
