@@ -39,6 +39,8 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
+import { PapaParseModule } from 'ngx-papaparse'
+
 /* Declarations ############################################################# */
 import { SidenavComponent } from './components/sidenav.component'
 import { HeaderComponent } from './components/header.component'
@@ -95,7 +97,8 @@ import { CSVParserService } from './csvParser.service'
 		MatTableModule,
 		MatTabsModule,
 		MatToolbarModule,
-		MatTooltipModule
+		MatTooltipModule,
+		PapaParseModule
 	],
 	declarations: [
 		SidenavComponent,

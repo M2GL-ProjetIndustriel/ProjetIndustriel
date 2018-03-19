@@ -1,26 +1,48 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 
-	<button mat-raised-button color="primary" class="button-margin-bottom" routerLink="/experiment"><mat-icon>arrow_back</mat-icon>Retour</button>
+	<button mat-raised-button color="primary" class="button-margin-bottom" (click)="back()"><mat-icon>arrow_back</mat-icon>Retour</button>
 
-	<app-card *ngIf="experiment" header="{{experiment.experimentName}}" fxFlex="100">
+	<app-card *ngIf="experiment" header="{{experiment.name}}" fxFlex="100">
 		<mat-menu #experimentActionMenu="matMenu">
-			<button mat-menu-item><mat-icon>edit</mat-icon>Modifier</button>
-			<button mat-menu-item><mat-icon>delete</mat-icon>Supprimer</button>
+			<button mat-menu-item [routerLink]="['/experiment/edit', experiment.id]"><mat-icon>edit</mat-icon>Modifier</button>
+			<button mat-menu-item (click)="onDelete()"><mat-icon>delete</mat-icon>Supprimer</button>
 		</mat-menu>
 
 		<button mat-raised-button card-action color="accent" matTooltip="Options" [matMenuTriggerFor]="experimentActionMenu">
-			<mat-icon>settings</mat-icon>
+			<mat-icon>more_vert</mat-icon>
 		</button>
 
 		<div card-content>
-			<p><strong>ID</strong> {{experiment._id}}</p>
-			<p><strong>Name</strong> {{experiment.experimentName}}</p>
-			<p><strong>Date</strong> {{experiment.experimentDate | date: 'dd MMMM yy | h:mm:ss z'}}</p>
-			<p><strong>Version</strong> {{experiment.__v}}</p>
-			<p><strong>Results</strong> {{experiment.experimentResult}}</p>
+			<mat-list>
+				<h3 mat-subheader>Caractéristiques</h3>
+				<mat-list-item>
+					<p matLine><strong>Nom</strong></p>
+					<p matLine> {{experiment.name}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Date</strong></p>
+					<p matLine> {{experiment.date}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Solveur</strong></p>
+					<p matLine> {{experiment.solver}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Paramètres du solveur</strong></p>
+					<p matLine> {{experiment.solver_paramaters}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Machine</strong></p>
+					<p matLine> {{experiment.device}} </p>
+				</mat-list-item>
+				<mat-list-item>
+					<p matLine><strong>Description de l'expérimentation</strong></p>
+					<p matLine> {{experiment.description}} </p>
+				</mat-list-item>
+				<mat-divider></mat-divider>
+
+				<h3 mat-subheader>Résultats</h3>
+			</mat-list>
 		</div>
 	</app-card>
-
-	<app-test-graph fxFlex="48"></app-test-graph>
-	<app-test-graph fxFlex="48"></app-test-graph>
 </div>

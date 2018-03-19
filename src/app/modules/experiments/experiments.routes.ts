@@ -12,7 +12,15 @@ export const experimentsRoutes: Routes = [
 		component: ExperimentsOverviewComponent
 	},
 	{
+		path: 'experiment/add',
+		component: ExperimentsOverviewComponent
+	},
+	{
 		path: 'experiment/:experimentID',
 		component: ExperimentDetailsComponent
+	},
+	{
+		path: 'experiment/edit/:experimentID',
+		component: ExperimentsOverviewComponent
 	}
 ]

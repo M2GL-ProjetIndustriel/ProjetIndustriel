@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpParams } from '@angular/common/http'
+import {
+	HttpClient,
+	HttpParams,
+	HttpRequest
+} from '@angular/common/http'
 
-import { Observable } from 'rxjs/Observable'
-import { catchError, retry, map } from 'rxjs/operators'
+import { catchError, retry, map, tap, last } from 'rxjs/operators'
 
-import { BasicExperiment, Experiment } from './experiment'
 import { ApiMessageService } from '../../shared/apiMessage.service'
 import { appConfig } from '../../config'
 
@@ -19,10 +21,10 @@ import { appConfig } from '../../config'
  */
 @Injectable()
 export class ExperimentService {
-
 	/**
 	 * Constructor, doesn't do shit.
-	 * @param http HttpClient injection.
+	 * @param http              HttpClient injection.
+	 * @param apiMessageService ApiMessageService injection.
 	 */
 	constructor (
 		private http: HttpClient,
@@ -30,10 +32,10 @@ export class ExperimentService {
 	) {}
 
 	/**
-	 * Function requesting a list of experiments. Take apge number a and a
-	 * page size as parameters, if none of them are present the request
-	 * should return evry single experiments otherwise should return the
-	 * experiments of the corresponding page.
+	 * Function requesting a list of experiments. Take a page number and a
+	 * page size as parameters for pagination, and a sort colomn and a sort
+	 * order (asc or desc) for sorting purpose should return the experiments of
+	 * the corresponding page sorted in the requested order.
 	 * @param  pageIndex Number of the page requested.
 	 * @param  pageSize  Size of a page.
 	 * @param  sort      Sorting preference of the request.
@@ -43,27 +45,69 @@ export class ExperimentService {
 	getExperiments(pageIndex?: number, pageSize?: number, sort?: string, order?: string) {
 		let params = new HttpParams()
 		params = params.append('pageIndex', (pageIndex) ? pageIndex.toString() : '')
-		params = params.append('pageSize', (pageSize) ? pageSize.toString() : '')
+		params = params.append('page_size', (pageSize) ? pageSize.toString() : '')
 		params = params.append('sort', (sort) ? sort : '')
 		params = params.append('order', (order) ? order : '')
 
-		return this.http.get(appConfig.apiUrl + '/experiment', {
-			params: params
-		}).pipe(
+		return this.http.get(appConfig.apiUrl + '/experiment', { params: params })
+			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),
-				catchError(err => { throw err }) //might be useless
+				catchError(err => { throw err })
 			)
 	}
 
 	/**
 	 * Function requesting a specific experiment. Take the requested experiment
 	 * ID as a parameter.
-	 * @param  experimentID The id of the experiment requested.
-	 * @return              Return an observable to subscribe to.
+	 * @param  experimentID Id of the experiment requested.
+	 * @return            Return an observable to subscribe to.
 	 */
 	getExperiment(experimentID: string) {
 		return this.http.get(appConfig.apiUrl + '/experiment/' + experimentID)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
+	/**
+	 * Post request to create a new experiment with data.
+	 * @param  data Data to post.
+	 * @return      Return an observable to subscribe to.
+	 */
+	postExperiment(data: any) {
+		return this.http.post(appConfig.apiUrl + '/experiment', data)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
+	/**
+	 * Put request to update an existing experiment with the new data.
+	 * @param  data       Data to update.
+	 * @param  experimentID Id of the experiment to update.
+	 * @return            Return an observable to subscribe to.
+	 */
+	editExperiment(data: any, experimentID: string) {
+		return this.http.put(appConfig.apiUrl + '/experiment/' + experimentID, data)
+			.pipe(
+				retry(appConfig.httpFailureRetryNumber),
+				map(this.apiMessageService.handleMessage),
+				catchError(err => { throw err })
+			)
+	}
+
+	/**
+	 * Request an experiment to be deleted.
+	 * @param  experimentID Id of the experiment to be deleted.
+	 * @return            Return an observable to subscribe to.
+	 */
+	deleteExperiment(experimentID: string) {
+		return this.http.delete(appConfig.apiUrl + '/experiment/' + experimentID)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),

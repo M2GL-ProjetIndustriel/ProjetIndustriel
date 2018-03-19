@@ -2,8 +2,9 @@ import { Routes } from '@angular/router'
 
 import { AuthenticationGuard } from './authentication.guard'
 
-import { solversRoutes } from '../solvers/solvers.routes'
+import { experimentsRoutes } from '../experiments/experiments.routes'
 import { instancesRoutes } from '../instances/instances.routes'
+import { solversRoutes } from '../solvers/solvers.routes'
 
 import { LoginComponent } from './components/login.component'
 import { AppHomeComponent } from '../../components/app-home.component'
@@ -17,8 +18,9 @@ export const authenticationRoutes: Routes = [
 		canActivate: [AuthenticationGuard],
 		canActivateChild: [AuthenticationGuard],
 		children: [
-			...solversRoutes,
+			...experimentsRoutes,
 			...instancesRoutes,
+			...solversRoutes,
 			{
 				path: 'home',
 				component: AppHomeComponent

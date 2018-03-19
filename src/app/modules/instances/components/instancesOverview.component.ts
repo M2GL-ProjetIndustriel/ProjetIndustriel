@@ -12,7 +12,9 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 	styleUrls: ['instancesOverview.component.scss']
 })
 export class InstancesOverviewComponent {
-
+	/**
+	 * Current user (null = not logged in)
+	 */
 	user: any = null
 
 	/**

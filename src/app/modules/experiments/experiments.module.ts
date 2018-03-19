@@ -1,6 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -45,7 +46,7 @@ import { SharedModule } from '../../shared/shared.module'
 /* Declarations ############################################################# */
 import { ExperimentsOverviewComponent } from './components/experimentsOverview.component'
 import { ExperimentsListComponent } from './components/experimentsList.component'
-import { ExperimentDetailsComponent } from './components/experimentDetails.component'
+import { ExperimentDetailsComponent, DeleteExperimentDialogComponent } from './components/experimentDetails.component'
 
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
@@ -98,10 +99,15 @@ import { ExperimentService } from './experiment.service'
 	declarations: [
 		ExperimentsOverviewComponent,
 		ExperimentsListComponent,
-		ExperimentDetailsComponent
+		ExperimentDetailsComponent,
+		DeleteExperimentDialogComponent
 	],
 	providers: [
-		ExperimentService
+		ExperimentService,
+		{
+			provide: 'ExperimentService',
+			useExisting: ExperimentService
+		}
 	]
 })
-export class ExperimentsModule { }
+export class ExperimentsModule {}

@@ -9,5 +9,4 @@ import { Component } from '@angular/core'
 	templateUrl: 'solversOverview.component.html',
 	styleUrls: ['solversOverview.component.scss']
 })
-export class SolversOverviewComponent {
-}
+export class SolversOverviewComponent {}

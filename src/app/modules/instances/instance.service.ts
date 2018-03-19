@@ -49,10 +49,12 @@ export class InstanceService {
 		params = params.append('sort', (sort) ? sort : '')
 		params = params.append('order', (order) ? order : '')
 
-		return this.http.get(appConfig.apiUrl + '/instance', { params: params }).pipe(
+		return this.http.get(appConfig.apiUrl + '/instance', { params: params })
+			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),
-				catchError(err => { throw err }))
+				catchError(err => { throw err })
+			)
 	}
 
 	/**
@@ -105,7 +107,7 @@ export class InstanceService {
 	 * @return            Return an observable to subscribe to.
 	 */
 	deleteInstance(instanceID: string) {
-		return this.http.delete(appConfig.apiUrl + '/isntance/' + instanceID)
+		return this.http.delete(appConfig.apiUrl + '/instance/' + instanceID)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(this.apiMessageService.handleMessage),

@@ -117,4 +117,4 @@ import { SolverService } from './solver.service'
 		}
 	]
 })
-export class SolversModule { }
+export class SolversModule {}

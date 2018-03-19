@@ -41,8 +41,6 @@ import {
 	MatTooltipModule,
 } from '@angular/material'
 
-import { PapaParseModule } from 'ngx-papaparse'
-
 import { SharedModule } from '../../shared/shared.module'
 
 /* Declarations ############################################################# */
@@ -99,7 +97,6 @@ import { InstanceService } from  './instance.service'
 		MatTabsModule,
 		MatToolbarModule,
 		MatTooltipModule,
-		PapaParseModule,
 		SharedModule
 	],
 	declarations: [
@@ -121,4 +118,4 @@ import { InstanceService } from  './instance.service'
 		}
 	]
 })
-export class InstancesModule { }
+export class InstancesModule {}
