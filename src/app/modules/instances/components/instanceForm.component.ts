@@ -201,14 +201,18 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	onSubmit() {
 		if (this.instanceForm.valid) {
 			let data = this.instanceForm.value
-			data.values = this.toBackendFormat(this.featureTable.dataSource.data)
+			this.csvFileAsArrayStream.subscribe(
+				features => {
+					data.values = InstanceFeaturesFactory.toBackendFormatFromFeatures(features)
+					console.log(data)
 
-			console.log(data)
-
-			if (this.isEdit)
-				this.editInstance(data)
-			else
-				this.addInstance(data)
+					if (this.isEdit)
+						this.editInstance(data)
+					else
+						this.addInstance(data)
+				},
+				err => { throw err }
+			)
 		}
 	}
 
@@ -259,8 +263,6 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 			this.papa.parse(reader.result, {
 				complete: (result) => {
 					let data = InstanceFeaturesFactory.newFromCSV(result.data)
-
-					console.log(data)
 
 					if (data) {
 						this.csvFileAsArrayStream.next(data)
