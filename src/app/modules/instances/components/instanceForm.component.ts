@@ -5,12 +5,11 @@ import { Location } from '@angular/common'
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
-import { PapaParseService } from 'ngx-papaparse'
-
 import { InstanceService } from '../instance.service'
 import { InstanceFeaturesFactory, InstanceFeatures } from '../instanceFeatures.model'
 import { FileUploadComponent } from '../../../shared/components/fileUpload.component'
 import { CustomFile } from '../../../shared/files.model'
+import { CSVParserService } from '../../../shared/csvParser.service'
 
 /**
  * InstanceForm Component, form to add or edit an instance.
@@ -68,7 +67,7 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	 * @param route           ActivatedRoute injection.
 	 * @param router          Router injection.
 	 * @param location        Location injection.
-	 * @param papa            PapaParseService injection.
+	 * @param csvParser       CSVParserService injection.
 	 * @param instanceService InstanceService injection.
 	 */
 	constructor(
@@ -76,7 +75,7 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private router: Router,
 		private location: Location,
-		private papa: PapaParseService,
+		private csvParser: CSVParserService,
 		private instanceService: InstanceService
 	) {
 		this.createForm()
@@ -94,15 +93,7 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 
 		//Sub to the csv file FileUploadComponent to get the file uploaded
 		this.subscriptions.push(this.csvInput.onFileAddedToQueue.subscribe(
-			file => {
-				if (this.checkFileTypeIsCSV(file)) {
-					this.isLoadingResults = true
-					this.csvFile = file
-					this.parseCSVFile()
-				}
-				else
-					file.remove()
-			}
+			file => this.onFileAdded(file)
 		))
 	}
 
@@ -247,34 +238,26 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 		)
 	}
 
-	private checkFileTypeIsCSV (file: CustomFile): boolean {
-		let mime_type = file.file.type
-
-		if (mime_type === 'text/plain' || mime_type === 'text/csv'
-			|| mime_type === 'application/csv' || mime_type === 'application/x-csv'
-			|| mime_type === 'text/x-csv' || mime_type === 'application/vnd.ms-excel')
-			return true
-		return false
+	private onFileAdded(file: CustomFile) {
+		if (this.csvParser.checkFileTypeIsCSV(file.file)) {
+			this.isLoadingResults = true
+			this.csvFile = file
+			this.csvParser.parseCSVFile(file.file,  this.onFileParsed.bind(this))
+		}
+		else
+			file.remove()
 	}
 
-	private parseCSVFile() {
-		let reader = new FileReader()
-		reader.onloadend = () => {
-			this.papa.parse(reader.result, {
-				complete: (result) => {
-					let data = InstanceFeaturesFactory.newFromCSV(result.data)
+	private onFileParsed(result: any) {
+		let data = InstanceFeaturesFactory.newFromCSV(result)
 
-					if (data) {
-						this.csvFileAsArrayStream.next(data)
-						this.csvFileUploaded = true
-					}
-					else
-						this.csvFile.remove()
-
-					this.isLoadingResults = false
-				}
-			})
+		if (data) {
+			this.csvFileAsArrayStream.next(data)
+			this.csvFileUploaded = true
 		}
-		reader.readAsText(this.csvFile.file)
+		else
+			this.csvFile.remove()
+
+		this.isLoadingResults = false
 	}
 }

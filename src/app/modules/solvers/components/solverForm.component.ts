@@ -294,7 +294,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	addSolver() {
 		this.isLoadingResults = true
 		this.progressValue = 0
-		this.solverService.postSolver(this.buildFormData(), this.onProgressUpdate, this).subscribe(
+		this.solverService.postSolver(this.buildFormData(), this.onProgressUpdate.bind(this)).subscribe(
 			data => this.router.navigate(['/solver/', data.id]),
 			err => {
 				this.isLoadingResults = false
@@ -310,7 +310,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	editSolver() {
 		this.isLoadingResults = true
 		this.progressValue = 0
-		this.solverService.editSolver(this.buildFormData(), this.solverID, this.onProgressUpdate, this).subscribe(
+		this.solverService.editSolver(this.buildFormData(), this.solverID, this.onProgressUpdate.bind(this)).subscribe(
 			data => this.router.navigate(['/solver/', data.id]),
 			err => {
 				this.isLoadingResults = false
@@ -323,12 +323,11 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 * Progress handler, update progressValue, called during the download or
 	 * upload of files from the form.
 	 * @param  message Progress message received.
-	 * @param  ctx     Context, reference to this SolverFormComponent.
 	 */
-	onProgressUpdate(message: any, ctx?: any) {
-		if (typeof message === 'number' && ctx)
-			ctx.progressValue = message
-		else if (typeof message !== 'number' && ctx)
-			ctx.progressValue = 0
+	onProgressUpdate(message: any) {
+		if (typeof message === 'number')
+			this.progressValue = message
+		else if (typeof message !== 'number')
+			this.progressValue = 0
 	}
 }

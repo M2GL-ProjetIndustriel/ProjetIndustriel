@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 
+import { Observable } from 'rxjs/Observable'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { retry, map } from 'rxjs/operators'
 
@@ -18,7 +19,8 @@ export class AuthenticationService {
 	constructor(private http: HttpClient) {}
 
 	login(username: string, password: string) {
-		return this.http.post(appConfig.apiUrl + '/token-auth', { username: username, password: password })
+		return this.debugLogin(username, password)
+		/*return this.http.post(appConfig.apiUrl + '/token-auth', { username: username, password: password })
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map((data: any) => {
@@ -33,8 +35,7 @@ export class AuthenticationService {
 					}
 					else
 						throw new Error('Pas de jeton, pas de chocolat.')
-				})
-			)
+				}))*/
 	}
 
 	logout() {
@@ -57,5 +58,17 @@ export class AuthenticationService {
 			username: username,
 			accessLevel: 'admin'
 		}
+	}
+
+	private debugLogin(username: string, password: string) {
+		let user = this.createLoggedInUser('123', username)
+		localStorage.setItem('user', JSON.stringify(user))
+		this.user.next(user)
+
+		this.loggedIn = true
+
+		return new Observable(observer => {
+			observer.next(user)
+		})
 	}
 }

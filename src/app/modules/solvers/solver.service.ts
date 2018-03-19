@@ -77,34 +77,32 @@ export class SolverService {
 	/**
 	 * Post the FormData to create a new solver. Since the solver might need to
 	 * upload files the request is reporting progress to keep an eye on the
-	 * progress of the upload. The function can be given a function and a
-	 * context to be called each time progress is reported.
+	 * progress of the upload. The function can be given a function
+	 * called each time progress is reported.
 	 * @param  data            Data to post.
 	 * @param  progressHandler Function handling the event messages on progress update.
-	 * @param  ctx             Context to be passed to the progressHandler function.
 	 * @return                 Return an observable to subscribe to.
 	 */
-	postSolver(data: FormData, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
+	postSolver(data: FormData, progressHandler?: (message: any, ctx?: any) => void) {
 		const req = this.createFormDataRequest('POST', appConfig.apiUrl + '/solver', data)
 
-		return this.requestWithProgress(req, progressHandler, ctx)
+		return this.requestWithProgress(req, progressHandler)
 	}
 
 	/**
 	 * Put the FormData to update an existing solver. Since the solver might
 	 * need to upload files the request is reporting progress to keep an eye
-	 * on the progress of the upload. The function can be given a function and a
-	 * context to be called each time progress is reported.
+	 * on the progress of the upload. The function can be given a function
+	 * called each time progress is reported.
 	 * @param  data            Data to update.
 	 * @param  solverID        Id of the solver to update.
-	 * @param  progressHandler Function handling the event messages on progress update.
-	 * @param  ctx             Context to be passed to the progressHandler function.
+	 * @param  progressHandler Function handling the event messages on progress update
 	 * @return                 Return an observable to subscribe to.
 	 */
-	editSolver(data: FormData, solverID: string, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
+	editSolver(data: FormData, solverID: string, progressHandler?: (message: any, ctx?: any) => void) {
 		const req = this.createFormDataRequest('PUT', appConfig.apiUrl + '/solver/' + solverID, data)
 
-		return this.requestWithProgress(req, progressHandler, ctx)
+		return this.requestWithProgress(req, progressHandler)
 	}
 
 	/**
@@ -124,14 +122,13 @@ export class SolverService {
 	/**
 	 * Download the files of a solver (source files and executable). Since it's
 	 * a download the request is reporting progress to keep an eye on the
-	 * progress of the download. The function can be given a function and a
-	 * context to be called each time progress is reported.
+	 * progress of the download. The function can be given a function called
+	 * each time progress is reported.
 	 * @param  url             Location of the file to download.
 	 * @param  progressHandler Function handling the event messages on progress update.
-	 * @param  ctx             Context to be passed to the progressHandler function.
 	 * @return                 Return an observable to subscribe to.
 	 */
-	getSolverFile(url: string, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
+	getSolverFile(url: string, progressHandler?: (message: any, ctx?: any) => void) {
 		const req = new HttpRequest('GET', url, {
 			reportProgress: true,
 			responseType: 'blob'
@@ -143,7 +140,7 @@ export class SolverService {
 				map(event => this.getEventMessage(event)),
 				tap((msg) => {
 					if (progressHandler)
-						progressHandler(msg, ctx)
+						progressHandler(msg)
 				}),
 				last(),
 			)
@@ -173,17 +170,16 @@ export class SolverService {
 	 * message which is the HttpResponse.
 	 * @param  req             An Http request who report progress.
 	 * @param  progressHandler Function handling the event messages on progress update.
-	 * @param  ctx             Context to be passed to the progressHandler function.
 	 * @return                 Return an observable to subscribe to.
 	 */
-	private requestWithProgress(req: HttpRequest<any>, progressHandler?: (message: any, ctx?: any) => void, ctx?: any) {
+	private requestWithProgress(req: HttpRequest<any>, progressHandler?: (message: any, ctx?: any) => void) {
 		return this.http.request(req)
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map(event => this.getEventMessage(event)),
 				tap((msg) => {
 					if (progressHandler)
-						progressHandler(msg, ctx)
+						progressHandler(msg)
 				}),
 				last(),
 				map(this.apiMessageService.handleMessage),
