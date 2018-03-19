@@ -13,25 +13,12 @@ export class InstanceFeature {
 export class InstanceFeatures {
 	private data: Array<InstanceFeature> = new Array<InstanceFeature>()
 
-	constructor(features?: Array<InstanceFeature>) {
-		if (features)
-			this.data = features
-	}
-
 	add(name: string, value: string, unit?: string) {
 		this.data.push(new InstanceFeature(name, value, unit))
 	}
 
 	toArray(): Array<InstanceFeature> {
 		return this.data
-	}
-}
-
-export class InstanceFeaturesTableFormat extends InstanceFeatures {
-	headers: Array<string> = ['name', 'value', 'unit']
-
-	constructor(features: InstanceFeatures) {
-		super(features.toArray())
 	}
 }
 
@@ -52,11 +39,20 @@ export class InstanceFeaturesFactory {
 		return result
 	}
 
-	static toTableFormatFromCSV(csvData: Array<any>): InstanceFeaturesTableFormat {
-		if (!InstanceFeaturesFactory.isValidCSV(csvData.slice(0, 1)[0]))
+	static toTableFormatFromCSV(csvData: Array<any>) {
+		let features = InstanceFeaturesFactory.newFromCSV(csvData)
+
+		if (!features)
 			return null
 
-		return new InstanceFeaturesTableFormat(InstanceFeaturesFactory.newFromCSV(csvData))
+		return InstanceFeaturesFactory.toTableFormatFromFeatures(features)
+	}
+
+	static toTableFormatFromFeatures(features: InstanceFeatures) {
+		return {
+			data: features.toArray(),
+			headers: ['name', 'value', 'unit']
+		}
 	}
 
 	static toBackendFormatFromFeatures(features: InstanceFeatures): Array<any> {

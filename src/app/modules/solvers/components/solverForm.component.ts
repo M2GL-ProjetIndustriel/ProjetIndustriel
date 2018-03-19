@@ -188,7 +188,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 * @param  getExecFile Whether or not to get the exec files once the source files have been retrieved.
 	 */
 	getSolverToEditSourceFiles(data: any, getExecFile?: boolean) {
-		this.solverService.getSolverFile(data.source_path, this.onProgressUpdate, this).subscribe(
+		this.solverService.getSolverFile(data.source_path, this.onProgressUpdate.bind(this)).subscribe(
 			(blob: Blob) => {
 				this.sourceInput.onFileAdded(null, new File([blob], data.source_path.split('/').pop()))
 
@@ -209,7 +209,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 * @param  data     Data containing infos on the solver.
 	 */
 	getSolverToEditExecFiles(data: any) {
-		this.solverService.getSolverFile(data.executable_path, this.onProgressUpdate, this).subscribe(
+		this.solverService.getSolverFile(data.executable_path, this.onProgressUpdate.bind(this)).subscribe(
 			(blob: Blob) => {
 				this.execInput.onFileAdded(null, new File([blob], data.executable_path.split('/').pop()))
 				this.isLoadingResults = false
