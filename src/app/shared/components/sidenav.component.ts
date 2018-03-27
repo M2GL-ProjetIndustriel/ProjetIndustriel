@@ -33,11 +33,6 @@ export class SidenavComponent {
 			'routerLink': 'instance'
 		},
 		{
-			'label': 'Résultats',
-			'icon': 'list',
-			'routerLink': 'result'
-		},
-		{
 			'label': 'Solveurs',
 			'icon': 'list',
 			'routerLink': 'solver'

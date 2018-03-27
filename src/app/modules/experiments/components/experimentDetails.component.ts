@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
 
 import { ExperimentService } from '../experiment.service'
+import { ExperimentResults } from '../experimentResults.model'
 
 /**
  * Experiment details component, display the details of the experiment and allow
@@ -17,22 +18,19 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 	/**
 	 * Experiment to be displayed.
 	 */
-	experiment: any
+	experiment: any = null
+
+	experimentResults: ExperimentResults = null
 	/**
 	 * Subscriptions of the component.
 	 */
 	subscriptions = []
-	/**
-	 * Reference to the current user, null = not logged in.
-	 */
-	user: any = null
 
 	/**
 	 * Constructor, doesn't do shit.
 	 * @param route             ActivatedRoute injection.
 	 * @param router            Router injection.
 	 * @param dialog            MatDialog injection.
-	 * @param authService       AuthenticationService injection.
 	 * @param experimentService ExperimentService injection.
 	 */
 	constructor (
@@ -50,7 +48,10 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.subscriptions.push(this.route.params.subscribe(
 			params => this.experimentService.getExperiment(params['experimentID']).subscribe(
-				data => this.experiment = data,
+				data => {
+					this.experiment = data
+					this.convertData(data)
+				},
 				err => {
 					this.back()
 					throw err
@@ -99,6 +100,11 @@ export class ExperimentDetailsComponent implements OnInit, OnDestroy {
 						})
 			}
 		)
+	}
+
+	convertData(data: any) {
+		//extract results here
+		//this.experimentResults = somehting()
 	}
 }
 

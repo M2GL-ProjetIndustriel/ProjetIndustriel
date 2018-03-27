@@ -2,6 +2,8 @@ import { Component, Input, ViewChild, OnInit, AfterViewInit } from '@angular/cor
 import { MatPaginator, MatTableDataSource, MatSelect } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections'
 
+import { ExperimentResults } from '../experimentResults.model'
+
 @Component({
 	selector: 'experiment-results',
 	templateUrl: 'experimentResults.component.html',
@@ -21,14 +23,17 @@ export class ExperimentResultsComponent implements OnInit, AfterViewInit {
 	headers: Array<string> = []
 
 	ngOnInit() {
-		this.stream.subscribe(
-			data => {
-				if (data) {
-					let results = data.toTable()
-					this.dataSource.data = results.data
-					this.headers = results.headers
-				}
-			})
+		if (this.stream && this.stream instanceof ExperimentResults)
+			console.log('array')
+		else if (this.stream)
+			this.stream.subscribe(
+				data => {
+					if (data) {
+						let results = data.toTable()
+						this.dataSource.data = results.data
+						this.headers = results.headers
+					}
+				})
 	}
 
 	ngAfterViewInit() {
