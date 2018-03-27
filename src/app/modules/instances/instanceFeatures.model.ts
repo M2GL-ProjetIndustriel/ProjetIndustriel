@@ -25,7 +25,7 @@ export class InstanceFeatures {
 export class InstanceFeaturesFactory {
 
 	static newFromCSV(csvData: Array<any>): InstanceFeatures {
-		//first row is the columns headers row
+		//first row is the column headers row
 		const headers = csvData.slice(0, 1)[0]
 		const data = csvData.slice(1)
 
@@ -33,9 +33,9 @@ export class InstanceFeaturesFactory {
 			return null
 
 		let result = new InstanceFeatures()
-		for (let i in data) {
+		for (let i in data)
 			result.add(data[i][0], data[i][1], data[i][2])
-		}
+
 		return result
 	}
 

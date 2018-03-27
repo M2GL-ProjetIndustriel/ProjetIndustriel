@@ -8,7 +8,7 @@
 		<form [formGroup]="solverForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 			<!-- Data fields -->
 			<mat-form-field fxFlex="100" hintLabel="100 caratères max">
-				<input matInput #name placeholder="Nom*" formControlName="name">
+				<input matInput placeholder="Nom*" formControlName="name">
 				<mat-error *ngIf="solverForm.get('name').invalid && solverForm.get('name').dirty">Nom invalide</mat-error>
 				<mat-hint align="end">{{solverForm.get('name').value?.length || 0}}/100</mat-hint>
 			</mat-form-field>

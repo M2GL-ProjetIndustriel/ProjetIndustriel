@@ -47,6 +47,8 @@ import { SharedModule } from '../../shared/shared.module'
 import { ExperimentsOverviewComponent } from './components/experimentsOverview.component'
 import { ExperimentsListComponent } from './components/experimentsList.component'
 import { ExperimentDetailsComponent, DeleteExperimentDialogComponent } from './components/experimentDetails.component'
+import { ExperimentFormComponent } from './components/experimentForm.component'
+import { ExperimentResultsTableComponent } from './components/experimentResultsTable.component'
 
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
@@ -57,6 +59,7 @@ import { ExperimentService } from './experiment.service'
 @NgModule({
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		RouterModule,
 		HttpClientModule,
 		HttpClientJsonpModule,
@@ -100,7 +103,9 @@ import { ExperimentService } from './experiment.service'
 		ExperimentsOverviewComponent,
 		ExperimentsListComponent,
 		ExperimentDetailsComponent,
-		DeleteExperimentDialogComponent
+		DeleteExperimentDialogComponent,
+		ExperimentFormComponent,
+		ExperimentResultsTableComponent
 	],
 	providers: [
 		ExperimentService,

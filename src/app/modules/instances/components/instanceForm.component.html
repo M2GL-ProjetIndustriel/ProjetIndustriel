@@ -7,7 +7,7 @@
 		<form [formGroup]="instanceForm" (ngSubmit)="onSubmit()" novalidate class="form-container" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 			<!-- Data fields -->
 			<mat-form-field fxFlex="100" hintLabel="100 caratères max">
-				<input matInput #name placeholder="Nom*" formControlName="name">
+				<input matInput placeholder="Nom*" formControlName="name">
 				<mat-error *ngIf="instanceForm.get('name').invalid && instanceForm.get('name').dirty">Nom invalide</mat-error>
 				<mat-hint align="end">{{instanceForm.get('name').value?.length || 0}}/100</mat-hint>
 			</mat-form-field>
@@ -43,7 +43,7 @@
 						<mat-panel-title>Instance features</mat-panel-title>
 						<mat-panel-description>Tableau des features.</mat-panel-description>
 					</mat-expansion-panel-header>
-						<instance-features-table #featureTable [stream]="csvFileAsArrayStream"></instance-features-table>
+						<instance-features-table #featureTable [stream]="instanceFeaturesStream"></instance-features-table>
 				</mat-expansion-panel>
 			</mat-accordion>
 

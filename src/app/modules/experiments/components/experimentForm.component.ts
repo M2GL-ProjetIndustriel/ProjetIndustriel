@@ -5,34 +5,34 @@ import { Location } from '@angular/common'
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
-import { InstanceService } from '../instance.service'
-import { InstanceFeaturesFactory, InstanceFeatures } from '../instanceFeatures.model'
+import { ExperimentService } from '../experiment.service'
+import { ResultMeasurementsFactory, ExperimentResults } from '../modules/results/resultMeasurement.model'
 import { FileUploadComponent } from '../../../shared/components/fileUpload.component'
 import { CustomFile } from '../../../shared/files.model'
 import { CSVParserService } from '../../../shared/csvParser.service'
 
 /**
- * InstanceForm Component, form to add or edit an instance.
+ * ExperimentForm Component, form to add or edit an experiment.
  *
  * Composed of a clasic form with inputs and 2 {@link FileUploadComponent} to
  * upload files along the form.
  */
 @Component({
-	selector: 'instance-form',
-	templateUrl: './instanceForm.component.html',
-	styleUrls: ['./instanceForm.component.scss']
+	selector: 'experiment-form',
+	templateUrl: './experimentForm.component.html',
+	styleUrls: ['./experimentForm.component.scss']
 })
-export class InstanceFormComponent implements OnInit, OnDestroy {
+export class ExperimentFormComponent implements OnInit, OnDestroy {
 	/**
-	 * Whether or not we're editing an instance. Default to false (adding an
-	 * instance).
+	 * Whether or not we're editing an experiment. Default to false (adding an
+	 * experiment).
 	 */
 	isEdit: boolean = false
 	/**
-	 * Id of the instance that is being edited, if it's not an edit this
+	 * Id of the experiment that is being edited, if it's not an edit this
 	 * attribute should not be used.
 	 */
-	instanceID: string
+	experimentID: string
 	/**
 	 * Whether or not an http request is ongoing.
 	 */
@@ -40,14 +40,14 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	/**
 	 * Form reference.
 	 */
-	instanceForm: FormGroup
+	experimentForm: FormGroup
 	/**
 	 * Subscriptions of the component.
 	 */
 	subscriptions = []
 	/**
 	 * Reference to the FileUploadComponent holding the csv file containing the
-	 * features of the instance.
+	 * features of the experiment.
 	 */
 	@ViewChild('csvInput') csvInput: FileUploadComponent
 	/**
@@ -57,18 +57,18 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 
 	csvFileUploaded: boolean = false
 
-	private instanceFeaturesStream: BehaviorSubject<InstanceFeatures> = new BehaviorSubject<InstanceFeatures>(null)
+	private exprimentResultsStream: BehaviorSubject<ExperimentResults> = new BehaviorSubject<ExperimentResults>(null)
 
-	@ViewChild('featureTable') featureTable: any
+	@ViewChild('resultsTable') resultsTable: any
 
 	/**
 	 * Constructor, create the form.
-	 * @param formBuilder     FormBuilder injection.
-	 * @param route           ActivatedRoute injection.
-	 * @param router          Router injection.
-	 * @param location        Location injection.
-	 * @param csvParser       CSVParserService injection.
-	 * @param instanceService InstanceService injection.
+	 * @param formBuilder       FormBuilder injection.
+	 * @param route             ActivatedRoute injection.
+	 * @param router            Router injection.
+	 * @param location          Location injection.
+	 * @param csvParser         CSVParserService injection.
+	 * @param experimentService ExperimentService injection.
 	 */
 	constructor(
 		private formBuilder: FormBuilder,
@@ -76,7 +76,7 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private location: Location,
 		private csvParser: CSVParserService,
-		private instanceService: InstanceService
+		private experimentService: ExperimentService
 	) {
 		this.createForm()
 	}
@@ -107,11 +107,11 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Check if it's an edit or an addition by trying to get the ':instanceID'
-	 * params in the route, if no param ':instanceID' was found it's not an
-	 * edit, otherwise if a ':instanceID' is found it mean it's an edit and will
-	 * set to true the 'isEdit' flag and call getInstanceToEdit to, you guessed
-	 * it, get the instance to edit.
+	 * Check if it's an edit or an addition by trying to get the ':experimentID'
+	 * params in the route, if no param ':experimentID' was found it's not an
+	 * edit, otherwise if a ':experimentID' is found it mean it's an edit and will
+	 * set to true the 'isEdit' flag and call getExperimentToEdit to, you guessed
+	 * it, get the experiment to edit.
 	 *
 	 * If there's an error call back to go back to the precedent route.
 	 */
@@ -119,10 +119,10 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(this.route.params.subscribe(
 			params => {
 				//if params found mean its an edit
-				if (params['instanceID']) {
+				if (params['experimentID']) {
 					this.isEdit = true
-					this.instanceID = params['instanceID']
-					this.getInstanceToEdit(this.instanceID)
+					this.experimentID = params['experimentID']
+					this.getExperimentToEdit(this.experimentID)
 				}
 			},
 			err => {
@@ -133,14 +133,14 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Call the instanceService to get the instance to edit.
+	 * Call the experimentService to get the experiment to edit.
 	 *
 	 * If there's an error call back to go back to the precedent route.
-	 * @param  instanceID Id of the instance.
+	 * @param  experimentID Id of the experiment.
 	 */
-	getInstanceToEdit(instanceID: string) {
+	getExperimentToEdit(experimentID: string) {
 		this.isLoadingResults = true
-		this.instanceService.getInstance(instanceID).subscribe(
+		this.experimentService.getExperiment(experimentID).subscribe(
 			data => {
 				this.setFormValues(data)
 			},
@@ -162,27 +162,31 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	 * Use FormBuilder to create the form with default values and validators.
 	 */
 	createForm() {
-		this.instanceForm = this.formBuilder.group({
+		this.experimentForm = this.formBuilder.group({
 			name: ['', [Validators.required, Validators.maxLength(100)]],
-			instance_type: ['', [Validators.required, Validators.maxLength(100)]],
-			instance_family: ['', Validators.maxLength(100)],
-			path: ['', Validators.maxLength(200)]
+			date: [new Date(), Validators.required],
+			solver_parameters: ['', Validators.maxLength(200)],
+			solver: ['', Validators.required],
+			device: ['', Validators.maxLength(200)],
+			description: ['', Validators.maxLength(400)]
 		})
 	}
 
 	/**
-	 * Set the values of the instanceForm from data given as an argument.
-	 * @param  data Data containing infos on an instance.
+	 * Set the values of the experimentForm from data given as an argument.
+	 * @param  data Data containing infos on an experiment.
 	 */
 	setFormValues(data) {
-		this.instanceForm.setValue({
+		this.experimentForm.setValue({
 			name: data.name,
-			instance_type: data.instance_type,
-			instance_family: data.instance_family,
-			path: data.path
+			date: data.date,
+			solver_parameters: data.solver_parameters,
+			solver: data.solver,
+			device: data.device,
+			description: data.description
 		})
 		//might need to convert data beforehand
-		//this.instanceFeaturesStream.next(data.features)
+		//this.exprimentResultsStream.next(data.features)
 	}
 
 	/**
@@ -190,17 +194,17 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	 * appropriate function if it's an edit or an addition.
 	 */
 	onSubmit() {
-		if (this.instanceForm.valid) {
-			let data = this.instanceForm.value
-			this.instanceFeaturesStream.subscribe(
-				features => {
-					data.values = InstanceFeaturesFactory.toBackendFormatFromFeatures(features)
+		if (this.experimentForm.valid) {
+			let data = this.experimentForm.value
+			this.exprimentResultsStream.subscribe(
+				results => {
+					data.values = results.toArray()
 					console.log(data)
 
-					if (this.isEdit)
-						this.editInstance(data)
+					/*if (this.isEdit)
+						this.editExperiment(data)
 					else
-						this.addInstance(data)
+						this.addExperiment(data)*/
 				},
 				err => { throw err }
 			)
@@ -209,13 +213,13 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 
 
 	/**
-	 * Call the instanceService to add an instance. On success redirect to the newly
-	 * created instance details page.
+	 * Call the experimentService to add an experiment. On success redirect to the newly
+	 * created experiment details page.
 	 */
-	addInstance(data: any) {
+	addExperiment(data: any) {
 		this.isLoadingResults = true
-		this.instanceService.postInstance(data).subscribe(
-			data => this.router.navigate(['/instance/', data.id]),
+		this.experimentService.postExperiment(data).subscribe(
+			data => this.router.navigate(['/experiment/', data.id]),
 			err => {
 				this.isLoadingResults = false
 				throw err
@@ -224,13 +228,13 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Call the instanceService to edit an instance. On success redirect to the
-	 * edited instance details page.
+	 * Call the experimentService to edit an experiment. On success redirect to the
+	 * edited experiment details page.
 	 */
-	editInstance(data: any) {
+	editExperiment(data: any) {
 		this.isLoadingResults = true
-		this.instanceService.editInstance(data, this.instanceID).subscribe(
-			data => this.router.navigate(['/instance/', data.id]),
+		this.experimentService.editExperiment(data, this.experimentID).subscribe(
+			data => this.router.navigate(['/experiment/', data.id]),
 			err => {
 				this.isLoadingResults = false
 				throw err
@@ -249,10 +253,10 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 	}
 
 	private onFileParsed(result: any) {
-		let data = InstanceFeaturesFactory.newFromCSV(result)
+		let data = ResultMeasurementsFactory.newFromCSV(result)
 
 		if (data) {
-			this.instanceFeaturesStream.next(data)
+			this.exprimentResultsStream.next(data)
 			this.csvFileUploaded = true
 		}
 		else

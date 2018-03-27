@@ -2,6 +2,7 @@ import { Routes } from '@angular/router'
 
 import { ExperimentsOverviewComponent } from './components/experimentsOverview.component'
 import { ExperimentDetailsComponent } from './components/experimentDetails.component'
+import { ExperimentFormComponent } from './components/experimentForm.component'
 
 /**
  * Routes of the experiment module.
@@ -13,7 +14,7 @@ export const experimentsRoutes: Routes = [
 	},
 	{
 		path: 'experiment/add',
-		component: ExperimentsOverviewComponent
+		component: ExperimentFormComponent
 	},
 	{
 		path: 'experiment/:experimentID',
@@ -21,6 +22,6 @@ export const experimentsRoutes: Routes = [
 	},
 	{
 		path: 'experiment/edit/:experimentID',
-		component: ExperimentsOverviewComponent
+		component: ExperimentFormComponent
 	}
 ]
