@@ -17,7 +17,11 @@
 				<mat-error *ngIf="solverForm.get('version').invalid && solverForm.get('version').dirty">Version invalide</mat-error>
 				<mat-hint align="end">{{solverForm.get('version').value?.length || 0}}/100</mat-hint>
 			</mat-form-field>
-
+			<mat-form-field fxFlex="400"  hintLabel="400 caratères max">
+				<textarea matInput placeholder="Description" formControlName="description"></textarea>
+				<mat-error *ngIf="solverForm.get('description').invalid && solverForm.get('description').dirty">Version invalide</mat-error>
+				<mat-hint align="end">{{solverForm.get('description').value?.length || 0}}/400</mat-hint>
+			</mat-form-field>
 			<!-- File Upload -->
 			<mat-accordion multi="true" fxFlex="100">
 				<!-- Sources files drop zone -->

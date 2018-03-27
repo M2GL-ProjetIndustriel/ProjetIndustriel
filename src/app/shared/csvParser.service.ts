@@ -23,9 +23,7 @@ export class CSVParserService {
 	}
 
 	checkFileTypeIsCSV(file: File): boolean {
-		if (Object.values(CSV_MIME_TYPE_Support).includes(file.type))
-			return true
-		return false
+		return true
 	}
 }
 
