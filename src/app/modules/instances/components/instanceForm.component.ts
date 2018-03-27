@@ -59,7 +59,7 @@ export class InstanceFormComponent implements OnInit, OnDestroy {
 
 	private instanceFeaturesStream: BehaviorSubject<InstanceFeatures> = new BehaviorSubject<InstanceFeatures>(null)
 
-	@ViewChild('featureTable') featureTable: any
+	//@ViewChild('featureTable') featureTable: any
 
 	/**
 	 * Constructor, create the form.

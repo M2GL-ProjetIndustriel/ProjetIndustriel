@@ -48,7 +48,7 @@ import { ExperimentsOverviewComponent } from './components/experimentsOverview.c
 import { ExperimentsListComponent } from './components/experimentsList.component'
 import { ExperimentDetailsComponent, DeleteExperimentDialogComponent } from './components/experimentDetails.component'
 import { ExperimentFormComponent } from './components/experimentForm.component'
-import { ExperimentResultsTableComponent } from './components/experimentResultsTable.component'
+import { ExperimentResultsComponent } from './components/experimentResults.component'
 
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
@@ -105,7 +105,7 @@ import { ExperimentService } from './experiment.service'
 		ExperimentDetailsComponent,
 		DeleteExperimentDialogComponent,
 		ExperimentFormComponent,
-		ExperimentResultsTableComponent
+		ExperimentResultsComponent
 	],
 	providers: [
 		ExperimentService,

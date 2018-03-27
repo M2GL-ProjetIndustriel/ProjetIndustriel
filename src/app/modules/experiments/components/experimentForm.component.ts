@@ -6,7 +6,7 @@ import { Location } from '@angular/common'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 import { ExperimentService } from '../experiment.service'
-import { ResultMeasurementsFactory, ExperimentResults } from '../modules/results/resultMeasurement.model'
+import { ResultMeasurementsFactory, ExperimentResults } from '../experimentResults.model'
 import { FileUploadComponent } from '../../../shared/components/fileUpload.component'
 import { CustomFile } from '../../../shared/files.model'
 import { CSVParserService } from '../../../shared/csvParser.service'
@@ -59,7 +59,7 @@ export class ExperimentFormComponent implements OnInit, OnDestroy {
 
 	private exprimentResultsStream: BehaviorSubject<ExperimentResults> = new BehaviorSubject<ExperimentResults>(null)
 
-	@ViewChild('resultsTable') resultsTable: any
+	//@ViewChild('experimentResults') experimentResults: any
 
 	/**
 	 * Constructor, create the form.
