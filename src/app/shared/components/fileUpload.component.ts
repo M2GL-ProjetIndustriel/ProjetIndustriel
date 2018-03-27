@@ -99,9 +99,9 @@ export class FileUploadComponent implements OnInit {
 			files = [ fileList ]
 		else
 		 	 files = Array.from((fileList) ? fileList : event.target.files)
-
 		files.forEach((file) => {
 			let fileAdded = this.fileQueue.add(file)
+			console.log(fileAdded)
 			if (fileAdded)
 				this.onFileAddedToQueue.emit(fileAdded)
 		})

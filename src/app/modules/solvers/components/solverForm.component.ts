@@ -233,7 +233,8 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	createForm() {
 		this.solverForm = this.formBuilder.group({
 			name: ['', [Validators.required, Validators.maxLength(100)]],
-			version: ['', Validators.maxLength(100)]
+			version: ['', [Validators.required, Validators.maxLength(100)]],
+			description: ['', Validators.maxLength(400)],
 		})
 	}
 
@@ -257,7 +258,8 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	setFormValues(data) {
 		this.solverForm.setValue({
 			name: data.name,
-			version: data.version
+			version: data.version,
+			description: data.description
 		})
 	}
 
@@ -271,6 +273,7 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 
 		formData.append('name', this.solverForm.value.name)
 		formData.append('version', this.solverForm.value.version)
+		formData.append('description', this.solverForm.value.description)
 
 		//add check api logic
 		//if (this.sourceFile && this.sourceFile.apiValidationStatus === ApiValidationStatus.Validated)
