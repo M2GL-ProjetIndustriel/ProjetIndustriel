@@ -10,3 +10,8 @@
 	background-color: $grey;
 	cursor: pointer;
 }
+
+.mat-table {
+	overflow: auto;
+	max-height: 512px;
+}

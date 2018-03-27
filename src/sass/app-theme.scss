@@ -3,7 +3,7 @@
 @include mat-core();
 
 $m2-app-primary: mat-palette($mat-light-blue, 500);
-$m2-app-accent: mat-palette($mat-brown, 300);
+$m2-app-accent: mat-palette($mat-amber, A200);
 $m2-app-warn: mat-palette($mat-red, 500);
 
 $m2-app-theme: mat-light-theme($m2-app-primary, $m2-app-accent, $m2-app-warn);

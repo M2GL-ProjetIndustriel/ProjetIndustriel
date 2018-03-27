@@ -19,7 +19,8 @@ export class AuthenticationService {
 	constructor(private http: HttpClient) {}
 
 	login(username: string, password: string) {
-		return this.http.post(appConfig.apiUrl + '/token-auth', { username: username, password: password })
+		return this.debugLogin(username, password)
+		/*return this.http.post(appConfig.apiUrl + '/token-auth', { username: username, password: password })
 			.pipe(
 				retry(appConfig.httpFailureRetryNumber),
 				map((data: any) => {
@@ -34,7 +35,7 @@ export class AuthenticationService {
 					}
 					else
 						throw new Error('Pas de jeton, pas de chocolat.')
-				}))
+				}))*/
 	}
 
 	logout() {

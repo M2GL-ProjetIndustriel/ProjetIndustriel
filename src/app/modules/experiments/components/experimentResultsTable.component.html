@@ -1,15 +1,40 @@
-<div class="table-container">
-	<mat-table [dataSource]="dataSource">
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+	<div class="table-container" fxFlex="20">
+		<mat-table [dataSource]="dataSource">
 
-		<ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-			<mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
-			<mat-cell *matCellDef="let row"> {{row.get(column)}} </mat-cell>
-		</ng-container>
+			<ng-container matColumnDef="instance">
+				<mat-header-cell *matHeaderCellDef> Instance </mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.get('instance')}} </mat-cell>
+			</ng-container>
 
-		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-		<mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></mat-row>
-	</mat-table>
+			<ng-container matColumnDef="select">
+				<mat-header-cell *matHeaderCellDef><mat-icon>check</mat-icon></mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					<mat-checkbox
+						(click)="$event.stopPropagation()"
+						(change)="$event ? selection.toggle(row) : null"
+						[checked]="selection.isSelected(row)">
+					</mat-checkbox>
+				</mat-cell>
+			</ng-container>
 
-	<mat-paginator [pageSizeOptions]="[100, 250, 500, 1000]" [showFirstLastButtons]="true">
-	</mat-paginator>
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></mat-row>
+		</mat-table>
+
+		<mat-paginator [pageSizeOptions]="[100, 250, 500, 1000]" [showFirstLastButtons]="true">
+		</mat-paginator>
+	</div>
+
+	<!--<mat-tab-group fxFlex="76">
+		<mat-tab *ngFor="let result of selected" [label]="result.get('instance')">
+			<mat-list>
+				<h3 mat-subheader>Info</h3>
+				<mat-list-item *ngFor="let header of results.headers">
+					<p matLine><strong> {{header}} </strong></p>
+					<p matLine> {{result.get(header)}} </p>
+				</mat-list-item>
+			</mat-list>
+		</mat-tab>
+	</mat-tab-group>-->
 </div>
