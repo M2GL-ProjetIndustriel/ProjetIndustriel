@@ -46,7 +46,7 @@ import { SidenavComponent } from './components/sidenav.component'
 import { HeaderComponent } from './components/header.component'
 import { CardComponent } from './components/card.component'
 import { UnluckyRouteComponent } from './components/unluckyRoute.component'
-import { TestGraphComponent } from './components/testGraph.component'
+import { GraphComponent } from './components/graph.component'
 import { FileUploadComponent } from './components/fileUpload.component'
 import { TableComponent } from './components/table.component'
 import { ErrorDirective } from './error.directive'
@@ -105,7 +105,7 @@ import { CSVParserService } from './csvParser.service'
 		HeaderComponent,
 		UnluckyRouteComponent,
 		CardComponent,
-		TestGraphComponent,
+		GraphComponent,
 		FileUploadComponent,
 		TableComponent,
 		ErrorDirective
@@ -115,7 +115,7 @@ import { CSVParserService } from './csvParser.service'
 		HeaderComponent,
 		UnluckyRouteComponent,
 		CardComponent,
-		TestGraphComponent,
+		GraphComponent,
 		FileUploadComponent,
 		TableComponent,
 		ErrorDirective

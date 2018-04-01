@@ -1,7 +1,7 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -49,6 +49,8 @@ import { ExperimentsListComponent } from './components/experimentsList.component
 import { ExperimentDetailsComponent, DeleteExperimentDialogComponent } from './components/experimentDetails.component'
 import { ExperimentFormComponent } from './components/experimentForm.component'
 import { ExperimentResultsComponent } from './components/experimentResults.component'
+import { ExperimentResultsStatsComponent } from './components/experimentResultsStats.component'
+import { ExperimentResultsGraphDialogComponent } from './components/experimentResultsGraphDialog.component'
 
 /* Providers ################################################################ */
 import { ExperimentService } from './experiment.service'
@@ -60,6 +62,7 @@ import { ExperimentService } from './experiment.service'
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
+		FormsModule,
 		RouterModule,
 		HttpClientModule,
 		HttpClientJsonpModule,
@@ -105,7 +108,13 @@ import { ExperimentService } from './experiment.service'
 		ExperimentDetailsComponent,
 		DeleteExperimentDialogComponent,
 		ExperimentFormComponent,
-		ExperimentResultsComponent
+		ExperimentResultsComponent,
+		ExperimentResultsStatsComponent,
+		ExperimentResultsGraphDialogComponent
+	],
+	entryComponents: [
+		DeleteExperimentDialogComponent,
+		ExperimentResultsGraphDialogComponent
 	],
 	providers: [
 		ExperimentService,

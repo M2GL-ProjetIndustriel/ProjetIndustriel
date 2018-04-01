@@ -1,0 +1,19 @@
+.mat-dialog-content {
+	min-height: 256px;
+	min-width: 256px;
+}
+
+.vertical-radio-group {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.radio-group {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.text-with-icon {
+    display: flex;
+    align-items: center;
+}

@@ -37,10 +37,6 @@ export class HeaderComponent implements AfterViewInit {
 	 */
 	@Input() sidenav
 	/**
-	 * Name of the icon of the toggle button.
-	 */
-	sidenavToggleIcon: string = 'arrow_back'
-	/**
 	 * Reference to the search input html element.
 	 */
 	@ViewChild('searchInput') searchInput: ElementRef
@@ -82,18 +78,15 @@ export class HeaderComponent implements AfterViewInit {
 	}
 
 	/**
-	 * Toggle the display of the sidebar and change the icon to match the state
-	 * of the sidebar (opened or closed). By default the sidebar is open.
+	 * Toggle the display of the sidebar. By default the sidebar is open.
 	 */
 	toggle() {
-		this.sidenav.toggle().then((value) => {
-			if (value.type === 'open')
-				this.sidenavToggleIcon = 'arrow_back'
-			else if (value.type === 'close')
-				this.sidenavToggleIcon = 'arrow_forward'
-		})
+		this.sidenav.toggle()
 	}
 
+	/**
+	 * Logout button handler, logout the user using AuthenticationService.
+	 */
 	logout() {
 		this.authService.logout()
 	}

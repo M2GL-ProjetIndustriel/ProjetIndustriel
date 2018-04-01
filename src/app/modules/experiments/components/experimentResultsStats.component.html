@@ -1,0 +1,9 @@
+<app-card header="Résultats">
+	<button card-action mat-raised-button color="accent" matTooltip="Créer graphe" (click)="onCreateGraph()">
+		<mat-icon>show_chart</mat-icon>
+	</button>
+
+	<experiment-results card-content #experimentResults [stream]="stream"></experiment-results>
+</app-card>
+
+<app-graph *ngIf="graphData != null" [graphType]="graphType" [data]="graphData"></app-graph>

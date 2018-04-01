@@ -1,0 +1,32 @@
+<h2 class="text-with-icon" mat-dialog-title><mat-icon>show_chart</mat-icon> Créer un graphe</h2>
+
+<mat-dialog-content>
+	<div class="radio-group">
+		<h3>Sélection des résultats {{selectedResults}}</h3>
+		<mat-radio-group [(ngModel)]="selectedResults" class="vertical-radio-group">
+			<mat-radio-button value="all">Tous les résultats</mat-radio-button>
+			<mat-radio-button value="selected">Seulement ceux sélectionner</mat-radio-button>
+		</mat-radio-group>
+	</div>
+
+	<div class="radio-group">
+		<h3>Sélection de la colonne {{selectedHeader}}</h3>
+		<mat-radio-group [(ngModel)]="selectedHeader" class="vertical-radio-group">
+			<mat-radio-button *ngFor="let header of headers" [value]="header"> {{header}} </mat-radio-button>
+		</mat-radio-group>
+	</div>
+
+	<div class="radio-group">
+		<h3>Type de graphe {{selectedGraphType}}</h3>
+		<mat-radio-group [(ngModel)]="selectedGraphType" class="vertical-radio-group">
+			<mat-radio-button value="line"><span class="text-with-icon"><mat-icon>show_chart</mat-icon> Ligne</span></mat-radio-button>
+			<mat-radio-button value="bar"><span class="text-with-icon"><mat-icon>insert_chart</mat-icon> Bâton</span></mat-radio-button>
+			<mat-radio-button value="pie"><span class="text-with-icon"><mat-icon>pie_chart</mat-icon> Circulaire</span></mat-radio-button>
+		</mat-radio-group>
+	</div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+	<button mat-raised-button color="warn" mat-dialog-close>Annuler</button>
+	<button mat-raised-button color="primary" [mat-dialog-close]="selectedValues()">Valider</button>
+</mat-dialog-actions>

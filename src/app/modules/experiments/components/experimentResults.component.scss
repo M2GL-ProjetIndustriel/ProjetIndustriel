@@ -16,7 +16,16 @@
 	max-height: 512px;
 }
 
-
 .mat-column-select {
 	overflow: initial;
+	flex: 0 0 32px;
+}
+
+.no-result-selected {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 256px;
+
 }

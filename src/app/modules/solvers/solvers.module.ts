@@ -1,6 +1,6 @@
 /* Imports ################################################################## */
 import { NgModule } from '@angular/core'
-import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'
@@ -109,7 +109,6 @@ import { SolverService } from './solver.service'
 		DeleteSolverDialogComponent
 	],
 	providers: [
-		DatePipe,
 		SolverService,
 		{
 			provide: 'SolverService',

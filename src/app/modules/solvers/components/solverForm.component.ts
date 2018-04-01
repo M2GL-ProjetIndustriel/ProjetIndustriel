@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Location, DatePipe } from '@angular/common'
+import { Location } from '@angular/common'
 
 import { SolverService } from '../solver.service'
 import { FileUploadComponent } from '../../../shared/components/fileUpload.component'
@@ -69,7 +69,6 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 	 * @param route         ActivatedRoute injection.
 	 * @param router        Router injection.
 	 * @param location      Location injection.
-	 * @param datePipe      DatePipe injection (to format dates).
 	 * @param solverService SolverService injection.
 	 */
 	constructor(
@@ -77,7 +76,6 @@ export class SolverFormComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private router: Router,
 		private location: Location,
-		private datePipe: DatePipe,
 		private solverService: SolverService
 	) {
 		this.createForm()

@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutWrap>
 	<div class="table-container" fxFlex="20">
-		<h4>Sélectionner les résultats à afficher</h4>
+		<!--<h4>Sélectionner les résultats à afficher</h4>-->
 		<mat-table [dataSource]="dataSource">
 
 			<ng-container matColumnDef="instance">
@@ -27,7 +27,11 @@
 		</mat-paginator>
 	</div>
 
-	<mat-tab-group *ngIf="selection.selected.length > 0" fxFlex="76">
+	<div *ngIf="selection.selected.length == 0" fxFlex="80" class="no-result-selected">
+		<h3>Sélectionner des résultats à afficher.</h3>
+	</div>
+
+	<mat-tab-group *ngIf="selection.selected.length > 0" fxFlex="80">
 		<mat-tab *ngFor="let result of selection.selected" [label]="result.get('instance')">
 			<mat-list>
 				<h3 mat-subheader>Info</h3>
