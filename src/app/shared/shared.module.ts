@@ -55,6 +55,7 @@ import { ErrorDirective } from './error.directive'
 import { ErrorService } from './error.service'
 import { ApiMessageService } from './apiMessage.service'
 import { CSVParserService } from './csvParser.service'
+import { ColorService } from './color.service'
 
 /**
  * Shared module, contains everything that is global/shared between the
@@ -123,7 +124,8 @@ import { CSVParserService } from './csvParser.service'
 	providers: [
 		ErrorService,
 		ApiMessageService,
-		CSVParserService
+		CSVParserService,
+		ColorService
 	]
 })
 export class SharedModule { }

@@ -15,6 +15,10 @@ export class ExperimentResultsGraphDialogComponent {
 
 	selectedGraphType: string
 
+	selectedLegendOption: boolean = false
+
+	selectedAxisOption: boolean = false
+
 	constructor(@Inject(MAT_DIALOG_DATA) private data: any) {
 		if (data && data.headers)
 			this.headers = data.headers
@@ -24,7 +28,9 @@ export class ExperimentResultsGraphDialogComponent {
 		return {
 			results: this.selectedResults,
 			header: this.selectedHeader,
-			graph: this.selectedGraphType
+			graph: this.selectedGraphType,
+			legend: this.selectedLegendOption,
+			axis: this.selectedAxisOption
 		}
 	}
 }

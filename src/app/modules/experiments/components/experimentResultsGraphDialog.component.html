@@ -24,6 +24,17 @@
 			<mat-radio-button value="pie"><span class="text-with-icon"><mat-icon>pie_chart</mat-icon> Circulaire</span></mat-radio-button>
 		</mat-radio-group>
 	</div>
+
+	<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+		<div fxFlex="48">
+			<p>Afficher la légende</p>
+			<mat-slide-toggle [(ngModel)]="selectedLegendOption"></mat-slide-toggle>
+		</div>
+		<div fxFlex="48">
+			<p>Afficher les axes</p>
+			<mat-slide-toggle [(ngModel)]="selectedAxisOption"></mat-slide-toggle>
+		</div>
+	</div>
 </mat-dialog-content>
 
 <mat-dialog-actions>

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material'
 
 import { ResultMeasurements } from '../experimentResults.model'
 import { ExperimentResultsGraphDialogComponent } from './experimentResultsGraphDialog.component'
+import { ColorService } from '../../../shared/color.service'
 
 @Component({
 	selector: 'experiment-results-stats',
@@ -18,7 +19,12 @@ export class ExperimentResultsStatsComponent {
 
 	graphType: string = ''
 
-	constructor(private dialog: MatDialog) {}
+	graphOption: boolean[] = []
+
+	constructor(
+		private dialog: MatDialog,
+		private colors: ColorService
+	) {}
 
 	onCreateGraph() {
 		let dialogRef = this.dialog.open(ExperimentResultsGraphDialogComponent, {
@@ -37,21 +43,56 @@ export class ExperimentResultsStatsComponent {
 		let data = (params.results === 'selected') ? this.experimentResults.selection.selected : this.experimentResults.dataSource.data
 
 		this.graphData = null
+		this.graphType = params.graph
+		this.graphOption = [params.legend, params.axis]
 
-		if (params.graph === 'pie') {
-			this.graphType = params.graph
-			this.graphData = this.toPieGraphDataset(data, params.header)
-		}
+		if (params.graph === 'line')
+			this.graphData = this.toLineGraphDataset(data, params)
+		if (params.graph === 'bar')
+			this.graphData = this.toBarGraphDataset(data, params)
+		if (params.graph === 'pie')
+			this.graphData = this.toPieGraphDataset(data, params)
 
 	}
 
-	toPieGraphDataset(data: ResultMeasurements[], header: string) {
+	toPieGraphDataset(data: ResultMeasurements[], params: any) {
 		let graphData = this.emptyGraphData()
 
 		for (let i in data) {
 			graphData.labels.push(data[i].get('instance'))
-			graphData.datasets[0].data.push(data[i].get(header))
+			graphData.datasets[0].data.push(data[i].get(params.header))
 		}
+
+		graphData.datasets[0].backgroundColor = this.setGraphColor(graphData)
+
+		return graphData
+	}
+
+	toLineGraphDataset(data: ResultMeasurements[], params: any) {
+		let graphData = this.emptyGraphData()
+
+		for (let i in data) {
+			graphData.labels.push(data[i].get('instance'))
+			graphData.datasets[0].data.push(data[i].get(params.header))
+		}
+
+		graphData.datasets[0].borderColor = this.colors.getRandomColor()
+		graphData.datasets[0]['fill'] = false
+		graphData.datasets[0]['label'] = params.header
+
+		return graphData
+	}
+
+	toBarGraphDataset(data: ResultMeasurements[], params: any) {
+		let graphData = this.emptyGraphData()
+
+		for (let i in data) {
+			graphData.labels.push(data[i].get('instance'))
+			graphData.datasets[0].data.push(data[i].get(params.header))
+		}
+
+		graphData.datasets[0].backgroundColor = this.setGraphColor(graphData)
+		graphData.datasets[0]['label'] = params.header
 
 		return graphData
 	}
@@ -59,9 +100,20 @@ export class ExperimentResultsStatsComponent {
 	private emptyGraphData() {
 		return {
 			datasets: [{
-				data: []
+				data: [],
+				backgroundColor: [],
+				borderColor: ''
 			}],
 			labels: []
 		}
+	}
+
+	private setGraphColor(data: any) {
+		let colors = []
+
+		for (let i = 0; i < data.datasets[0].data.length ; i++)
+			colors.push(this.colors.getRandomColor())
+
+		return colors
 	}
 }

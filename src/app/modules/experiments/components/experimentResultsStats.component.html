@@ -6,4 +6,4 @@
 	<experiment-results card-content #experimentResults [stream]="stream"></experiment-results>
 </app-card>
 
-<app-graph *ngIf="graphData != null" [graphType]="graphType" [data]="graphData"></app-graph>
+<app-graph *ngIf="graphData != null" [graphType]="graphType" [option]="graphOption" [data]="graphData"></app-graph>

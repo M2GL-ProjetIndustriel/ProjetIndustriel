@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ElementRef, ViewChild } from '@angular/core'
+import { Component, Input, ElementRef, ViewChild } from '@angular/core'
 
 import { Chart } from 'chart.js'
 
@@ -9,62 +9,62 @@ import { saveAs } from 'file-saver/FileSaver'
 	templateUrl: './graph.component.html',
 	styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent implements AfterViewInit {
+export class GraphComponent  {
 
 	@Input() set graphType(value: string) {
-		this.createChart(this.data, value)
+		this.createChart(this._data, value, this._option)
 	}
 
 	private _graphType: string = 'pie'
 
 	@Input() set data(value: any) {
-		this.createChart(value, this.graphType)
+		this.createChart(value, this._graphType, this._option)
 	}
 
 	private _data: any = null
+
+	@Input() set option(value: any) {
+		this.createChart(this._data, this._graphType, value)
+	}
+
+	private _option: any = []
 
 	@ViewChild('chartCanvas') canvas: ElementRef
 
 	chart: any
 
-	constructor (private elementRef: ElementRef) { }
-
-	ngAfterViewInit() {
-		this.createChart(this.data, this.graphType)
-	}
+	constructor (private elementRef: ElementRef) {}
 
 	exportToImageAndSave() {
 		this.canvas.nativeElement.toBlob((blob) => saveAs(blob, 'graph.png'))
 	}
 
-	createChart(data, type) {
-		if (this._graphType !== type || this._data !== data) {
-			if (type)
-				this._graphType = type
-			if (data)
-				this._data = data
+	createChart(data, type, option) {
+		if (this._graphType !== type || this._data !== data || this._option !== option) {
+			this._graphType = type
+			this._data = data
+			this._option = option
 
 			if (this.chart)
 				this.chart.destroy()
+
 			this.chart = new Chart(this.canvas.nativeElement, {
 				type: this._graphType,
 				data: this._data,
 				options: {
 					legend: {
-						display: false
-					}/*,
+						display: this._option[0] || false
+					},
 					scales: {
 						xAxes: [{
-							display: true
+							display: this._option[1] || false
 						}],
 						yAxes: [{
-							display: true
+							display: this._option[1] || false
 						}]
-					}*/
+					}
 				}
 			})
-			console.log(this.chart)
 		}
-
 	}
 }
